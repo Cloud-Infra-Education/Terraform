@@ -15,3 +15,9 @@ variable "admin_cidr" {
 variable "bastion_instance_type" {
   default = "t3.micro"
 }
+
+variable "eks_public_access_cidrs" {
+  description = "EKS에 접속가능한 CIDR 참조"
+  type        = list(string)
+}
+

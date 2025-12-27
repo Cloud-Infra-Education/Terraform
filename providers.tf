@@ -36,39 +36,73 @@ provider "aws" {
   alias  = "oregon"
 }
 
+
+# Seoul
 provider "kubernetes" {
-  host                   = module.eks.cluster_endpoint
-  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+  host                   = module.eks_seoul.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks_seoul.cluster_certificate_authority_data)
 
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
     command     = "aws"
     args = [
-      "eks",
-      "get-token",
-      "--cluster-name",
-      module.eks.cluster_name,
-      "--region",
-      "ap-northeast-2"
+      "eks", "get-token",
+      "--cluster-name", module.eks_seoul.cluster_name,
+      "--region", "ap-northeast-2"
     ]
   }
 }
 
+# Oregon
+provider "kubernetes" {
+  alias                  = "oregon"
+  host                   = module.eks_oregon.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks_oregon.cluster_certificate_authority_data)
+
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    command     = "aws"
+    args = [
+      "eks", "get-token",
+      "--cluster-name", module.eks_oregon.cluster_name,
+      "--region", "us-west-2"
+    ]
+  }
+}
+
+# Seoul Helm
 provider "helm" {
   kubernetes {
-    host                   = module.eks.cluster_endpoint
-    cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+    host                   = module.eks_seoul.cluster_endpoint
+    cluster_ca_certificate = base64decode(module.eks_seoul.cluster_certificate_authority_data)
 
     exec {
       api_version = "client.authentication.k8s.io/v1beta1"
       command     = "aws"
       args = [
-        "eks",
-        "get-token",
-        "--cluster-name",
-        module.eks.cluster_name,
-        "--region",
-        "ap-northeast-2"
+        "eks", "get-token",
+        "--cluster-name", module.eks_seoul.cluster_name,
+        "--region", "ap-northeast-2"
+      ]
+    }
+  }
+}
+
+# Oregon Helm
+provider "helm" {
+  alias = "oregon"
+
+  kubernetes {
+    host                   = module.eks_oregon.cluster_endpoint
+    cluster_ca_certificate = base64decode(module.eks_oregon.cluster_certificate_authority_data)
+
+    exec {
+      api_version = "client.authentication.k8s.io/v1beta1"
+      command     = "aws"
+      args = [
+        "eks", "get-token",
+        "--cluster-name", module.eks_oregon.cluster_name,
+        "--region", "us-west-2"
       ]
     }
   }

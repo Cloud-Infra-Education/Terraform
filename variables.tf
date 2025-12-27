@@ -22,6 +22,16 @@ variable "eks_public_access_cidrs" {
 }
 
 variable "eks_admin_principal_arn" {
-  description = "EKS access entry 생성용"
+  description = "EKS Access Entry 생성용"
   type        = string
+}
+
+variable "ecr_replication_repo_prefixes" {
+  description = "ECR 미러링 관련 옵션"
+  type        = list(string)
+  default = [
+    "user-service",
+    "order-service",
+    "product-service",
+  ]
 }

@@ -9,7 +9,6 @@ resource "aws_ec2_transit_gateway_peering_attachment" "kor_to_usa" {
   }
 }
 
-#Hello there~
 resource "aws_ec2_transit_gateway_peering_attachment_accepter" "usa_accept" {
   provider                      = aws.oregon
   transit_gateway_attachment_id = aws_ec2_transit_gateway_peering_attachment.kor_to_usa.id

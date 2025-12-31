@@ -1,5 +1,4 @@
 locals {
-  # Argo Helm repo + chart info
   argocd_helm_repo     = "https://argoproj.github.io/argo-helm"
   argocd_helm_chart    = "argo-cd"
   argocd_release_name  = "argocd"
@@ -29,6 +28,7 @@ resource "helm_release" "argocd_seoul" {
     name  = "server.service.type"
     value = "ClusterIP"
   }
+
 }
 
 # -------------------------

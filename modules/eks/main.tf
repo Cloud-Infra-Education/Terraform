@@ -6,11 +6,12 @@ module "eks_seoul" {
     aws = aws.seoul
   }
 
-  cluster_name    = "formation-lap-seoul"
+#  cluster_name    = "formation-lap-seoul"
+  cluster_name    = "chan-formation-lap-seoul"
   cluster_version = "1.34"
 
-  vpc_id     = module.kor_vpc.vpc_id
-  subnet_ids = module.kor_vpc.private_eks_subnet_ids
+  vpc_id     = var.kor_vpc_id
+  subnet_ids = var.kor_private_eks_subnet_ids
 
   cluster_endpoint_private_access      = true
   cluster_endpoint_public_access       = true
@@ -36,11 +37,12 @@ module "eks_oregon" {
     aws = aws.oregon
   }
 
-  cluster_name    = "formation-lap-oregon"
+#  cluster_name    = "formation-lap-oregon"
+  cluster_name    = "chan-formation-lap-oregon"
   cluster_version = "1.34"
 
-  vpc_id     = module.usa_vpc.vpc_id
-  subnet_ids = module.usa_vpc.private_eks_subnet_ids
+  vpc_id     = var.usa_vpc_id
+  subnet_ids = var.usa_private_eks_subnet_ids
 
   cluster_endpoint_private_access      = true
   cluster_endpoint_public_access       = true

@@ -2,13 +2,14 @@ module "alb_controller_irsa" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "~> 5.0"
 
-  role_name = "alb-controller-irsa"
+#  role_name = "alb-controller-irsa"
+  role_name = "chan-alb-controller-irsa"
 
   attach_load_balancer_controller_policy = true
 
   oidc_providers = {
     eks = {
-      provider_arn               = module.eks_seoul.oidc_provider_arn
+      provider_arn               = var.eks_seoul_oidc_provider_arn
       namespace_service_accounts = ["kube-system:aws-load-balancer-controller"]
     }
   }
@@ -23,10 +24,6 @@ resource "kubernetes_service_account_v1" "alb_controller" {
       "eks.amazonaws.com/role-arn" = module.alb_controller_irsa.iam_role_arn
     }
   }
-  depends_on = [
-    module.eks_seoul,
-    aws_eks_access_policy_association.terraform_admin_cluster
-  ]
 }
 
 resource "helm_release" "aws_load_balancer_controller" {
@@ -37,7 +34,7 @@ resource "helm_release" "aws_load_balancer_controller" {
 
   set {
     name  = "clusterName"
-    value = module.eks_seoul.cluster_name
+    value = var.eks_seoul_cluster_name
   }
 
   set {
@@ -47,7 +44,7 @@ resource "helm_release" "aws_load_balancer_controller" {
 
   set {
     name  = "vpcId"
-    value = module.kor_vpc.vpc_id
+    value = var.kor_vpc_id
   }
 
   set {
@@ -61,12 +58,9 @@ resource "helm_release" "aws_load_balancer_controller" {
   }
 
   depends_on = [
-    aws_eks_access_policy_association.terraform_admin_cluster,
-    module.eks_seoul,
     kubernetes_service_account_v1.alb_controller,
     module.alb_controller_irsa
   ]
 
   timeout = 600
 }
-

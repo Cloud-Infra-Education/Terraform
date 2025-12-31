@@ -37,6 +37,21 @@ variable "ecr_replication_repo_prefixes" {
 }
 
 # =======================
+# ADDED: DB Cluster & DB Security-Group (Seoul + Oregon)
+# =======================
+
+variable "db_username" {
+  description = "DB master username"
+  type = string
+}
+
+variable "db_password" {
+  description = "DB master password"
+  type      = string
+  sensitive = true
+}
+
+# =======================
 # ADDED: ArgoCD install & Application settings (Seoul + Oregon)
 # =======================
 variable "argocd_namespace" {

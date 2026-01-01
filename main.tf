@@ -21,12 +21,12 @@ module "eks" {
   }
 
   kor_vpc_id                 = module.network.kor_vpc_id
-  kor_private_eks_subnet_ids  = module.network.kor_private_eks_subnet_ids
+  kor_private_eks_subnet_ids = module.network.kor_private_eks_subnet_ids
   usa_vpc_id                 = module.network.usa_vpc_id
   usa_private_eks_subnet_ids = module.network.usa_private_eks_subnet_ids
 
-  eks_public_access_cidrs  = var.eks_public_access_cidrs
-  eks_admin_principal_arn  = var.eks_admin_principal_arn
+  eks_public_access_cidrs = var.eks_public_access_cidrs
+  eks_admin_principal_arn = var.eks_admin_principal_arn
 }
 
 module "ecr" {
@@ -44,38 +44,38 @@ module "addons" {
   source = "./modules/addons"
 
   providers = {
-    aws.seoul          = aws.seoul
-    aws.oregon         = aws.oregon
-    kubernetes         = kubernetes
-    kubernetes.oregon  = kubernetes.oregon
-    helm               = helm
-    helm.oregon        = helm.oregon
+    aws.seoul         = aws.seoul
+    aws.oregon        = aws.oregon
+    kubernetes        = kubernetes
+    kubernetes.oregon = kubernetes.oregon
+    helm              = helm
+    helm.oregon       = helm.oregon
   }
 
   kor_vpc_id = module.network.kor_vpc_id
   usa_vpc_id = module.network.usa_vpc_id
 
-  eks_seoul_cluster_name      = module.eks.seoul_cluster_name
-  eks_seoul_oidc_provider_arn = module.eks.seoul_oidc_provider_arn
+  eks_seoul_cluster_name       = module.eks.seoul_cluster_name
+  eks_seoul_oidc_provider_arn  = module.eks.seoul_oidc_provider_arn
   eks_oregon_cluster_name      = module.eks.oregon_cluster_name
   eks_oregon_oidc_provider_arn = module.eks.oregon_oidc_provider_arn
-  
+
   depends_on = [module.eks]
 }
 
 module "argocd" {
   source = "./modules/argocd"
-  
+
   providers = {
-    helm               = helm
-    helm.oregon        = helm.oregon
-    kubernetes         = kubernetes
-    kubernetes.oregon  = kubernetes.oregon
+    helm              = helm
+    helm.oregon       = helm.oregon
+    kubernetes        = kubernetes
+    kubernetes.oregon = kubernetes.oregon
   }
-  
-  argocd_namespace = var.argocd_namespace
+
+  argocd_namespace     = var.argocd_namespace
   argocd_chart_version = var.argocd_chart_version
-  
+
   argocd_app_name                  = var.argocd_app_name
   argocd_app_repo_url              = var.argocd_app_repo_url
   argocd_app_path                  = var.argocd_app_path
@@ -83,3 +83,18 @@ module "argocd" {
   argocd_app_destination_namespace = var.argocd_app_destination_namespace
   argocd_app_enabled               = var.argocd_app_enabled
 }
+
+module "ga" {
+  count = var.ga_enabled ? 1 : 0
+  source = "./modules/ga"
+
+  providers = {
+    aws        = aws.oregon
+    aws.seoul  = aws.seoul
+    aws.oregon = aws.oregon
+  }
+
+  ga_name              = var.ga_name
+  alb_lookup_tag_value = var.alb_lookup_tag_value
+}
+

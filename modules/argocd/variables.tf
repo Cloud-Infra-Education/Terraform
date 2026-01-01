@@ -27,6 +27,6 @@ variable "argocd_app_destination_namespace" {
   type = string
 }
 variable "argocd_app_enabled" {
-  type = bool
+  type    = bool
   default = false
 }

@@ -1,25 +1,36 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# 1) ArgoCD
+# GA
+#terraform destroy -target=module.ga[0].aws_globalaccelerator_endpoint_group.seoul_http
+#terraform destroy -target=module.ga[0].aws_globalaccelerator_endpoint_group.seoul
+#terraform destroy -target=module.ga[0].aws_globalaccelerator_endpoint_group.oregon_http
+#terraform destroy -target=module.ga[0].aws_globalaccelerator_endpoint_group.oregon
+#terraform destroy -target=module.ga[0].aws_globalaccelerator_listener.http -auto-approve
+#terraform destroy -target=module.ga[0].aws_globalaccelerator_listener.this -auto-approve
+#terraform destroy -target=module.ga[0].aws_globalaccelerator_accelerator.this -auto-approve
+terraform destroy -target=module.ga[0] -auto-approve
+
+
+# ArgoCD
 terraform destroy -target=module.argocd.kubernetes_manifest.argocd_app_seoul[0] -auto-approve
 terraform destroy -target=module.argocd.kubernetes_manifest.argocd_app_oregon[0] -auto-approve
 terraform destroy -target=module.argocd.helm_release.argocd_seoul -auto-approve
 terraform destroy -target=module.argocd.helm_release.argocd_oregon -auto-approve
 
-# 2) K8s/Helm addons (AWS Load Balancer Controller)
+# K8s/Helm addons (AWS Load Balancer Controller)
 terraform destroy -target=module.addons.helm_release.aws_load_balancer_controller -auto-approve
 terraform destroy -target=module.addons.kubernetes_service_account_v1.alb_controller -auto-approve
 terraform destroy -target=module.addons.helm_release.aws_load_balancer_controller_oregon -auto-approve
 terraform destroy -target=module.addons.kubernetes_service_account_v1.alb_controller_oregon -auto-approve
 
-# 3) IRSA roles
+# IRSA roles
 terraform destroy -target=module.addons.module.alb_controller_irsa -auto-approve
 terraform destroy -target=module.addons.module.alb_controller_irsa_oregon -auto-approve
 
-# 4) EKS
+# EKS
 terraform destroy -target=module.eks.module.eks_seoul -auto-approve
 terraform destroy -target=module.eks.module.eks_oregon -auto-approve
 
-# 5) Everything
+# Everything
 terraform destroy -auto-approve

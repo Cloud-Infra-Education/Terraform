@@ -24,7 +24,6 @@ terraform {
   }
 }
 
-# Default provider (Seoul). Keep for resources/modules that don't specify alias.
 provider "aws" {
   region = "ap-northeast-2"
 }
@@ -39,9 +38,9 @@ provider "aws" {
   alias  = "oregon"
 }
 
-# -----------------------
+# ====================
 # Kubernetes providers
-# -----------------------
+# ====================
 
 # Seoul
 provider "kubernetes" {
@@ -76,9 +75,9 @@ provider "kubernetes" {
   }
 }
 
-# -----------------------
+# ==============
 # Helm providers
-# -----------------------
+# ==============
 
 # Seoul Helm
 provider "helm" {

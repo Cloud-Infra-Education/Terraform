@@ -36,17 +36,17 @@ variable "ecr_replication_repo_prefixes" {
   ]
 }
 
-# =======================
-# ADDED: ArgoCD install & Application settings (Seoul + Oregon)
-# =======================
+# =====================
+# argocd 모듈 관련 변수
+# =====================
 variable "argocd_namespace" {
-  type        = string
-  default     = "argocd"
+  type    = string
+  default = "argocd"
 }
 
 variable "argocd_chart_version" {
-  type        = string
-  default     = ""
+  type    = string
+  default = ""
 }
 
 variable "argocd_app_name" {
@@ -62,18 +62,18 @@ variable "argocd_app_repo_url" { ############ 나중에 수정
 }
 
 variable "argocd_app_path" {
-  type        = string
-  default     = "base"
+  type    = string
+  default = "base"
 }
 
 variable "argocd_app_target_revision" {
-  type        = string
-  default     = "main"
+  type    = string
+  default = "main"
 }
 
-variable "argocd_app_destination_namespace" { 
-  type        = string
-  default     = "formation-lap"
+variable "argocd_app_destination_namespace" {
+  type    = string
+  default = "formation-lap"
 }
 
 variable "argocd_app_enabled" {
@@ -82,3 +82,20 @@ variable "argocd_app_enabled" {
   default     = false
 }
 
+#==================
+# ga 모듈 관련 변수
+#==================
+variable "ga_name" {
+  type    = string
+  default = "formation-lap-ga"
+}
+
+variable "alb_lookup_tag_value" {
+  type    = string
+  default = "formation-lap/msa-ingress"
+}
+
+variable "ga_enabled" {
+  type    = bool
+  default = false
+}

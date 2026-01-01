@@ -32,9 +32,9 @@ variable "alb_lookup_tag_value" {
   type        = string
 }
 
-# ==================
-# Listener : 443 포트
-# ==================
+# ======================
+# GA Listener : 443 포트
+# ======================
 variable "listener_protocol" {
   description = "GA listener protocol. For ALB endpoints, TCP is the minimal option."
   type        = string
@@ -98,9 +98,9 @@ variable "oregon_weight" {
   default     = 128
 }
 
-# ================== 
-# Listener : 80 포트 
-# ================== 
+# =====================
+# GA Listener : 80 포트 
+# =====================
 variable "http_listener_port" {
   type    = number
   default = 80
@@ -131,3 +131,14 @@ variable "http_health_check_port" {
   default = 80
 }
 
+# =========================
+# Route53 도메인 & A 레코드
+# =========================
+variable "domain_name" {
+  type = string
+}
+
+variable "api_subdomain" {
+  type = string
+  default = "api"
+}

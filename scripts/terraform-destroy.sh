@@ -2,15 +2,7 @@
 set -euo pipefail
 
 # GA
-#terraform destroy -target=module.ga[0].aws_globalaccelerator_endpoint_group.seoul_http
-#terraform destroy -target=module.ga[0].aws_globalaccelerator_endpoint_group.seoul
-#terraform destroy -target=module.ga[0].aws_globalaccelerator_endpoint_group.oregon_http
-#terraform destroy -target=module.ga[0].aws_globalaccelerator_endpoint_group.oregon
-#terraform destroy -target=module.ga[0].aws_globalaccelerator_listener.http -auto-approve
-#terraform destroy -target=module.ga[0].aws_globalaccelerator_listener.this -auto-approve
-#terraform destroy -target=module.ga[0].aws_globalaccelerator_accelerator.this -auto-approve
-terraform destroy -target=module.ga[0] -auto-approve
-
+terraform destroy -target=module.domain[0] -auto-approve
 
 # ArgoCD
 terraform destroy -target=module.argocd.kubernetes_manifest.argocd_app_seoul[0] -auto-approve

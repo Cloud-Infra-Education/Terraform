@@ -41,7 +41,6 @@ provider "aws" {
 # ====================
 # Kubernetes providers
 # ====================
-
 # Seoul
 provider "kubernetes" {
   host                   = module.eks.seoul_cluster_endpoint
@@ -78,7 +77,6 @@ provider "kubernetes" {
 # ==============
 # Helm providers
 # ==============
-
 # Seoul Helm
 provider "helm" {
   kubernetes {

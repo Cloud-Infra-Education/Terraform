@@ -82,9 +82,9 @@ variable "argocd_app_enabled" {
   default     = false
 }
 
-#==================
-# ga 모듈 관련 변수
-#==================
+# =================
+# ga 관련 변수
+# =================
 variable "ga_name" {
   type    = string
   default = "formation-lap-ga"
@@ -99,3 +99,17 @@ variable "ga_enabled" {
   type    = bool
   default = false
 }
+
+# =================
+# Route53 관련 변수
+# =================
+variable "domain_name" {
+  type        = string
+}
+
+variable "api_subdomain" {
+  type        = string
+  default     = "api"
+}
+
+

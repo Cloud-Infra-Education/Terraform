@@ -1,4 +1,3 @@
-# Root module: orchestrates per-domain modules.
 module "network" {
   source = "./modules/network"
 
@@ -84,9 +83,9 @@ module "argocd" {
   argocd_app_enabled               = var.argocd_app_enabled
 }
 
-module "ga" {
+module "domain" {
   count = var.ga_enabled ? 1 : 0
-  source = "./modules/ga"
+  source = "./modules/domain"
 
   providers = {
     aws        = aws.oregon
@@ -96,5 +95,6 @@ module "ga" {
 
   ga_name              = var.ga_name
   alb_lookup_tag_value = var.alb_lookup_tag_value
+  domain_name          = var.domain_name
 }
 

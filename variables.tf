@@ -36,6 +36,14 @@ variable "ecr_replication_repo_prefixes" {
   ]
 }
 
+variable "onprem_public_ip" {
+  type = string
+}
+
+variable "onprem_private_cidr" {
+  type = string
+}
+
 # =====================
 # argocd 모듈 관련 변수
 # =====================

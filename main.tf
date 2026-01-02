@@ -9,6 +9,8 @@ module "network" {
   key_name_kor = var.key_name_kor
   key_name_usa = var.key_name_usa
   admin_cidr   = var.admin_cidr
+  onprem_public_ip = var.onprem_public_ip
+  onprem_private_cidr = var.onprem_private_cidr
 }
 
 module "eks" {

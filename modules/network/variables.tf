@@ -9,6 +9,13 @@ variable "key_name_usa" {
 }
 
 variable "admin_cidr" {
-  description = "CIDR block allowed to access bastion/management endpoints"
-  type        = string
+  type = string
+}
+
+variable "onprem_public_ip" {
+  type = string
+}
+
+variable "onprem_private_cidr" {
+  type = string
 }

@@ -6,7 +6,8 @@ module "eks_seoul" {
     aws = aws.seoul
   }
 
-  cluster_name    = "formation-lap-seoul"
+#  cluster_name    = "formation-lap-seoul"
+  cluster_name    = "chan-formation-lap-seoul"
   cluster_version = "1.34"
 
   vpc_id     = var.kor_vpc_id
@@ -36,7 +37,8 @@ module "eks_oregon" {
     aws = aws.oregon
   }
 
-  cluster_name    = "formation-lap-oregon"
+#  cluster_name    = "formation-lap-oregon"
+  cluster_name    = "chan-formation-lap-oregon"
   cluster_version = "1.34"
 
   vpc_id     = var.usa_vpc_id

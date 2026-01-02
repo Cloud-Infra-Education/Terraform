@@ -13,6 +13,19 @@ output "private_eks_subnet_ids" {
     if startswith(try(s.tags["Name"], ""), "PrivateSubnet-EKS-")
   ]
 }
-#--------------------------------------
-#DB Subnet 구성할 때 똑같이 하시오.....
-#--------------------------------------
+output "private_route_table_ids" {
+  value = [aws_route_table.private.id]
+}
+output "public_route_table_ids" {
+  value = [aws_route_table.public.id]
+}
+
+# =======================================
+# DB Subnet 구성할 때 똑같이 하시오.....
+# =======================================
+
+
+
+
+# =============
+# VPN 구성 관련

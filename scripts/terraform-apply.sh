@@ -9,4 +9,4 @@ terraform apply -var="argocd_app_enabled=true" -auto-approve
 
 # 3) Domain 구성(Route53, GA, CloudFront)
 sleep 1 
-terraform apply -var="argocd_app_enabled=true" -var="ga_enabled=true" -auto-approve
+terraform apply -var="argocd_app_enabled=true" -var="domain_set_enabled=true" -auto-approve

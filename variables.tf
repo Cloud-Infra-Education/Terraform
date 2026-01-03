@@ -1,3 +1,8 @@
+variable "our_team" {
+  type = string
+  default = "formation-lap"
+}
+
 variable "key_name_kor" {
   description = "EC2 Key Pair in Seoul Region"
   type        = string
@@ -115,7 +120,7 @@ variable "alb_lookup_tag_value" {
   default = "formation-lap/msa-ingress"
 }
 
-variable "ga_enabled" {
+variable "domain_set_enabled" {
   type    = bool
   default = false
 }
@@ -140,3 +145,5 @@ variable "db_password" {
   type      = string
   sensitive = true
 }
+
+

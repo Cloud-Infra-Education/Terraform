@@ -92,7 +92,7 @@ module "s3" {
 }
 
 module "domain" {
-  count = var.ga_enabled ? 1 : 0
+  count = var.domain_set_enabled ? 1 : 0
   source = "./modules/domain"
 
   providers = {
@@ -105,6 +105,7 @@ module "domain" {
   ga_name              = var.ga_name
   alb_lookup_tag_value = var.alb_lookup_tag_value
   domain_name          = var.domain_name
+
   origin_bucket_name   = module.s3.origin_bucket_name
 }
 
@@ -112,15 +113,17 @@ module "database" {
   source = "./modules/database"
   
   providers = {
-    aws.seoul = aws.seoul
+    aws.seoul  = aws.seoul
     aws.oregon = aws.oregon
   }
-  kor_vpc_id  = module.network.kor_vpc_id
-  usa_vpc_id  = module.network.usa_vpc_id
-  db_username = var.db_username
-  db_password = var.db_password
+  kor_vpc_id                = module.network.kor_vpc_id
+  usa_vpc_id                = module.network.usa_vpc_id
   kor_private_db_subnet_ids = module.network.kor_private_db_subnet_ids
   usa_private_db_subnet_ids = module.network.usa_private_db_subnet_ids
   seoul_eks_workers_sg_id   = module.eks.seoul_eks_workers_sg_id
   oregon_eks_workers_sg_id  = module.eks.oregon_eks_workers_sg_id
+  
+  db_username = var.db_username
+  db_password = var.db_password
+  our_team    = var.our_team
 }

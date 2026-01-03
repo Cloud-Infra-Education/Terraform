@@ -1,23 +1,11 @@
 data "aws_route53_zone" "public" {
-  name         = "${var.domain_name}."
+  name = var.domain_name
   private_zone = false
-}
-
-resource "aws_route53_record" "api_a" {
-  zone_id = data.aws_route53_zone.public.zone_id
-  name    = "${var.api_subdomain}.${var.domain_name}"
-  type    = "A"
-
-  alias {
-    name                   = aws_globalaccelerator_accelerator.this.dns_name
-    zone_id                = aws_globalaccelerator_accelerator.this.hosted_zone_id
-    evaluate_target_health = false
-  }
 }
 
 resource "aws_route53_record" "www_a" {
   zone_id = data.aws_route53_zone.public.zone_id
-  name    = local.fqdn
+  name    = local.www_fqdn
   type    = "A"
 
   alias {
@@ -43,3 +31,15 @@ resource "aws_route53_record" "www_cert_validation" {
   records  = [each.value.value]
 }
 
+# ============================================
+resource "aws_route53_record" "api_a" {
+  zone_id = data.aws_route53_zone.public.zone_id
+  name    = "${var.api_subdomain}.${var.domain_name}"
+  type    = "A"
+
+  alias {
+    name                   = aws_globalaccelerator_accelerator.this.dns_name
+    zone_id                = aws_globalaccelerator_accelerator.this.hosted_zone_id
+    evaluate_target_health = false
+  }
+}

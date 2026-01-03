@@ -1,15 +1,13 @@
 variable "kor_vpc_id" {
   type = string
 }
-
-variable "kor_private_eks_subnet_ids" {
-  type = list(string)
-}
-
 variable "usa_vpc_id" {
   type = string
 }
 
+variable "kor_private_eks_subnet_ids" {
+  type = list(string)
+}
 variable "usa_private_eks_subnet_ids" {
   type = list(string)
 }

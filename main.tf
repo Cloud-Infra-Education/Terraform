@@ -6,10 +6,10 @@ module "network" {
     aws.oregon = aws.oregon
   }
 
-  key_name_kor        = var.key_name_kor
-  key_name_usa        = var.key_name_usa
-  admin_cidr          = var.admin_cidr
-  onprem_public_ip    = var.onprem_public_ip
+  key_name_kor = var.key_name_kor
+  key_name_usa = var.key_name_usa
+  admin_cidr   = var.admin_cidr
+  onprem_public_ip = var.onprem_public_ip
   onprem_private_cidr = var.onprem_private_cidr
 }
 
@@ -94,7 +94,7 @@ module "s3" {
 }
 
 module "domain" {
-  count  = var.ga_enabled ? 1 : 0
+  count = var.ga_enabled ? 1 : 0
   source = "./modules/domain"
 
   providers = {
@@ -108,4 +108,21 @@ module "domain" {
   alb_lookup_tag_value = var.alb_lookup_tag_value
   domain_name          = var.domain_name
   origin_bucket_name   = module.s3.origin_bucket_name
+}
+
+module "database" {
+  source = "./modules/database"
+  
+  providers = {
+    aws.seoul = aws.seoul
+    aws.oregon = aws.oregon
+  }
+  kor_vpc_id  = module.network.kor_vpc_id
+  usa_vpc_id  = module.network.usa_vpc_id
+  db_username = var.db_username
+  db_password = var.db_password
+  kor_private_db_subnet_ids = module.network.kor_private_db_subnet_ids
+  usa_private_db_subnet_ids = module.network.usa_private_db_subnet_ids
+  seoul_eks_workers_sg_id   = module.eks.seoul_eks_workers_sg_id
+  oregon_eks_workers_sg_id  = module.eks.oregon_eks_workers_sg_id
 }

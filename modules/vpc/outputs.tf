@@ -13,19 +13,16 @@ output "private_eks_subnet_ids" {
     if startswith(try(s.tags["Name"], ""), "PrivateSubnet-EKS-")
   ]
 }
+output "private_db_subnet_ids" {
+  value = [
+    for s in aws_subnet.private : s.id
+    if startswith(try(s.tags["Name"], ""), "PrivateSubnet-DB-")
+  ]
+}
+
 output "private_route_table_ids" {
   value = [aws_route_table.private.id]
 }
 output "public_route_table_ids" {
   value = [aws_route_table.public.id]
 }
-
-# =======================================
-# DB Subnet 구성할 때 똑같이 하시오.....
-# =======================================
-
-
-
-
-# =============
-# VPN 구성 관련

@@ -127,8 +127,16 @@ variable "domain_name" {
   type        = string
 }
 
-#variable "api_subdomain" {
-#  type        = string
-#  default     = "api"
-#}
+# ================
+# DB 클러스터 계정
+# ================
+variable "db_username" {
+  description = "DB master username"
+  type = string
+}
 
+variable "db_password" {
+  description = "DB master password"
+  type      = string
+  sensitive = true
+}

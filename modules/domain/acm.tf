@@ -1,10 +1,16 @@
+locals {
+  www_fqdn = "${var.www_subdomain}.${var.domain_name}"
+  s3_rest_domain    = "${var.origin_bucket_name}.s3.${var.origin_bucket_region}.amazonaws.com"
+  origin_id         = "team-formation-lap-origin-s3"
+}
+
+# =========== CloudFront ACM ===========
 resource "aws_acm_certificate" "www" {
   provider          = aws.acm
-  domain_name       = local.fqdn
+  domain_name       = local.www_fqdn
   validation_method = "DNS"
   tags              = var.tags
 }
-
 resource "aws_acm_certificate_validation" "www" {
   provider                = aws.acm
   certificate_arn         = aws_acm_certificate.www.arn

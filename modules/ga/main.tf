@@ -18,8 +18,6 @@ resource "aws_globalaccelerator_accelerator" "this" {
   name            = var.ga_name
   enabled         = var.enabled
   ip_address_type = var.ip_address_type
-
-  tags = var.tags
 }
 
 # =====================================

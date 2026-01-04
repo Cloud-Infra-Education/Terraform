@@ -91,6 +91,20 @@ module "s3" {
   origin_bucket_name = var.origin_bucket_name
 }
 
+module "acm" {
+  source = "./modules/acm"
+  
+  providers = {
+    aws.acm    = aws.acm
+    aws.seoul  = aws.seoul
+    aws.oregon = aws.oregon
+  }
+
+  our_team = var.our_team
+  domain_name = var.domain_name
+  origin_bucket_name   = module.s3.origin_bucket_name
+}
+
 module "domain" {
   count = var.domain_set_enabled ? 1 : 0
   source = "./modules/domain"
@@ -100,16 +114,38 @@ module "domain" {
     aws.acm    = aws.acm
     aws.seoul  = aws.seoul
     aws.oregon = aws.oregon
+    kubernetes        = kubernetes
+    kubernetes.oregon = kubernetes.oregon
+  }
+
+  domain_name          = var.domain_name
+  our_team             = var.our_team
+
+  origin_bucket_name   = module.s3.origin_bucket_name
+  acm_arn_api_seoul    = module.acm.acm_arn_api_seoul
+  acm_arn_api_oregon   = module.acm.acm_arn_api_oregon
+  acm_arn_www          = module.acm.acm_arn_www
+  dvo_api_seoul        = module.acm.dvo_api_seoul
+  dvo_api_oregon       = module.acm.dvo_api_oregon
+  dvo_www              = module.acm.dvo_www
+}
+
+module "ga" {
+  count = var.ga_set_enabled ? 1 : 0
+  source = "./modules/ga"
+  
+  providers = {
+    aws.seoul  = aws.seoul
+    aws.oregon = aws.oregon
   }
 
   ga_name              = var.ga_name
   alb_lookup_tag_value = var.alb_lookup_tag_value
   domain_name          = var.domain_name
-
-  origin_bucket_name   = module.s3.origin_bucket_name
 }
 
 module "database" {
+  count = var.db_cluster_enabled ? 1 : 0
   source = "./modules/database"
   
   providers = {

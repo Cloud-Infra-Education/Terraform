@@ -163,3 +163,19 @@ module "database" {
   db_password = var.db_password
   our_team    = var.our_team
 }
+
+module "dms" {
+  source = "./modules/dms"
+
+  source_db_endpoint = module.database.kor_db_cluster_endpoint
+  target_db_endpoint = module.database.usa_db_cluster_endpoint
+
+  source_db_sg_id = module.database.kor_db_security_group_id
+  target_db_sg_id = module.database.usa_db_security_group_id
+
+  db_port = module.database.db_port
+
+  vpc_id     = module.network.kor_vpc_id
+  subnet_ids = module.network.kor_private_db_subnet_ids
+}
+

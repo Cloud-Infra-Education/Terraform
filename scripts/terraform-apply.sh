@@ -10,7 +10,7 @@ terraform apply -auto-approve
 sleep 1
 terraform apply -var="argocd_app_enabled=true" -auto-approve
 
-# 3) CloudFront & ACM ISSUE 작업 & ingress 적용
+# 3) Domain - CloudFront & ACM ISSUE 작업 & ingress 적용
 sleep 1
 terraform apply -var="argocd_app_enabled=true" -var="domain_set_enabled=true" -auto-approve
 

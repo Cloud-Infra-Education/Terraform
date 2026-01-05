@@ -159,4 +159,11 @@ variable "db_password" {
   sensitive = true
 }
 
+variable "source_db_name" {
+  type = string
+}
+
+variable "target_db_name" {
+  type = string
+}
 

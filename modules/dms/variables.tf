@@ -27,3 +27,31 @@ variable "subnet_ids" {
   type = list(string)
 }
 
+variable "db_username" {
+  type = string
+}
+
+variable "db_password" {
+  type      = string
+  sensitive = true
+}
+
+variable "source_db_name" {
+  description = "Source database name for DMS replication"
+  type        = string
+}
+
+variable "target_db_name" {
+  description = "Target database name for DMS replication"
+  type        = string
+}
+
+variable "db_kor_cluster_id" {
+  type        = string
+  description = "KOR Aurora cluster ID for DMS dependency"
+}
+
+variable "db_usa_cluster_id" {
+  type        = string
+  description = "USA Aurora cluster ID for DMS dependency"
+}

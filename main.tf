@@ -159,6 +159,7 @@ module "database" {
   seoul_eks_workers_sg_id   = module.eks.seoul_eks_workers_sg_id
   oregon_eks_workers_sg_id  = module.eks.oregon_eks_workers_sg_id
   
+
   db_username = var.db_username
   db_password = var.db_password
   our_team    = var.our_team
@@ -166,6 +167,11 @@ module "database" {
 
 module "dms" {
   source = "./modules/dms"
+
+  db_username = var.db_username
+  db_password = var.db_password
+  db_kor_cluster_id = module.database.kor_cluster_id
+  db_usa_cluster_id = module.database.usa_cluster_id
 
   source_db_endpoint = module.database.kor_db_cluster_endpoint
   target_db_endpoint = module.database.usa_db_cluster_endpoint
@@ -177,5 +183,8 @@ module "dms" {
 
   vpc_id     = module.network.kor_vpc_id
   subnet_ids = module.network.kor_private_db_subnet_ids
+
+  source_db_name   = "kor_db"   
+  target_db_name   = "usa_db"
 }
 

@@ -18,3 +18,10 @@ output "usa_db_security_group_id" {
   value = aws_security_group.db_usa.id
 }
 
+output "kor_cluster_id" {
+  value = aws_rds_cluster.kor.id
+}
+
+output "usa_cluster_id" {
+  value = aws_rds_cluster.usa.id
+}

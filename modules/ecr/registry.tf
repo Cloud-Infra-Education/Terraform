@@ -1,18 +1,18 @@
 resource "aws_ecr_repository" "user" {
   provider             = aws.seoul
-  name                 = "user-service"
+  name                 = "user1-service"
   image_tag_mutability = "IMMUTABLE"
   force_delete         = true 
 }
 resource "aws_ecr_repository" "order" {
   provider             = aws.seoul
-  name                 = "order-service"
+  name                 = "order1-service"
   image_tag_mutability = "IMMUTABLE"
   force_delete         = true 
 }
 resource "aws_ecr_repository" "product" {
   provider             = aws.seoul
-  name                 = "product-service"
+  name                 = "product1-service"
   image_tag_mutability = "IMMUTABLE"
   force_delete         = true 
 }
@@ -22,19 +22,19 @@ resource "aws_ecr_repository" "product" {
 
 resource "aws_ecr_repository" "user_oregon" {
   provider             = aws.oregon
-  name                 = "user-service"
+  name                 = "user1-service"
   image_tag_mutability = "IMMUTABLE"
   force_delete         = true 
 }
 resource "aws_ecr_repository" "order_oregon" {
   provider             = aws.oregon
-  name                 = "order-service"
+  name                 = "order1-service"
   image_tag_mutability = "IMMUTABLE"
   force_delete         = true 
 }
 resource "aws_ecr_repository" "product_oregon" {
   provider             = aws.oregon
-  name                 = "product-service"
+  name                 = "product1-service"
   image_tag_mutability = "IMMUTABLE"
   force_delete         = true 
 }

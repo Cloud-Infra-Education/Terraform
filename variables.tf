@@ -31,6 +31,27 @@ variable "eks_admin_principal_arn" {
   type        = string
 }
 
+# ======= enabled 스위치 모음=======
+variable "argocd_app_enabled" {
+  description = "EKS에 ArgoCD 설치까지 마치고 앱을 만들기로..."
+  type        = bool
+  default     = false
+}
+variable "ga_set_enabled" {
+  type    = bool
+  default = false
+}
+variable "domain_set_enabled" {
+  description = "ACM을 만들고 도메인을 구성한다."
+  type        = bool
+  default     = false
+}
+variable "db_cluster_enabled" {
+  description = "DB 스위치"
+  type        = bool
+  default     = false
+}
+
 # ==========
 # ECR 미러링
 # ==========
@@ -101,11 +122,6 @@ variable "argocd_app_destination_namespace" {
   default = "formation-lap"
 }
 
-variable "argocd_app_enabled" {
-  description = "EKS에 ArgoCD 설치까지 마치고 앱을 만들기로..."
-  type        = bool
-  default     = false
-}
 
 # =================
 # ga 관련 변수
@@ -120,10 +136,6 @@ variable "alb_lookup_tag_value" {
   default = "formation-lap/msa-ingress"
 }
 
-variable "domain_set_enabled" {
-  type    = bool
-  default = false
-}
 
 # =================
 # Route53 관련 변수
@@ -131,6 +143,7 @@ variable "domain_set_enabled" {
 variable "domain_name" {
   type        = string
 }
+
 
 # ================
 # DB 클러스터 계정

@@ -17,8 +17,10 @@ module "eks" {
   source = "./modules/eks"
 
   providers = {
-    aws.seoul  = aws.seoul
-    aws.oregon = aws.oregon
+    aws.seoul   = aws.seoul
+    aws.oregon  = aws.oregon
+    helm        = helm
+    helm.oregon = helm.oregon
   }
 
   kor_vpc_id                 = module.network.kor_vpc_id

@@ -1,0 +1,21 @@
+name: "Trivy Security Scan"
+
+on:
+  push:
+    branches: [ "main" ] 
+  pull_request:
+    branches: [ "main" ] 
+
+jobs:
+  trivy-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Trivy for Terraform
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config' 
+          severity: 'CRITICAL,HIGH' 
+          exit-code: '1' 

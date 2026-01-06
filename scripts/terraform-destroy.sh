@@ -2,6 +2,9 @@
 set -euo pipefail
 
 # GA
+terraform destroy -target=module.ga[0] -auto-approve
+
+# Domain
 terraform destroy -target=module.domain[0] -auto-approve
 
 # ArgoCD

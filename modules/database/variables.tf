@@ -29,3 +29,44 @@ variable "seoul_eks_workers_sg_id" {
 variable "oregon_eks_workers_sg_id" {
   type = string
 }
+
+variable "our_team" {
+  type = string
+}
+
+variable "db_port" {
+  type        = number
+  default     = 3306
+}
+
+variable "proxy_require_tls" {
+  type        = bool
+  default     = false
+}
+
+variable "proxy_idle_client_timeout" {
+  description = "Seconds"
+  type        = number
+  default     = 1800
+}
+
+variable "proxy_debug_logging" {
+  type        = bool
+  default     = false
+}
+
+variable "proxy_max_connections_percent" {
+  type        = number
+  default     = 100
+}
+
+variable "proxy_max_idle_connections_percent" {
+  type        = number
+  default     = 50
+}
+
+variable "proxy_connection_borrow_timeout" {
+  description = "Seconds"
+  type        = number
+  default     = 120
+}

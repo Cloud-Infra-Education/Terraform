@@ -93,8 +93,22 @@ module "s3" {
   origin_bucket_name = var.origin_bucket_name
 }
 
+module "acm" {
+  source = "./modules/acm"
+  
+  providers = {
+    aws.acm    = aws.acm
+    aws.seoul  = aws.seoul
+    aws.oregon = aws.oregon
+  }
+
+  our_team = var.our_team
+  domain_name = var.domain_name
+  origin_bucket_name   = module.s3.origin_bucket_name
+}
+
 module "domain" {
-  count = var.ga_enabled ? 1 : 0
+  count = var.domain_set_enabled ? 1 : 0
   source = "./modules/domain"
 
   providers = {
@@ -102,27 +116,52 @@ module "domain" {
     aws.acm    = aws.acm
     aws.seoul  = aws.seoul
     aws.oregon = aws.oregon
+    kubernetes        = kubernetes
+    kubernetes.oregon = kubernetes.oregon
+  }
+
+  domain_name          = var.domain_name
+  our_team             = var.our_team
+
+  origin_bucket_name   = module.s3.origin_bucket_name
+  acm_arn_api_seoul    = module.acm.acm_arn_api_seoul
+  acm_arn_api_oregon   = module.acm.acm_arn_api_oregon
+  acm_arn_www          = module.acm.acm_arn_www
+  dvo_api_seoul        = module.acm.dvo_api_seoul
+  dvo_api_oregon       = module.acm.dvo_api_oregon
+  dvo_www              = module.acm.dvo_www
+}
+
+module "ga" {
+  count = var.ga_set_enabled ? 1 : 0
+  source = "./modules/ga"
+  
+  providers = {
+    aws.seoul  = aws.seoul
+    aws.oregon = aws.oregon
   }
 
   ga_name              = var.ga_name
   alb_lookup_tag_value = var.alb_lookup_tag_value
   domain_name          = var.domain_name
-  origin_bucket_name   = module.s3.origin_bucket_name
 }
 
 module "database" {
+#  count = var.db_cluster_enabled ? 1 : 0
   source = "./modules/database"
   
   providers = {
-    aws.seoul = aws.seoul
+    aws.seoul  = aws.seoul
     aws.oregon = aws.oregon
   }
-  kor_vpc_id  = module.network.kor_vpc_id
-  usa_vpc_id  = module.network.usa_vpc_id
-  db_username = var.db_username
-  db_password = var.db_password
+  kor_vpc_id                = module.network.kor_vpc_id
+  usa_vpc_id                = module.network.usa_vpc_id
   kor_private_db_subnet_ids = module.network.kor_private_db_subnet_ids
   usa_private_db_subnet_ids = module.network.usa_private_db_subnet_ids
   seoul_eks_workers_sg_id   = module.eks.seoul_eks_workers_sg_id
   oregon_eks_workers_sg_id  = module.eks.oregon_eks_workers_sg_id
+  
+  db_username = var.db_username
+  db_password = var.db_password
+  our_team    = var.our_team
 }

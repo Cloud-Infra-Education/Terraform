@@ -1,3 +1,8 @@
+variable "our_team" {
+  type = string
+  default = "formation-lap"
+}
+
 variable "key_name_kor" {
   description = "EC2 Key Pair in Seoul Region"
   type        = string
@@ -24,6 +29,27 @@ variable "eks_public_access_cidrs" {
 variable "eks_admin_principal_arn" {
   description = "EKS Access Entry 생성용"
   type        = string
+}
+
+# ======= enabled 스위치 모음=======
+variable "argocd_app_enabled" {
+  description = "EKS에 ArgoCD 설치까지 마치고 앱을 만들기로..."
+  type        = bool
+  default     = false
+}
+variable "ga_set_enabled" {
+  type    = bool
+  default = false
+}
+variable "domain_set_enabled" {
+  description = "ACM을 만들고 도메인을 구성한다."
+  type        = bool
+  default     = false
+}
+variable "db_cluster_enabled" {
+  description = "DB 스위치"
+  type        = bool
+  default     = false
 }
 
 # ==========
@@ -96,11 +122,6 @@ variable "argocd_app_destination_namespace" {
   default = "formation-lap"
 }
 
-variable "argocd_app_enabled" {
-  description = "EKS에 ArgoCD 설치까지 마치고 앱을 만들기로..."
-  type        = bool
-  default     = false
-}
 
 # =================
 # ga 관련 변수
@@ -115,10 +136,6 @@ variable "alb_lookup_tag_value" {
   default = "formation-lap/msa-ingress"
 }
 
-variable "ga_enabled" {
-  type    = bool
-  default = false
-}
 
 # =================
 # Route53 관련 변수
@@ -126,6 +143,7 @@ variable "ga_enabled" {
 variable "domain_name" {
   type        = string
 }
+
 
 # ================
 # DB 클러스터 계정
@@ -140,3 +158,5 @@ variable "db_password" {
   type      = string
   sensitive = true
 }
+
+

@@ -1,6 +1,13 @@
+locals {
+  www_fqdn = "${var.www_subdomain}.${var.domain_name}"
+  s3_rest_domain    = "${var.origin_bucket_name}.s3.${var.origin_bucket_region}.amazonaws.com"
+  origin_id         = "${var.our_team}-origin-s3"
+}
+
+
 # CloudFront OAC 설정
 resource "aws_cloudfront_origin_access_control" "this" {
-  name                              = "oac-${local.www_fqdn}"
+  name                              = "oac-for-cloudfront"
   description                       = "S3보안을 위한 CloudFront 접속용 OAC "
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
@@ -10,11 +17,9 @@ resource "aws_cloudfront_origin_access_control" "this" {
 resource "aws_cloudfront_distribution" "www" {
   enabled             = true
   is_ipv6_enabled     = true
-  comment             = "www distribution for ${local.www_fqdn}"
   default_root_object = var.default_root_object
   aliases             = [local.www_fqdn]
   price_class         = "PriceClass_All"
-  tags                = var.tags
 
   origin {
     domain_name = local.s3_rest_domain

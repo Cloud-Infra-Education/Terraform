@@ -14,9 +14,11 @@ terraform destroy -target=module.argocd.helm_release.argocd_seoul -auto-approve
 terraform destroy -target=module.argocd.helm_release.argocd_oregon -auto-approve
 
 # K8s/Helm addons (AWS Load Balancer Controller)
+terraform destroy -target=module.eks.helm_release.cluster_autoscaler_seoul -auto-approve
+terraform destroy -target=module.eks.helm_release.cluster_autoscaler_oregon -auto-approve
 terraform destroy -target=module.addons.helm_release.aws_load_balancer_controller -auto-approve
-terraform destroy -target=module.addons.kubernetes_service_account_v1.alb_controller -auto-approve
 terraform destroy -target=module.addons.helm_release.aws_load_balancer_controller_oregon -auto-approve
+terraform destroy -target=module.addons.kubernetes_service_account_v1.alb_controller -auto-approve
 terraform destroy -target=module.addons.kubernetes_service_account_v1.alb_controller_oregon -auto-approve
 
 # IRSA roles

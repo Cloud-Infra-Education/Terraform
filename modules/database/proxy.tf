@@ -2,7 +2,7 @@
 resource "aws_db_proxy" "kor" {
   provider               = aws.seoul
 
-  name                   = "${var.our_team}-kor-rds-proxy"
+  name                   = "${var.our_team}1-kor-rds-proxy"
   engine_family          = "MYSQL"
   role_arn               = aws_iam_role.kor_rds_proxy.arn
   vpc_subnet_ids         = var.kor_private_db_subnet_ids
@@ -45,7 +45,7 @@ resource "aws_db_proxy_target" "kor_cluster" {
 resource "aws_db_proxy" "usa" {
   provider               = aws.oregon
 
-  name                   = "${var.our_team}-usa-rds-proxy"
+  name                   = "${var.our_team}1-usa-rds-proxy"
   engine_family          = "MYSQL"
   role_arn               = aws_iam_role.usa_rds_proxy.arn
   vpc_subnet_ids         = var.usa_private_db_subnet_ids

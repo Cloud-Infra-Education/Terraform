@@ -55,3 +55,7 @@ variable "db_usa_cluster_id" {
   type        = string
   description = "USA Aurora cluster ID for DMS dependency"
 }
+
+variable "our_team" {
+  type = string
+}

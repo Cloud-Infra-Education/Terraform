@@ -166,6 +166,7 @@ module "database" {
 }
 
 module "dms" {
+  count = var.dms_enabled ? 1 : 0
   source = "./modules/dms"
 
   db_username = var.db_username
@@ -186,5 +187,7 @@ module "dms" {
 
   source_db_name   = "kor_db"   
   target_db_name   = "usa_db"
+  our_team = var.our_team
+
 }
 

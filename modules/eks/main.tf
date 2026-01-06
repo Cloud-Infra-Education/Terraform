@@ -16,6 +16,7 @@ module "eks_seoul" {
   cluster_endpoint_public_access       = true
   cluster_endpoint_public_access_cidrs = var.eks_public_access_cidrs
 
+  cluster_encryption_config = {}
 
   eks_managed_node_groups = {
     standard-workers = {
@@ -45,6 +46,8 @@ module "eks_oregon" {
   cluster_endpoint_private_access      = true
   cluster_endpoint_public_access       = true
   cluster_endpoint_public_access_cidrs = var.eks_public_access_cidrs
+
+  cluster_encryption_config = {}
 
   eks_managed_node_groups = {
     standard-workers = {

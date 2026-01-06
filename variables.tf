@@ -51,6 +51,11 @@ variable "db_cluster_enabled" {
   type        = bool
   default     = false
 }
+variable "dms_enabled" {
+  description = "DMS 스위치DB "
+  type        = bool
+  default     = false
+}
 
 # ==========
 # ECR 미러링

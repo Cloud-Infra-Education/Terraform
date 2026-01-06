@@ -5,7 +5,7 @@ resource "aws_dms_replication_subnet_group" "this" {
 }
 
 resource "aws_dms_replication_instance" "this" {
-  replication_instance_id        = "dms-repl"
+  replication_instance_id        = "${var.our_team}-dms-repl"
   replication_instance_class     = "dms.t3.medium"
   replication_subnet_group_id    = aws_dms_replication_subnet_group.this.id
   vpc_security_group_ids         = [aws_security_group.dms.id]
@@ -34,7 +34,7 @@ resource "aws_dms_endpoint" "target" {
 }
 
 resource "aws_dms_replication_task" "kor_to_usa_full_load" {
-  replication_task_id      = "kor-to-usa-full-load"
+  replication_task_id      = "${var.our_team}-kor-to-usa-full-load"
   replication_instance_arn = aws_dms_replication_instance.this.replication_instance_arn
   source_endpoint_arn      = aws_dms_endpoint.source.endpoint_arn
   target_endpoint_arn      = aws_dms_endpoint.target.endpoint_arn

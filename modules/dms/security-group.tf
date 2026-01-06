@@ -1,5 +1,5 @@
 resource "aws_security_group" "dms" {
-  name   = "dms-replication-sg"
+  name   = "${var.our_team}-dms-replication-sg"
   vpc_id = var.vpc_id
 }
 

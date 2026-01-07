@@ -47,6 +47,7 @@ provider "aws" {
 # ====================
 # Seoul
 provider "kubernetes" {
+  # alias 없음 -> Default: 서울
   host                   = module.eks.seoul_cluster_endpoint
   cluster_ca_certificate = base64decode(module.eks.seoul_cluster_certificate_authority_data)
 

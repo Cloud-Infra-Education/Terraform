@@ -1,5 +1,5 @@
 variable "our_team" {
-  type = string
+  type    = string
   default = "formation-lap"
 }
 
@@ -56,7 +56,7 @@ variable "db_cluster_enabled" {
 # ECR 미러링
 # ==========
 variable "ecr_replication_repo_prefixes" {
-  type        = list(string)
+  type = list(string)
   default = [
     "user-service",
     "order-service",
@@ -141,7 +141,7 @@ variable "alb_lookup_tag_value" {
 # Route53 관련 변수
 # =================
 variable "domain_name" {
-  type        = string
+  type = string
 }
 
 
@@ -150,13 +150,18 @@ variable "domain_name" {
 # ================
 variable "db_username" {
   description = "DB master username"
-  type = string
+  type        = string
 }
 
 variable "db_password" {
   description = "DB master password"
-  type      = string
-  sensitive = true
+  type        = string
+  sensitive   = true
 }
 
-
+# ------ Grafana 비밀번호임 ------
+variable "grafana_admin_password" {
+  type = string
+  #  sensitive = true
+  default = "root1004!"
+}

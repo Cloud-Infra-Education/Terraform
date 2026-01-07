@@ -1,4 +1,3 @@
-# ================= Seoul Region ==================
 module "eks_seoul" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.0"
@@ -17,6 +16,25 @@ module "eks_seoul" {
   cluster_endpoint_public_access       = true
   cluster_endpoint_public_access_cidrs = var.eks_public_access_cidrs
 
+  node_security_group_additional_rules = {
+    ingress_self_all = {
+      description = "Node to node all ports/protocols"
+      protocol    = "-1"
+      from_port   = 0
+      to_port     = 0
+      type        = "ingress"
+      self        = true
+    }
+    egress_vpc_only = {
+      description = "Allow egress to VPC only"
+      protocol    = "-1"
+      from_port   = 0
+      to_port     = 0
+      type        = "egress"
+      cidr_blocks = [var.kor_vpc_cidr] 
+    }
+  }
+
   eks_managed_node_groups = {
     standard-worker = {
       instance_types = ["t3.small"]
@@ -25,7 +43,7 @@ module "eks_seoul" {
       max_size       = 5
 
       tags = {
-        "k8s.io/cluster-autoscaler/enabled"                   = "true"
+        "k8s.io/cluster-autoscaler/enabled"             = "true"
         "k8s.io/cluster-autoscaler/formation-lap-seoul" = "owned"
       }
     }
@@ -75,7 +93,6 @@ resource "helm_release" "cluster_autoscaler_seoul" {
   depends_on = [module.eks_seoul]
 }
 
-# ================= Oregon Region ==================
 module "eks_oregon" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.0"
@@ -93,6 +110,25 @@ module "eks_oregon" {
   cluster_endpoint_private_access      = true
   cluster_endpoint_public_access       = true
   cluster_endpoint_public_access_cidrs = var.eks_public_access_cidrs
+
+  node_security_group_additional_rules = {
+    ingress_self_all = {
+      description = "Node to node all ports/protocols"
+      protocol    = "-1"
+      from_port   = 0
+      to_port     = 0
+      type        = "ingress"
+      self        = true
+    }
+    egress_vpc_only = {
+      description = "Allow egress to VPC only"
+      protocol    = "-1"
+      from_port   = 0
+      to_port     = 0
+      type        = "egress"
+      cidr_blocks = [var.usa_vpc_cidr] 
+    }
+  }
 
   eks_managed_node_groups = {
     standard-worker = {

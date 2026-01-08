@@ -52,6 +52,11 @@ variable "db_cluster_enabled" {
   default     = false
 }
 
+variable "app_monitoring_enabled" {
+  type    = bool
+  default = false
+}
+
 # ==========
 # ECR 미러링
 # ==========

@@ -147,7 +147,7 @@ module "ga" {
 }
 
 module "database" {
-#  count = var.db_cluster_enabled ? 1 : 0
+  count = var.db_cluster_enabled ? 1 : 0
   source = "./modules/database"
   
   providers = {
@@ -164,4 +164,23 @@ module "database" {
   db_username = var.db_username
   db_password = var.db_password
   our_team    = var.our_team
+}
+
+module "app_monitoring_seoul" {
+  count = var.app_monitoring_enabled ? 1 : 0
+  source = "./modules/app-monitoring"
+
+  providers = {
+    aws        = aws.seoul
+    kubernetes = kubernetes
+    helm       = helm
+  }
+
+  eks_cluster_name = module.eks.seoul_cluster_name
+  region           = "ap-northeast-2"
+
+  name_prefix = var.our_team
+  namespace   = "app-monitoring-seoul"
+
+  depends_on = [module.eks]
 }

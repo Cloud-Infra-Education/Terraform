@@ -12,6 +12,11 @@ terraform {
       version = "~> 0.10"
     }
 
+    mysql = {
+      source  = "petoju/mysql"   # 커뮤니티 버전
+      version = "3.0.88"         
+    }
+
     kubernetes = {
       source  = "hashicorp/kubernetes"
       version = "~> 2.0"
@@ -42,6 +47,7 @@ provider "aws" {
   region = "us-east-1"
   alias  = "acm"
 }
+
 # ====================
 # Kubernetes providers
 # ====================

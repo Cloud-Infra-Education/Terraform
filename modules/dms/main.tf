@@ -11,26 +11,95 @@ resource "aws_dms_replication_instance" "this" {
   vpc_security_group_ids         = [aws_security_group.dms.id]
 }
 
+# onprem -> kor 
+resource "aws_dms_endpoint" "onprem_source" {
+  endpoint_id   = "onprem-source-db"
+  endpoint_type = "source"
+  engine_name   = "mysql"
+
+  server_name   = var.onprem_db_endpoint   # 사설 IP 또는 온프레미스 DNS
+  port          = var.onprem_db_port
+  database_name = var.onprem_db_name
+  username = var.onprem_db_username
+  password = var.onprem_db_password
+}
+
+resource "aws_dms_endpoint" "kor_target" {
+  endpoint_id   = "kor-target-db"
+  endpoint_type = "target"
+  engine_name   = "mysql"
+
+  server_name   = var.source_db_endpoint   # Aurora Cluster endpoint
+  port          = var.db_port
+  database_name = var.source_db_name
+  username = var.dms_db_username
+  password = var.dms_db_password
+}
+
+resource "aws_dms_replication_task" "onprem_to_kor_full_load" {
+  replication_task_id      = "${var.our_team}-onprem-to-kor-full-load"
+  replication_instance_arn = aws_dms_replication_instance.this.replication_instance_arn
+
+  source_endpoint_arn = aws_dms_endpoint.onprem_source.endpoint_arn
+  target_endpoint_arn = aws_dms_endpoint.kor_target.endpoint_arn
+
+  migration_type = "full-load"
+  table_mappings = file("${path.module}/table-mappings.json")
+
+  replication_task_settings = jsonencode({
+    FullLoadSettings = {
+      TargetTablePrepMode = "DO_NOTHING"
+      MaxFullLoadSubTasks = 8
+      CommitRate          = 10000
+    }
+    Logging = { EnableLogging = true }
+  })
+}
+
+resource "time_sleep" "wait_before_onprem_dms_start" {
+  depends_on      = [aws_dms_replication_task.onprem_to_kor_full_load]
+  create_duration = "300s"
+}
+
+resource "null_resource" "start_onprem_dms_task_once" {
+  triggers = {
+    task_arn = aws_dms_replication_task.onprem_to_kor_full_load.replication_task_arn
+  }
+
+  depends_on = [time_sleep.wait_before_onprem_dms_start]
+
+  provisioner "local-exec" {
+    command = <<EOT
+aws dms start-replication-task \
+  --replication-task-arn ${aws_dms_replication_task.onprem_to_kor_full_load.replication_task_arn} \
+  --start-replication-task-type start-replication
+EOT
+  }
+}
+
+# kor -> usa
 resource "aws_dms_endpoint" "source" {
   endpoint_id   = "source-db"
   endpoint_type = "source"
   engine_name   = "mysql"
-  username      = var.db_username
-  password      = var.db_password
+
   server_name   = var.source_db_endpoint
   port          = var.db_port
   database_name = var.source_db_name
+  username = var.dms_db_username
+  password = var.dms_db_password
 }
 
 resource "aws_dms_endpoint" "target" {
   endpoint_id   = "target-db"
   endpoint_type = "target"
   engine_name   = "mysql"
-  username      = var.db_username
-  password      = var.db_password
+
   server_name   = var.target_db_endpoint
   port          = var.db_port
   database_name = var.target_db_name
+  username = var.dms_db_username
+  password = var.dms_db_password
 }
 
 resource "aws_dms_replication_task" "kor_to_usa_full_load" {

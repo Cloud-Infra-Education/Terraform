@@ -9,6 +9,18 @@ variable "db_password" {
   sensitive = true
 }
 
+variable "dms_db_username" {
+  type        = string
+  description = "DMS replication user for Aurora clusters"
+}
+
+variable "dms_db_password" {
+  type        = string
+  description = "Password for DMS replication user"
+  sensitive   = true
+}
+
+
 variable "kor_vpc_id" {
   type = string
 }
@@ -21,6 +33,14 @@ variable "kor_private_db_subnet_ids" {
 }
 variable "usa_private_db_subnet_ids" {
   type = list(string)
+}
+
+variable "kor_db_endpoint" {
+  type = string
+}
+
+variable "usa_db_endpoint" {
+  type = string
 }
 
 variable "seoul_eks_workers_sg_id" {
@@ -69,4 +89,13 @@ variable "proxy_connection_borrow_timeout" {
   description = "Seconds"
   type        = number
   default     = 120
+}
+
+variable "onprem_cidr" {
+  type = string
+}
+
+variable "dms_security_group_id" {
+  type = string
+  default = null
 }

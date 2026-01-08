@@ -83,6 +83,7 @@ module "argocd" {
   argocd_app_target_revision       = var.argocd_app_target_revision
   argocd_app_destination_namespace = var.argocd_app_destination_namespace
   argocd_app_enabled               = var.argocd_app_enabled
+
 }
 
 module "s3" {
@@ -156,23 +157,36 @@ module "database" {
   usa_vpc_id                = module.network.usa_vpc_id
   kor_private_db_subnet_ids = module.network.kor_private_db_subnet_ids
   usa_private_db_subnet_ids = module.network.usa_private_db_subnet_ids
+  kor_db_endpoint = module.database.kor_db_cluster_endpoint
+  usa_db_endpoint = module.database.usa_db_cluster_endpoint
   seoul_eks_workers_sg_id   = module.eks.seoul_eks_workers_sg_id
   oregon_eks_workers_sg_id  = module.eks.oregon_eks_workers_sg_id
   
-
   db_username = var.db_username
   db_password = var.db_password
+  dms_db_username = var.dms_db_username
+  dms_db_password = var.dms_db_password
   our_team    = var.our_team
+
+  onprem_cidr = var.onprem_private_cidr
+  dms_security_group_id = var.dms_enabled ? module.dms[0].dms_security_group_id : null
 }
 
 module "dms" {
   count = var.dms_enabled ? 1 : 0
   source = "./modules/dms"
 
+  providers = {
+    aws.seoul  = aws.seoul
+    aws.oregon = aws.oregon
+  }
+
   db_username = var.db_username
   db_password = var.db_password
   db_kor_cluster_id = module.database.kor_cluster_id
   db_usa_cluster_id = module.database.usa_cluster_id
+  dms_db_username = var.dms_db_username
+  dms_db_password = var.dms_db_password
 
   source_db_endpoint = module.database.kor_db_cluster_endpoint
   target_db_endpoint = module.database.usa_db_cluster_endpoint
@@ -189,5 +203,10 @@ module "dms" {
   target_db_name   = "usa_db"
   our_team = var.our_team
 
+  onprem_db_endpoint = var.onprem_private_ip
+  onprem_db_username = var.onprem_db_username
+  onprem_db_password = var.onprem_db_password
+  onprem_db_name     = "onprem_db"
+  onprem_cidr        = var.onprem_private_cidr
 }
 

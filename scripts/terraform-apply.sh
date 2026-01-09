@@ -25,3 +25,10 @@ terraform apply -var="argocd_app_enabled=true" -var="app_monitoring_enabled=true
 # 5) GA 구성
 sleep 1 
 terraform apply -var="argocd_app_enabled=true" -var="app_monitoring_enabled=true" -var="domain_set_enabled=true" -var="ga_set_enabled=true" -auto-approve
+
+
+
+
+
+terraform apply -var="app_monitoring_enabled=true" -auto-approve
+terraform plan -var="app_monitoring_enabled=true" 

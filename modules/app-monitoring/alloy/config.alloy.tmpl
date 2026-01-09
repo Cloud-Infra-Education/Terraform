@@ -1,12 +1,12 @@
 // ======================================================
 // Grafana Alloy pipeline (Seoul)
-// - Logs  : Kubernetes pod logs -> Loki
-// - Metrics: Simple scrape of annotated services -> Mimir (remote_write)
+// - Logs   : Kubernetes pod logs -> Loki
+// - Metrics: Simple scrape of services -> Mimir (remote_write)
 // - Traces : OTLP receiver -> Tempo
 //
 // NOTE
 // 1) This is a starter config.
-// 2) In real setups, add relabel/filters to limit scrape volume.
+// 2) Keep it minimal first; add filters/relabel later.
 // ======================================================
 
 logging {
@@ -30,6 +30,11 @@ loki.source.kubernetes "pod_logs" {
 loki.write "loki" {
   endpoint {
     url = "${loki_push_url}"
+
+    // Multi-tenancy header for Loki (auth_enabled=true)
+    headers = {
+      "X-Scope-OrgID" = "${tenant_id}",
+    }
   }
 }
 
@@ -41,27 +46,19 @@ discovery.kubernetes "services" {
   role = "service"
 }
 
-// Scrape only if the Service has annotation prometheus.io/scrape="true".
-prometheus.relabel "service_filter" {
-  targets = discovery.kubernetes.services.targets
-
-  rule {
-    source_labels = ["__meta_kubernetes_service_annotation_prometheus_io_scrape"]
-    regex         = "true"
-    action        = "keep"
-  }
-
-  forward_to = [prometheus.scrape.services.receiver]
-}
-
 prometheus.scrape "services" {
-  targets    = prometheus.relabel.service_filter.output
+  targets    = discovery.kubernetes.services.targets
   forward_to = [prometheus.remote_write.mimir.receiver]
 }
 
 prometheus.remote_write "mimir" {
   endpoint {
     url = "${mimir_remote_write_url}"
+
+    // Multi-tenancy header for Mimir
+    headers = {
+      "X-Scope-OrgID" = "${tenant_id}",
+    }
   }
 }
 
@@ -86,6 +83,11 @@ otelcol.receiver.otlp "default" {
 otelcol.exporter.otlp "tempo" {
   client {
     endpoint = "${tempo_otlp_grpc_endpoint}"
+
+    // Multi-tenancy header for Tempo
+    headers = {
+      "X-Scope-OrgID" = "${tenant_id}",
+    }
 
     tls {
       insecure = true

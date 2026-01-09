@@ -22,11 +22,9 @@ output "irsa_role_arns_seoul" {
   }
 }
 
-/*
 output "grafana_admin_password_seoul" {
   description = "Grafana admin password for grafana-seoul (sensitive)."
   value       = random_password.grafana_admin.result
   sensitive   = true
 }
 
-*/

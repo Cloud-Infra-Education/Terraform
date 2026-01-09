@@ -21,7 +21,7 @@ module "eks_seoul" {
   eks_managed_node_groups = {
     standard-worker = {
       instance_types = ["t3.large"]
-      desired_size   = 2
+      desired_size   = 3
       min_size       = 2
       max_size       = 10
 
@@ -99,7 +99,7 @@ module "eks_oregon" {
 
   eks_managed_node_groups = {
     standard-worker = {
-      instance_types = ["t3.large"]
+      instance_types = ["t3.small"]
       desired_size   = 2
       min_size       = 2
       max_size       = 10

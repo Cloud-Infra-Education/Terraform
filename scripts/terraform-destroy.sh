@@ -7,11 +7,15 @@ terraform destroy -target=module.ga[0] -auto-approve
 # Domain
 terraform destroy -target=module.domain[0] -auto-approve
 
+# App Monitoring (LGTM + Alloy)
+terraform destroy -target=module.app_monitoring_seoul[0] -auto-approve
+
 # ArgoCD
 terraform destroy -target=module.argocd.kubernetes_manifest.argocd_app_seoul[0] -auto-approve
 terraform destroy -target=module.argocd.kubernetes_manifest.argocd_app_oregon[0] -auto-approve
 terraform destroy -target=module.argocd.helm_release.argocd_seoul -auto-approve
 terraform destroy -target=module.argocd.helm_release.argocd_oregon -auto-approve
+
 
 # K8s/Helm addons (AWS Load Balancer Controller)
 terraform destroy -target=module.eks.helm_release.cluster_autoscaler_seoul -auto-approve

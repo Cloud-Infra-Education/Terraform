@@ -36,3 +36,16 @@ variable "loki_chart_version" {
   type = string
   default = "6.49.0"
 }
+
+variable "mimir_chart_version" {
+  description = "Helm chart version for grafana/mimir-distributed. Pinned to a 5.x release to keep classic architecture defaults."
+  type        = string
+  default     = "5.8.0"
+}
+
+variable "mimir_storageclass_name" {
+  description = "EBS StorageClass name used by Mimir PVCs."
+  type        = string
+  default     = "mimir-gp3-seoul"
+}
+

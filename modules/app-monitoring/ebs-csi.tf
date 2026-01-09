@@ -1,7 +1,6 @@
-# ==============================
-# Layer 0 - EBS CSI Driver (EKS Addon) + IRSA
-# (reuses existing data sources/locals from main.tf)
-# ==============================
+############################################
+# EBS CSI Driver (IRSA) - app-monitoring
+############################################
 
 data "aws_iam_policy_document" "ebs_csi_trust" {
   statement {
@@ -32,6 +31,7 @@ resource "aws_iam_role" "ebs_csi_driver" {
   assume_role_policy = data.aws_iam_policy_document.ebs_csi_trust.json
 }
 
+# ✅ 이게 2번 처리의 핵심 (DescribeInstances 포함)
 resource "aws_iam_role_policy_attachment" "ebs_csi_driver" {
   role       = aws_iam_role.ebs_csi_driver.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
@@ -45,6 +45,8 @@ resource "aws_eks_addon" "ebs_csi_driver" {
   resolve_conflicts_on_create = "OVERWRITE"
   resolve_conflicts_on_update = "OVERWRITE"
 
-  depends_on = [aws_iam_role_policy_attachment.ebs_csi_driver]
+  depends_on = [
+    aws_iam_role_policy_attachment.ebs_csi_driver
+  ]
 }
 

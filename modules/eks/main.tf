@@ -99,7 +99,7 @@ module "eks_oregon" {
 
   eks_managed_node_groups = {
     standard-worker = {
-      instance_types = ["t3.small"]
+      instance_types = ["t3.large"]
       desired_size   = 2
       min_size       = 2
       max_size       = 10

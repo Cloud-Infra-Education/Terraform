@@ -49,3 +49,9 @@ variable "mimir_storageclass_name" {
   default     = "mimir-gp3-seoul"
 }
 
+variable "tempo_chart_version" {
+  description = "Helm chart version for grafana/tempo-distributed."
+  type        = string
+  # Pin to a 1.x chart line (Tempo 2.x app versions).
+  default     = "1.60.0"
+}

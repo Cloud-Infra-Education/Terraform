@@ -83,6 +83,10 @@ variable "onprem_public_ip" {
   type = string
 }
 
+variable "onprem_public_cidr" {
+  type = string
+}
+
 variable "onprem_private_cidr" {
   type = string
 }
@@ -194,3 +198,4 @@ variable "target_db_name" {
 variable "onprem_private_ip" {
   type = string
 }
+

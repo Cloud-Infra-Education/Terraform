@@ -168,7 +168,8 @@ module "database" {
   dms_db_password = var.dms_db_password
   our_team    = var.our_team
 
-  onprem_cidr = var.onprem_private_cidr
+  onprem_public_ip    = var.onprem_public_cidr
+  onprem_private_cidr = var.onprem_private_cidr
   dms_security_group_id = var.dms_enabled ? module.dms[0].dms_security_group_id : null
 }
 
@@ -207,6 +208,6 @@ module "dms" {
   onprem_db_username = var.onprem_db_username
   onprem_db_password = var.onprem_db_password
   onprem_db_name     = "onprem_db"
-  onprem_cidr        = var.onprem_private_cidr
+  onprem_cidr = var.onprem_private_cidr
 }
 

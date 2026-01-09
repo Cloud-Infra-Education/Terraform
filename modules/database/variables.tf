@@ -2,7 +2,6 @@ variable "db_username" {
   description = "DB master username"
   type = string
 }
-
 variable "db_password" {
   description = "DB master password"
   type      = string
@@ -13,7 +12,6 @@ variable "dms_db_username" {
   type        = string
   description = "DMS replication user for Aurora clusters"
 }
-
 variable "dms_db_password" {
   type        = string
   description = "Password for DMS replication user"
@@ -91,9 +89,16 @@ variable "proxy_connection_borrow_timeout" {
   default     = 120
 }
 
-variable "onprem_cidr" {
-  type = string
+variable "onprem_private_cidr" {
+  type        = string
+  description = "On-premises private VM IP for DB access"
 }
+
+variable "onprem_public_ip" {
+  type        = string
+  description = "On-prem public IP (관리용 PC or VPN)"
+}
+
 
 variable "dms_security_group_id" {
   type = string

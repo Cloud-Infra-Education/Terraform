@@ -21,6 +21,8 @@ resource "aws_cloudfront_distribution" "www" {
   aliases             = [local.www_fqdn]
   price_class         = "PriceClass_All"
 
+  web_acl_id = var.cloudfront_waf_web_acl_arn
+
   origin {
     domain_name = local.s3_rest_domain
     origin_id   = local.origin_id

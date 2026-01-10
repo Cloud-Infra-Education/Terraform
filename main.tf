@@ -124,6 +124,11 @@ module "domain" {
   our_team             = var.our_team
 
   origin_bucket_name   = module.s3.origin_bucket_name
+
+  cloudfront_waf_web_acl_arn = module.waf.cloudfront_web_acl_arn
+  seoul_waf_web_acl_arn      = module.waf.seoul_web_acl_arn
+  oregon_waf_web_acl_arn     = module.waf.oregon_web_acl_arn
+
   acm_arn_api_seoul    = module.acm.acm_arn_api_seoul
   acm_arn_api_oregon   = module.acm.acm_arn_api_oregon
   acm_arn_www          = module.acm.acm_arn_www
@@ -147,7 +152,7 @@ module "ga" {
 }
 
 module "database" {
-#  count = var.db_cluster_enabled ? 1 : 0
+  count = var.db_cluster_enabled ? 1 : 0
   source = "./modules/database"
   
   providers = {
@@ -164,4 +169,18 @@ module "database" {
   db_username = var.db_username
   db_password = var.db_password
   our_team    = var.our_team
+}
+
+module "waf" {
+#  count  = var.domain_set_enabled ? 1 : 0
+  source = "./modules/waf"
+
+  providers = {
+    aws.acm    = aws.acm
+    aws.seoul  = aws.seoul
+    aws.oregon = aws.oregon
+  }
+
+  our_team    = var.our_team
+  domain_name = var.domain_name
 }

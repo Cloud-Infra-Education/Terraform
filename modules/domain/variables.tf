@@ -1,3 +1,6 @@
+variable "our_team" {
+  type = string
+}
 # =========================
 # Route53 도메인 & A 레코드
 # =========================
@@ -33,13 +36,21 @@ variable "default_root_object" {
 }
 
 
-#variable "acm_validation_records" {
-#  type = bool
-#  default = false
-#}
+# ===============
+# WAF (WAFv2)
+# ===============
+# CloudFront는 scope=CLOUDFRONT WebACL ARN
+variable "cloudfront_waf_web_acl_arn" {
+  type = string
+}
 
+# ALB(Seoul) scope=REGIONAL WebACL ARN
+variable "seoul_waf_web_acl_arn" {
+  type = string
+}
 
-variable "our_team" {
+# ALB(Oregon) scope=REGIONAL WebACL ARN
+variable "oregon_waf_web_acl_arn" {
   type = string
 }
 

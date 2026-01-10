@@ -7,7 +7,8 @@ locals {
 
 # CloudFront OAC 설정
 resource "aws_cloudfront_origin_access_control" "this" {
-  name                              = "oac-for-cloudfront"
+#  name                              = "oac-for-cloudfront"
+  name                              = "chan-oac-for-cloudfront"
   description                       = "S3보안을 위한 CloudFront 접속용 OAC "
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
@@ -20,6 +21,8 @@ resource "aws_cloudfront_distribution" "www" {
   default_root_object = var.default_root_object
   aliases             = [local.www_fqdn]
   price_class         = "PriceClass_All"
+
+  web_acl_id = var.cloudfront_waf_web_acl_arn
 
   origin {
     domain_name = local.s3_rest_domain

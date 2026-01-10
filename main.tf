@@ -152,7 +152,7 @@ module "ga" {
 }
 
 module "database" {
-  count = var.db_cluster_enabled ? 1 : 0
+#  count = var.db_cluster_enabled ? 1 : 0
   source = "./modules/database"
   
   providers = {
@@ -172,7 +172,6 @@ module "database" {
 }
 
 module "waf" {
-#  count  = var.domain_set_enabled ? 1 : 0
   source = "./modules/waf"
 
   providers = {

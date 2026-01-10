@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# DMS
+terraform destroy -target=module.dms[0] -auto-approve
+
+
 # GA
 terraform destroy -target=module.domain[0] -auto-approve
 

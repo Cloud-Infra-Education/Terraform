@@ -1,7 +1,7 @@
 locals {
-  argocd_helm_repo     = "https://argoproj.github.io/argo-helm"
-  argocd_helm_chart    = "argo-cd"
-  argocd_release_name  = "argocd"
+  argocd_helm_repo    = "https://argoproj.github.io/argo-helm"
+  argocd_helm_chart   = "argo-cd"
+  argocd_release_name = "argocd"
 
   argocd_application_manifest = {
     apiVersion = "argoproj.io/v1alpha1"
@@ -71,8 +71,8 @@ resource "helm_release" "argocd_seoul" {
 }
 
 resource "kubernetes_manifest" "argocd_app_seoul" {
-  count = var.argocd_app_enabled ? 1 : 0
-  manifest = local.argocd_application_manifest
+  count      = var.argocd_app_enabled ? 1 : 0
+  manifest   = local.argocd_application_manifest
   depends_on = [helm_release.argocd_seoul]
 }
 
@@ -105,8 +105,8 @@ resource "helm_release" "argocd_oregon" {
 }
 
 resource "kubernetes_manifest" "argocd_app_oregon" {
-  count = var.argocd_app_enabled ? 1 : 0
-  provider =  kubernetes.oregon
-  manifest = local.argocd_application_manifest
+  count      = var.argocd_app_enabled ? 1 : 0
+  provider   = kubernetes.oregon
+  manifest   = local.argocd_application_manifest
   depends_on = [helm_release.argocd_oregon]
 }

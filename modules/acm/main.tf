@@ -1,7 +1,7 @@
 locals {
-  www_fqdn = "${var.www_subdomain}.${var.domain_name}"
-  s3_rest_domain    = "${var.origin_bucket_name}.s3.${var.origin_bucket_region}.amazonaws.com"
-  origin_id         = "${var.our_team}-origin-s3"
+  www_fqdn       = "${var.www_subdomain}.${var.domain_name}"
+  s3_rest_domain = "${var.origin_bucket_name}.s3.${var.origin_bucket_region}.amazonaws.com"
+  origin_id      = "${var.our_team}-origin-s3"
 }
 
 locals {

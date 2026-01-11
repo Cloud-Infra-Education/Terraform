@@ -1,13 +1,13 @@
 locals {
-  www_fqdn = "${var.www_subdomain}.${var.domain_name}"
-  s3_rest_domain    = "${var.origin_bucket_name}.s3.${var.origin_bucket_region}.amazonaws.com"
-  origin_id         = "${var.our_team}-origin-s3"
+  www_fqdn       = "${var.www_subdomain}.${var.domain_name}"
+  s3_rest_domain = "${var.origin_bucket_name}.s3.${var.origin_bucket_region}.amazonaws.com"
+  origin_id      = "${var.our_team}-origin-s3"
 }
 
 
 # CloudFront OAC 설정
 resource "aws_cloudfront_origin_access_control" "this" {
-  name                              = "oac-for-cloudfront"
+  name                              = "y2om-oac-for-cloudfront"
   description                       = "S3보안을 위한 CloudFront 접속용 OAC "
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
@@ -22,10 +22,10 @@ resource "aws_cloudfront_distribution" "www" {
   price_class         = "PriceClass_All"
 
   origin {
-    domain_name = local.s3_rest_domain
-    origin_id   = local.origin_id
+    domain_name              = local.s3_rest_domain
+    origin_id                = local.origin_id
     origin_access_control_id = aws_cloudfront_origin_access_control.this.id
-    
+
     s3_origin_config {
       origin_access_identity = ""
     }
@@ -35,9 +35,9 @@ resource "aws_cloudfront_distribution" "www" {
     target_origin_id       = local.origin_id
     viewer_protocol_policy = "redirect-to-https"
 
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD", "OPTIONS"]
-    compress         = true
+    allowed_methods = ["GET", "HEAD", "OPTIONS"]
+    cached_methods  = ["GET", "HEAD", "OPTIONS"]
+    compress        = true
 
     forwarded_values {
       query_string = true
@@ -91,6 +91,6 @@ data "aws_iam_policy_document" "s3_allow_cloudfront" {
 
 resource "aws_s3_bucket_policy" "this" {
   provider = aws.seoul
-  bucket = var.origin_bucket_name
-  policy = data.aws_iam_policy_document.s3_allow_cloudfront.json
+  bucket   = var.origin_bucket_name
+  policy   = data.aws_iam_policy_document.s3_allow_cloudfront.json
 }

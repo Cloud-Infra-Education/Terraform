@@ -7,7 +7,7 @@ module "eks_seoul" {
     aws = aws.seoul
   }
 
-  cluster_name    = "formation-lap-seoul"
+  cluster_name    = "y2om-formation-lap-seoul"
   cluster_version = "1.34"
 
   vpc_id     = var.kor_vpc_id
@@ -25,8 +25,8 @@ module "eks_seoul" {
       max_size       = 5
 
       tags = {
-        "k8s.io/cluster-autoscaler/enabled"                   = "true"
-        "k8s.io/cluster-autoscaler/formation-lap-seoul" = "owned"
+        "k8s.io/cluster-autoscaler/enabled"                  = "true"
+        "k8s.io/cluster-autoscaler/y2om-formation-lap-seoul" = "owned"
       }
     }
   }
@@ -36,7 +36,7 @@ module "cluster_autoscaler_irsa_seoul" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "~> 5.0"
 
-  role_name = "eks-autoscaler-irsa-seoul"
+  role_name                        = "y2om-eks-autoscaler-irsa-seoul"
   attach_cluster_autoscaler_policy = true
   cluster_autoscaler_cluster_names = [module.eks_seoul.cluster_name]
 
@@ -49,7 +49,7 @@ module "cluster_autoscaler_irsa_seoul" {
 }
 
 resource "helm_release" "cluster_autoscaler_seoul" {
-  name       = "eks-autoscaler-seoul"
+  name       = "y2om-eks-autoscaler-seoul"
   repository = "https://kubernetes.github.io/autoscaler"
   chart      = "cluster-autoscaler"
   namespace  = "kube-system"
@@ -84,7 +84,7 @@ module "eks_oregon" {
     aws = aws.oregon
   }
 
-  cluster_name    = "formation-lap-oregon"
+  cluster_name    = "y2om-formation-lap-oregon"
   cluster_version = "1.34"
 
   vpc_id     = var.usa_vpc_id
@@ -102,8 +102,8 @@ module "eks_oregon" {
       max_size       = 5
 
       tags = {
-        "k8s.io/cluster-autoscaler/enabled"              = "true"
-        "k8s.io/cluster-autoscaler/formation-lap-oregon" = "owned"
+        "k8s.io/cluster-autoscaler/enabled"                   = "true"
+        "k8s.io/cluster-autoscaler/y2om-formation-lap-oregon" = "owned"
       }
     }
   }
@@ -113,7 +113,7 @@ module "cluster_autoscaler_irsa_oregon" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "~> 5.0"
 
-  role_name = "eks-autoscaler-irsa-oregon"
+  role_name                        = "y2om-eks-autoscaler-irsa-oregon"
   attach_cluster_autoscaler_policy = true
   cluster_autoscaler_cluster_names = [module.eks_oregon.cluster_name]
 
@@ -127,7 +127,7 @@ module "cluster_autoscaler_irsa_oregon" {
 
 resource "helm_release" "cluster_autoscaler_oregon" {
   provider   = helm.oregon
-  name       = "eks-autoscaler-oregon"
+  name       = "y2om-eks-autoscaler-oregon"
   repository = "https://kubernetes.github.io/autoscaler"
   chart      = "cluster-autoscaler"
   namespace  = "kube-system"

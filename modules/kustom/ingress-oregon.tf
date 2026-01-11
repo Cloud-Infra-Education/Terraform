@@ -32,14 +32,14 @@ resource "kubernetes_manifest" "msa_ingress" {
       namespace = var.namespace
       annotations = merge(
         {
-          "alb.ingress.kubernetes.io/scheme"            = "internet-facing"
-          "alb.ingress.kubernetes.io/target-type"       = "ip"
+          "alb.ingress.kubernetes.io/scheme"             = "internet-facing"
+          "alb.ingress.kubernetes.io/target-type"        = "ip"
           "alb.ingress.kubernetes.io/load-balancer-name" = var.alb_name
         },
         var.acm_arn != "" ? {
           # HTTPS 리스너 활성화
-          "alb.ingress.kubernetes.io/listen-ports"     = "[{\"HTTPS\":443}]"
-          "alb.ingress.kubernetes.io/certificate-arn"  = var.acm_arn
+          "alb.ingress.kubernetes.io/listen-ports"    = "[{\"HTTPS\":443}]"
+          "alb.ingress.kubernetes.io/certificate-arn" = var.acm_arn
 
           # 원하면 80->443 리다이렉트도 같이
           # "alb.ingress.kubernetes.io/ssl-redirect" = "443"

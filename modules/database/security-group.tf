@@ -2,9 +2,9 @@
 resource "aws_security_group" "db_kor" {
   provider = aws.seoul
 
-  name          = "SecurityGroup-DB-Cluster-Seoul"
-  description   = "KOR Aurora MySQL access"
-  vpc_id        = var.kor_vpc_id
+  name        = "y2om-SecurityGroup-DB-Cluster-Seoul"
+  description = "KOR Aurora MySQL access"
+  vpc_id      = var.kor_vpc_id
 
   egress {
     from_port   = 0
@@ -18,10 +18,10 @@ resource "aws_security_group" "db_kor" {
 resource "aws_security_group_rule" "kor_eks_to_db" {
   provider = aws.seoul
 
-  type                     = "ingress"
-  from_port                = var.db_port
-  to_port                  = var.db_port
-  protocol                 = "tcp"
+  type      = "ingress"
+  from_port = var.db_port
+  to_port   = var.db_port
+  protocol  = "tcp"
 
   security_group_id        = aws_security_group.db_kor.id
   source_security_group_id = aws_security_group.proxy_kor.id
@@ -30,10 +30,10 @@ resource "aws_security_group_rule" "kor_eks_to_db" {
 
 # ============= Seoul Region RDS Proxy =============
 resource "aws_security_group" "proxy_kor" {
-  provider      = aws.seoul
+  provider = aws.seoul
 
-  name          = "SecurityGroup-RDSproxy-Seoul"
-  vpc_id        = var.kor_vpc_id
+  name   = "y2om-SecurityGroup-RDSproxy-Seoul"
+  vpc_id = var.kor_vpc_id
 
   egress {
     from_port   = 0
@@ -59,7 +59,7 @@ resource "aws_security_group_rule" "kor_eks_to_proxy" {
 resource "aws_security_group" "db_usa" {
   provider = aws.oregon
 
-  name        = "SecurityGroup-DB-Cluster-Oregon"
+  name        = "y2om-SecurityGroup-DB-Cluster-Oregon"
   description = "USA Aurora MySQL access"
   vpc_id      = var.usa_vpc_id
 
@@ -75,10 +75,10 @@ resource "aws_security_group" "db_usa" {
 resource "aws_security_group_rule" "usa_eks_to_db" {
   provider = aws.oregon
 
-  type                     = "ingress"
-  from_port               = 3306
-  to_port                 = 3306
-  protocol                = "tcp"
+  type      = "ingress"
+  from_port = 3306
+  to_port   = 3306
+  protocol  = "tcp"
 
   security_group_id        = aws_security_group.db_usa.id
   source_security_group_id = aws_security_group.proxy_usa.id
@@ -86,10 +86,10 @@ resource "aws_security_group_rule" "usa_eks_to_db" {
 
 # ============= Oregon Region RDS Proxy =============
 resource "aws_security_group" "proxy_usa" {
-  provider      = aws.oregon
+  provider = aws.oregon
 
-  name          = "SecurityGroup-RDSproxy-Oregon"
-  vpc_id        = var.usa_vpc_id
+  name   = "y2om-SecurityGroup-RDSproxy-Oregon"
+  vpc_id = var.usa_vpc_id
 
   egress {
     from_port   = 0
@@ -101,7 +101,7 @@ resource "aws_security_group" "proxy_usa" {
 
 # ----- EKS Workers ----> Proxy
 resource "aws_security_group_rule" "usa_eks_to_proxy" {
-  provider                 = aws.oregon
+  provider = aws.oregon
 
   type                     = "ingress"
   from_port                = var.db_port

@@ -5,7 +5,7 @@ resource "aws_customer_gateway" "onprem_cgw" {
   ip_address = var.onprem_public_ip
   type       = "ipsec.1"
 
-  tags = { Name = "OnPrem-CGW" }
+  tags = { Name = "y2om-OnPrem-CGW" }
 }
 
 # 2. Site-to-Site VPN Connection (서울 Transit Gateway에 연결)
@@ -16,7 +16,7 @@ resource "aws_vpn_connection" "onprem_to_seoul_vpn" {
   type                = "ipsec.1"
   static_routes_only  = true
 
-  tags = { Name = "VPN-to-Seoul-TGW" }
+  tags = { Name = "y2om-VPN-to-Seoul-TGW" }
 }
 
 # 3. TGW 정적 경로 추가 (TGW가 로컬 대역을 인식하도록)

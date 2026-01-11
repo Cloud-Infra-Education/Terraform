@@ -6,14 +6,14 @@ resource "aws_security_group" "test" {
     protocol    = "icmp"
     from_port   = -1
     to_port     = -1
-    cidr_blocks = ["10.0.0.0/8"]
+    cidr_blocks = ["10.0.0.0/8", var.onprem_private_cidr]
   }
 
   ingress {
     protocol    = "tcp"
     from_port   = 22
     to_port     = 22
-    cidr_blocks = ["10.0.0.0/8"]
+    cidr_blocks = ["10.0.0.0/8", var.onprem_private_cidr]
   }
 
   egress {

@@ -8,6 +8,9 @@ variable "instance_type" {
   default = "t3.micro"
 }
 variable "admin_cidr" {}
+variable "onprem_private_cidr" {
+  type    = string
+}
 variable "public_subnet_names" {}
 variable "private_subnet_names" {}
 variable "tgw_id" {}

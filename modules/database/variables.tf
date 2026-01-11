@@ -24,10 +24,13 @@ variable "usa_private_db_subnet_ids" {
 }
 
 variable "seoul_eks_workers_sg_id" {
-  type = string
+  type    = string
+  default = null
 }
+
 variable "oregon_eks_workers_sg_id" {
-  type = string
+  type    = string
+  default = null
 }
 
 variable "our_team" {

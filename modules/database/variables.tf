@@ -18,6 +18,10 @@ variable "dms_db_password" {
   sensitive   = true
 }
 
+variable "primary_region" {
+  description = "current primary region (kor | usa)"
+  type        = string
+}
 
 variable "kor_vpc_id" {
   type = string

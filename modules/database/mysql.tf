@@ -18,14 +18,6 @@ provider "mysql" {
 
 }
 
-provider "mysql" {
-  alias    = "usa"
-  endpoint = aws_rds_cluster.usa.endpoint
-  username = var.db_username
-  password = var.db_password
-
-}
-
 resource "mysql_user" "dms_user_kor" {
   depends_on = [
     aws_rds_cluster.kor,
@@ -53,29 +45,3 @@ resource "mysql_grant" "dms_grant_kor" {
   privileges = ["SELECT", "REPLICATION SLAVE"]
 }
 
-resource "mysql_user" "dms_user_usa" {
-  depends_on = [
-    aws_rds_cluster.usa,
-    aws_db_subnet_group.usa,
-    aws_security_group.proxy_usa
-  ]
-
-  provider = mysql.usa
-  user     = var.dms_db_username
-  host     = "%"
-  plaintext_password = var.dms_db_password
-}
-
-resource "mysql_grant" "dms_grant_usa" {
-  depends_on = [
-    aws_rds_cluster.usa,
-    aws_db_subnet_group.usa,
-    aws_security_group.proxy_usa
-  ]
-
-  provider   = mysql.usa
-  user       = mysql_user.dms_user_usa.user
-  host       = mysql_user.dms_user_usa.host
-  database   = "*"
-  privileges = ["SELECT", "REPLICATION SLAVE"]
-}

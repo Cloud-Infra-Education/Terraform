@@ -173,6 +173,30 @@ module "database" {
   dms_security_group_id = var.dms_enabled ? module.dms[0].dms_security_group_id : null
 }
 
+module "proxy_primary_seoul" {
+  source = "./modules/proxy/primary"
+
+  providers = { aws = aws.seoul }
+
+  cluster_id        = module.database.kor_db_cluster_id
+  subnet_ids        = module.network.kor_private_db_subnet_ids
+  security_group_id = module.database.proxy_kor_sg_id
+  secret_arn        = module.database.kor_db_secret_arn
+  iam_role_arn      = module.database.kor_proxy_role_arn
+}
+
+module "proxy_secondary_oregon" {
+  source = "./modules/proxy/secondary"
+
+  providers = { aws = aws.oregon }
+
+  cluster_id        = module.database.usa_db_cluster_id
+  subnet_ids        = module.network.usa_private_db_subnet_ids
+  security_group_id = module.database.proxy_usa_sg_id
+  secret_arn        = module.database.usa_db_secret_arn
+  iam_role_arn      = module.database.usa_proxy_role_arn
+}
+
 module "dms" {
   count = var.dms_enabled ? 1 : 0
   source = "./modules/dms"

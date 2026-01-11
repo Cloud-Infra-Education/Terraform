@@ -10,6 +10,11 @@ resource "aws_db_subnet_group" "usa" {
   subnet_ids  = var.usa_private_db_subnet_ids
 }
 
+resource "aws_rds_global_cluster" "global" {
+  global_cluster_identifier = "global-aurora-mysql"
+  engine                    = "aurora-mysql"
+}
+
 #############################
 # Korea Aurora Cluster
 #############################
@@ -18,6 +23,7 @@ resource "aws_rds_cluster" "kor" {
 
   cluster_identifier = "kor1-aurora-mysql"
   engine             = "aurora-mysql"
+  global_cluster_identifier = aws_rds_global_cluster.global.id
 
   master_username = var.db_username
   master_password = var.db_password
@@ -57,26 +63,13 @@ resource "aws_rds_cluster" "usa" {
 
   cluster_identifier = "usa1-aurora-mysql"
   engine             = "aurora-mysql"
-
-  master_username = var.db_username
-  master_password = var.db_password
+  global_cluster_identifier = aws_rds_global_cluster.global.id
 
   db_subnet_group_name   = aws_db_subnet_group.usa.name
   vpc_security_group_ids = [aws_security_group.db_usa.id]
 
   storage_encrypted    = true
   skip_final_snapshot  = true
-}
-
-resource "aws_rds_cluster_instance" "usa_writer" {
-  provider = aws.oregon
-
-  identifier         = "usa1-writer"
-  cluster_identifier = aws_rds_cluster.usa.id
-  instance_class     = "db.t4g.medium"
-  engine             = aws_rds_cluster.usa.engine
-
-  promotion_tier = 0
 }
 
 resource "aws_rds_cluster_instance" "usa_reader1" {
@@ -87,5 +80,16 @@ resource "aws_rds_cluster_instance" "usa_reader1" {
   instance_class     = "db.t4g.medium"
   engine             = aws_rds_cluster.usa.engine
 
-  promotion_tier = 1
+  promotion_tier = 2
+}
+
+resource "aws_rds_cluster_instance" "usa_reader2" {
+  provider = aws.oregon
+
+  identifier         = "usa1-reader2"
+  cluster_identifier = aws_rds_cluster.usa.id
+  instance_class     = "db.t4g.medium"
+  engine             = aws_rds_cluster.usa.engine
+
+  promotion_tier = 3
 }

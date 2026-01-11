@@ -1,0 +1,55 @@
+provider "aws" {
+  region = "ap-northeast-2"
+}
+
+provider "aws" {
+  region = "ap-northeast-2"
+  alias  = "seoul"
+}
+
+provider "aws" {
+  region = "us-west-2"
+  alias  = "oregon"
+}
+
+# =================================
+# Helm providers (EKS 모듈에서 사용)
+# - 주의: EKS 생성 직후 1차 apply에서 helm 리소스가 실패할 수 있어
+#         필요하면 2번 apply로 마무리하세요.
+# =================================
+
+provider "helm" {
+  kubernetes {
+    host                   = module.eks.seoul_cluster_endpoint
+    cluster_ca_certificate = base64decode(module.eks.seoul_cluster_certificate_authority_data)
+
+    exec {
+      api_version = "client.authentication.k8s.io/v1beta1"
+      command     = "aws"
+      args = [
+        "eks", "get-token",
+        "--cluster-name", module.eks.seoul_cluster_name,
+        "--region", "ap-northeast-2"
+      ]
+    }
+  }
+}
+
+provider "helm" {
+  alias = "oregon"
+
+  kubernetes {
+    host                   = module.eks.oregon_cluster_endpoint
+    cluster_ca_certificate = base64decode(module.eks.oregon_cluster_certificate_authority_data)
+
+    exec {
+      api_version = "client.authentication.k8s.io/v1beta1"
+      command     = "aws"
+      args = [
+        "eks", "get-token",
+        "--cluster-name", module.eks.oregon_cluster_name,
+        "--region", "us-west-2"
+      ]
+    }
+  }
+}

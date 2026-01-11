@@ -45,6 +45,7 @@ resource "aws_security_group" "proxy_kor" {
 
 # ----- EKS Workers ----> Proxy
 resource "aws_security_group_rule" "kor_eks_to_proxy" {
+  count    = var.seoul_eks_workers_sg_id == null ? 0 : 1
   provider = aws.seoul
 
   type                     = "ingress"
@@ -101,6 +102,7 @@ resource "aws_security_group" "proxy_usa" {
 
 # ----- EKS Workers ----> Proxy
 resource "aws_security_group_rule" "usa_eks_to_proxy" {
+  count                    = var.oregon_eks_workers_sg_id == null ? 0 : 1
   provider                 = aws.oregon
 
   type                     = "ingress"

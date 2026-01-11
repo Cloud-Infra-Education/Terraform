@@ -15,11 +15,7 @@ STACKS=(
 )
 
 for s in "${STACKS[@]}"; do
-  echo "========== APPLY: $s =========="
-  (
-    cd "${ROOT_DIR}/${s}"
-    terraform init
-    terraform apply -auto-approve
-  )
+  echo "========== Be copied to: $s =========="
+  cp terraform.tfvars "${s}"
 done
 

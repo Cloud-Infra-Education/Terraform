@@ -2,11 +2,11 @@
 
 ## 스크립트 파일 활용 ##
 
-**scripts/terraform-apply.sh** : 리소스 자동생성
+**`scripts/terraform-apply.sh`** : 리소스 자동생성
 
-**scripts/terraform-destroy.sh** : 리소스 자동소멸
+**`scripts/terraform-destroy.sh`** : 리소스 자동소멸
 
-**scripts/copy-tfvars-to-stacks.sh** : 루트 디렉터리에 있는 tfvars를 모든 스택으로 분배
+**`scripts/copy-tfvars-to-stacks.sh`** : 루트 디렉터리에 있는 tfvars를 모든 스택으로 분배
 
 
 ## 디렉토리

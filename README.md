@@ -1,4 +1,4 @@
-##스택이 분리됐기 때문에 각 스택 디렉터리가 tfvars 파일을 갖고 있어야 해요
+**스택이 분리됐기 때문에 각 스택 디렉터리가 tfvars 파일을 갖고 있어야 해요**
 
 ## 자동으로 리소스를 생성 ##
 - scripts/terraform-apply.sh
@@ -25,8 +25,10 @@
 - `09-` : 
 - `10-app-monitoring` : LGTM + Alloy (지금은 서울만)
 
-##순서대로 실행하는 것을 권장합니다##
+**순서대로 실행하는 것을 권장합니다**
+
 **참고**:
+
 `02-kubernetes`를 수동으로 지울 때 아래 명령어를 먼저 실행하고 destroy 해야합니다.
 - terraform state rm module.eks.helm_release.cluster_autoscaler_seoul
 - terraform state rm module.eks.helm_release.cluster_autoscaler_oregon

@@ -1,15 +1,12 @@
 **스택이 분리됐기 때문에 각 스택 디렉터리가 tfvars 파일을 갖고 있어야 해요**
 
-## 자동으로 리소스를 생성 ##
-- scripts/terraform-apply.sh
+## 스크립트 파일 활용 ##
 
+**scripts/terraform-apply.sh** : 리소스 자동생성
 
-## 자동으로 리소스를 삭제 ##
-- scripts/terraform-destroy.sh
+**scripts/terraform-destroy.sh** : 리소스 자동소멸
 
-
-## 자동으로 tfvars 파일 배포 ##
-- scripts/copy-tfvars-to-stacks.sh
+**scripts/copy-tfvars-to-stacks.sh** : 루트 디렉터리에 있는 tfvars를 모든 스택으로 분배
 
 
 ## 디렉토리
@@ -26,6 +23,7 @@
 - `10-app-monitoring` : LGTM + Alloy (지금은 서울만)
 
 **순서대로 실행하는 것을 권장합니다**
+
 
 **참고**:
 

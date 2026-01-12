@@ -3,7 +3,7 @@ resource "aws_ec2_transit_gateway" "kor" {
   description = "KOR Transit Gateway"
 
   tags = {
-    Name = "TGW-KOR"
+    Name = "TGW-KOR1"
   }
 }
 
@@ -12,7 +12,7 @@ resource "aws_ec2_transit_gateway" "usa" {
   description = "USA Transit Gateway"
 
   tags = {
-    Name = "TGW-USA"
+    Name = "TGW-USA1"
   }
 }
 

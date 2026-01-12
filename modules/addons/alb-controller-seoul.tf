@@ -2,7 +2,7 @@ module "alb_controller_irsa" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "~> 5.0"
 
-  role_name = "alb-controller-irsa"
+  role_name = "1alb-controller-irsa"
 
   attach_load_balancer_controller_policy = true
 

@@ -2,11 +2,19 @@ variable "db_username" {
   description = "DB master username"
   type = string
 }
-
 variable "db_password" {
   description = "DB master password"
   type      = string
   sensitive = true
+}
+variable "dms_db_username" {
+  type        = string
+  description = "DMS replication user for Aurora clusters"
+}
+variable "dms_db_password" {
+  type        = string
+  description = "Password for DMS replication user"
+  sensitive   = true
 }
 
 variable "kor_vpc_id" {
@@ -32,6 +40,17 @@ variable "oregon_eks_workers_sg_id" {
   type    = string
   default = null
 }
+
+variable "onprem_private_cidr" {
+  type        = string
+  description = "On-premises private VM IP for DB access"
+}
+
+variable "onprem_public_ip" {
+  type        = string
+  description = "On-prem public IP (관리용 PC or VPN)"
+}
+
 
 variable "our_team" {
   type = string
@@ -73,3 +92,11 @@ variable "proxy_connection_borrow_timeout" {
   type        = number
   default     = 120
 }
+
+
+variable "kms_key_arn" {
+  type        = string
+  description = "KMS Key ARN for Aurora Global Cluster"
+  default     = null
+}
+

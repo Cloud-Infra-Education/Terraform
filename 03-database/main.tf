@@ -19,7 +19,13 @@ module "database" {
   seoul_eks_workers_sg_id  = data.terraform_remote_state.kubernetes.outputs.seoul_eks_workers_sg_id
   oregon_eks_workers_sg_id = data.terraform_remote_state.kubernetes.outputs.oregon_eks_workers_sg_id
 
-  db_username = var.db_username
-  db_password = var.db_password
-  our_team    = var.our_team
+  db_username     = var.db_username
+  db_password     = var.db_password
+  dms_db_username = var.dms_db_username
+  dms_db_password = var.dms_db_password
+
+  our_team = var.our_team
+
+  onprem_public_ip    = var.onprem_public_cidr
+  onprem_private_cidr = var.onprem_private_cidr
 }

@@ -1,3 +1,4 @@
+# AWS Providers
 provider "aws" {
   region = "ap-northeast-2"
 }
@@ -9,7 +10,7 @@ provider "aws" {
 
 provider "aws" {
   region = "us-west-2"
-  alias  = "oregon"
+  alias  = "oregon" # <--- 이 부분이 없으면 에러가 납니다
 }
 
 provider "aws" {
@@ -20,7 +21,10 @@ provider "aws" {
 # ====================
 # Kubernetes providers
 # ====================
+
+# 서울 클러스터 접속 설정
 provider "kubernetes" {
+  alias                  = "seoul"
   host                   = data.terraform_remote_state.kubernetes.outputs.seoul_cluster_endpoint
   cluster_ca_certificate = base64decode(data.terraform_remote_state.kubernetes.outputs.seoul_cluster_certificate_authority_data)
 
@@ -35,6 +39,7 @@ provider "kubernetes" {
   }
 }
 
+# 오레곤 클러스터 접속 설정
 provider "kubernetes" {
   alias                  = "oregon"
   host                   = data.terraform_remote_state.kubernetes.outputs.oregon_cluster_endpoint

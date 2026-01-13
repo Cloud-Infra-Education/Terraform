@@ -7,7 +7,7 @@ variable "domain_name" {
 }
 
 variable "api_subdomain" {
-  type = string
+  type    = string
   default = "api"
 }
 
@@ -27,12 +27,12 @@ variable "ip_address_type" {
 # 태그를 가지고 ALB를 지정함
 # ==========================
 variable "alb_lookup_tag_key" {
-  type        = string
-  default     = "ingress.k8s.aws/stack"
+  type    = string
+  default = "ingress.k8s.aws/stack"
 }
 
 variable "alb_lookup_tag_value" {
-  type        = string
+  type = string
 }
 
 # ======================
@@ -134,7 +134,10 @@ variable "oregon_weight" {
   default     = 128
 }
 
-
-
-
-
+# ==========================================
+# [추가됨] GA Flow Logs를 위한 S3 버킷 변수
+# ==========================================
+variable "origin_bucket_name" {
+  description = "The name of the S3 bucket where GA flow logs will be stored."
+  type        = string
+}

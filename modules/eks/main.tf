@@ -1,3 +1,8 @@
+# 1) [수정] AWS 공식 IP 확인 서비스를 사용하여 순수하게 IP 텍스트만 가져옵니다.
+data "http" "my_ip" {
+  url = "https://checkip.amazonaws.com"
+}
+
 # ================= Seoul Region ==================
 module "eks_seoul" {
   source  = "terraform-aws-modules/eks/aws"
@@ -15,7 +20,13 @@ module "eks_seoul" {
 
   cluster_endpoint_private_access      = true
   cluster_endpoint_public_access       = true
-  cluster_endpoint_public_access_cidrs = var.eks_public_access_cidrs
+
+  # 2) tfvars의 IP 리스트 + 현재 실행자의 IP를 합침
+  # chomp는 혹시 모를 줄바꿈 문자를 제거해줍니다.
+  cluster_endpoint_public_access_cidrs = distinct(concat(
+    var.eks_public_access_cidrs, 
+    ["${chomp(data.http.my_ip.response_body)}/32"]
+  ))
 
   eks_managed_node_groups = {
     standard-worker = {
@@ -25,7 +36,7 @@ module "eks_seoul" {
       max_size       = 10
 
       tags = {
-        "k8s.io/cluster-autoscaler/enabled"                   = "true"
+        "k8s.io/cluster-autoscaler/enabled"                  = "true"
         "k8s.io/cluster-autoscaler/formation-lap-seoul" = "owned"
       }
     }
@@ -92,7 +103,12 @@ module "eks_oregon" {
 
   cluster_endpoint_private_access      = true
   cluster_endpoint_public_access       = true
-  cluster_endpoint_public_access_cidrs = var.eks_public_access_cidrs
+
+  # 2) 오레곤 클러스터에도 동일하게 실행자 IP를 자동으로 추가
+  cluster_endpoint_public_access_cidrs = distinct(concat(
+    var.eks_public_access_cidrs, 
+    ["${chomp(data.http.my_ip.response_body)}/32"]
+  ))
 
   eks_managed_node_groups = {
     standard-worker = {

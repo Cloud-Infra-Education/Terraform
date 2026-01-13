@@ -31,6 +31,9 @@ resource "helm_release" "aws_load_balancer_controller" {
   chart      = "aws-load-balancer-controller"
   namespace  = "kube-system"
 
+  # [중요] EKS 1.34와의 스키마 충돌을 방지하기 위해 사전 검증을 비활성화합니다.
+  disable_openapi_validation = true 
+
   set {
     name  = "clusterName"
     value = var.eks_seoul_cluster_name

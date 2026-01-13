@@ -17,6 +17,12 @@ variable "db_password" {
   sensitive   = true
 }
 
+variable "db_name" {
+  description = "Database name"
+  type        = string
+  default     = "ott_db"
+}
+
 # ============================================
 # remote_state 경로 (local backend 기준)
 # ============================================

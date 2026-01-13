@@ -13,7 +13,8 @@ data "aws_iam_policy_document" "rds_proxy_assume_role" {
 # ============= Seoul Region ================
 resource "aws_iam_role" "kor_rds_proxy" {
   provider           = aws.seoul
-  name               = "${var.our_team}-KOR-RDS-Proxy-Role"
+  #name               = "${var.our_team}-KOR-RDS-Proxy-Role"
+  name               = "${var.our_team}-yuh-KOR-RDS-Proxy-Role"
   assume_role_policy = data.aws_iam_policy_document.rds_proxy_assume_role.json
 }
 
@@ -28,7 +29,10 @@ resource "aws_iam_role_policy" "kor_rds_proxy" {
       {
         Effect   = "Allow"
         Action   = ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"]
-        Resource = data.aws_secretsmanager_secret.kor_db.arn
+        Resource = [
+          data.aws_secretsmanager_secret.kor_db.arn
+          # aws_secretsmanager_secret.admin_kor.arn  # 주석 처리됨
+        ]
       }
     ]
   })
@@ -37,7 +41,8 @@ resource "aws_iam_role_policy" "kor_rds_proxy" {
 # ============= Oregon Region ================
 resource "aws_iam_role" "usa_rds_proxy" {
   provider           = aws.oregon
-  name               = "${var.our_team}-USA-RDS-Proxy-Role"
+  #name               = "${var.our_team}-USA-RDS-Proxy-Role"
+  name               = "${var.our_team}-yuh-USA-RDS-Proxy-Role"
   assume_role_policy = data.aws_iam_policy_document.rds_proxy_assume_role.json
 }
 
@@ -57,4 +62,3 @@ resource "aws_iam_role_policy" "usa_rds_proxy" {
     ]
   })
 }
-

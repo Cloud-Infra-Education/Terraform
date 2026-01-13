@@ -7,7 +7,8 @@ module "eks_seoul" {
     aws = aws.seoul
   }
 
-  cluster_name    = "formation-lap-seoul"
+  #cluster_name    = "formation-lap-seoul"
+  cluster_name    = "yuh-formation-lap-seoul"
   cluster_version = "1.34"
 
   vpc_id     = var.kor_vpc_id
@@ -36,7 +37,8 @@ module "cluster_autoscaler_irsa_seoul" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "~> 5.0"
 
-  role_name = "eks-autoscaler-irsa-seoul"
+  #role_name = "eks-autoscaler-irsa-seoul"
+  role_name = "yuh-eks-autoscaler-irsa-seoul"
   attach_cluster_autoscaler_policy = true
   cluster_autoscaler_cluster_names = [module.eks_seoul.cluster_name]
 
@@ -84,7 +86,8 @@ module "eks_oregon" {
     aws = aws.oregon
   }
 
-  cluster_name    = "formation-lap-oregon"
+  #cluster_name    = "formation-lap-oregon"
+  cluster_name    = "yuh-formation-lap-oregon"
   cluster_version = "1.34"
 
   vpc_id     = var.usa_vpc_id
@@ -113,7 +116,8 @@ module "cluster_autoscaler_irsa_oregon" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "~> 5.0"
 
-  role_name = "eks-autoscaler-irsa-oregon"
+  #role_name = "eks-autoscaler-irsa-oregon"
+  role_name = "yuh-eks-autoscaler-irsa-oregon"
   attach_cluster_autoscaler_policy = true
   cluster_autoscaler_cluster_names = [module.eks_oregon.cluster_name]
 

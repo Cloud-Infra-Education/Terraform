@@ -1,20 +1,24 @@
 resource "aws_db_subnet_group" "kor" {
   provider    = aws.seoul
-  name        = "kor-db-subnet-group"
+  #name        = "kor-db-subnet-group"
+  name        = "yuh-kor-db-subnet-group"
   subnet_ids  = var.kor_private_db_subnet_ids
 }
 
 resource "aws_db_subnet_group" "usa" {
   provider    = aws.oregon
-  name        = "usa-db-subnet-group"
+  #name        = "usa-db-subnet-group"
+  name        = "yuh-usa-db-subnet-group"
   subnet_ids  = var.usa_private_db_subnet_ids
 }
 
 resource "aws_rds_cluster" "kor" {
   provider = aws.seoul
 
-  cluster_identifier = "kor-aurora-mysql"
+  #cluster_identifier = "kor-aurora-mysql"
+  cluster_identifier = "yuh-kor-aurora-mysql"
   engine             = "aurora-mysql"
+  database_name      = "ott_db"
 
   master_username = var.db_username
   master_password = var.db_password
@@ -28,7 +32,7 @@ resource "aws_rds_cluster" "kor" {
 resource "aws_rds_cluster_instance" "kor_writer" {
   provider = aws.seoul
 
-  identifier         = "kor-writer"
+  identifier         = "kor-writer-yuh"
   cluster_identifier = aws_rds_cluster.kor.id
   instance_class     = "db.t4g.medium"
   engine             = aws_rds_cluster.kor.engine
@@ -38,7 +42,7 @@ resource "aws_rds_cluster_instance" "kor_writer" {
 resource "aws_rds_cluster_instance" "kor_reader" {
   provider = aws.seoul
 
-  identifier         = "kor-reader"
+  identifier         = "kor-reader-yuh"
   cluster_identifier = aws_rds_cluster.kor.id
   instance_class     = "db.t4g.medium"
   engine             = aws_rds_cluster.kor.engine
@@ -49,8 +53,10 @@ resource "aws_rds_cluster_instance" "kor_reader" {
 resource "aws_rds_cluster" "usa" {
   provider = aws.oregon
 
-  cluster_identifier = "usa-aurora-mysql"
+  #cluster_identifier = "usa-aurora-mysql"
+  cluster_identifier = "yuh-usa-aurora-mysql"
   engine             = "aurora-mysql"
+  database_name      = var.db_name
 
   master_username = var.db_username
   master_password = var.db_password
@@ -64,7 +70,7 @@ resource "aws_rds_cluster" "usa" {
 resource "aws_rds_cluster_instance" "usa_writer" {
   provider = aws.oregon
 
-  identifier         = "usa-writer"
+  identifier         = "usa-writer-yuh"
   cluster_identifier = aws_rds_cluster.usa.id
   instance_class     = "db.t4g.medium"
   engine             = aws_rds_cluster.usa.engine
@@ -74,7 +80,7 @@ resource "aws_rds_cluster_instance" "usa_writer" {
 resource "aws_rds_cluster_instance" "usa_reader" {
   provider = aws.oregon
 
-  identifier         = "usa-reader"
+  identifier         = "usa-reader-yuh"
   cluster_identifier = aws_rds_cluster.usa.id
   instance_class     = "db.t4g.medium"
   engine             = aws_rds_cluster.usa.engine

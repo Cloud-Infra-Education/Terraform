@@ -13,6 +13,9 @@ data "aws_iam_openid_connect_provider" "this" {
 locals {
   # IRSA condition key requires issuer hostpath without the https:// prefix.
   oidc_issuer_hostpath = replace(data.aws_eks_cluster.this.identity[0].oidc[0].issuer, "https://", "")
+
+  # Allow overriding OIDC provider ARN (e.g., when using cross-account/remote references).
+  oidc_provider_arn = coalesce(var.eks_seoul_oidc_provider_arn, data.aws_iam_openid_connect_provider.this.arn)
 }
 
 resource "kubernetes_namespace_v1" "monitoring" {
@@ -35,23 +38,5 @@ module "s3_tempo" {
   source = "../s3"
 
   origin_bucket_name = local.bucket_names.tempo
-}
-
-module "s3_mimir_blocks" {
-  source = "../s3"
-
-  origin_bucket_name = local.bucket_names.mimir_blocks
-}
-
-module "s3_mimir_alertmanager" {
-  source = "../s3"
-
-  origin_bucket_name = local.bucket_names.mimir_alertmanager
-}
-
-module "s3_mimir_ruler" {
-  source = "../s3"
-
-  origin_bucket_name = local.bucket_names.mimir_ruler
 }
 

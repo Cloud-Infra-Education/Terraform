@@ -32,7 +32,7 @@ resource "helm_release" "grafana_seoul" {
       }
 
       adminUser     = "admin"
-      adminPassword = random_password.grafana_admin.result
+      adminPassword = coalesce(var.grafana_admin_password, random_password.grafana_admin.result)
 
       persistence = {
         enabled = false
@@ -57,17 +57,11 @@ resource "helm_release" "grafana_seoul" {
               }
             },
             {
-              name      = "Mimir"
+              name      = "AMP"
               type      = "prometheus"
               access    = "proxy"
-              url       = local.mimir_nginx_url
+              url       = local.amp_query_base_url
               isDefault = true
-              jsonData = {
-                httpHeaderName1 = "X-Scope-OrgID"
-              }
-              secureJsonData = {
-                httpHeaderValue1 = "chan"
-              }
             },
             {
               name   = "Tempo"
@@ -89,6 +83,7 @@ resource "helm_release" "grafana_seoul" {
 
   depends_on = [
     kubernetes_namespace_v1.monitoring,
+    kubernetes_service_v1.amp_query_sigv4_proxy_seoul,
   ]
 }
 

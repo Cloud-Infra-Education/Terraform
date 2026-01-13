@@ -19,9 +19,9 @@ module "domain" {
 
   origin_bucket_name = data.terraform_remote_state.infra.outputs.origin_bucket_name
 
-  cloudfront_waf_web_acl_arn = data.terraform_remote_state.certificate.outputs.cloudfront_waf_web_acl_arn
-  seoul_waf_web_acl_arn      = data.terraform_remote_state.certificate.outputs.seoul_waf_web_acl_arn
-  oregon_waf_web_acl_arn     = data.terraform_remote_state.certificate.outputs.oregon_waf_web_acl_arn
+  # cloudfront_waf_web_acl_arn = data.terraform_remote_state.certificate.outputs.cloudfront_waf_web_acl_arn
+  # seoul_waf_web_acl_arn      = data.terraform_remote_state.certificate.outputs.seoul_waf_web_acl_arn
+  # oregon_waf_web_acl_arn     = data.terraform_remote_state.certificate.outputs.oregon_waf_web_acl_arn
 
   acm_arn_api_seoul  = data.terraform_remote_state.certificate.outputs.acm_arn_api_seoul
   acm_arn_api_oregon = data.terraform_remote_state.certificate.outputs.acm_arn_api_oregon

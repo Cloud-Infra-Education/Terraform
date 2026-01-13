@@ -17,8 +17,6 @@ module "eks" {
   providers = {
     aws.seoul   = aws.seoul
     aws.oregon  = aws.oregon
-    helm        = helm
-    helm.oregon = helm.oregon
   }
 
   kor_vpc_id                 = data.terraform_remote_state.infra.outputs.kor_vpc_id

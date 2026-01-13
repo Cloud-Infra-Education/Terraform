@@ -9,12 +9,12 @@ variable "domain_name" {
 }
 
 variable "api_subdomain" {
-  type = string
+  type    = string
   default = "api"
 }
 
 variable "www_subdomain" {
-  type = string
+  type    = string
   default = "www"
 }
 # ===============
@@ -22,17 +22,17 @@ variable "www_subdomain" {
 # ===============
 #버킷명 
 variable "origin_bucket_name" {
-  type        = string
+  type = string
 }
 
 variable "origin_bucket_region" {
-  type        = string
-  default     = "ap-northeast-2"
+  type    = string
+  default = "ap-northeast-2"
 }
 
 variable "default_root_object" {
-  type        = string
-  default     = "index.html"
+  type    = string
+  default = "index.html"
 }
 
 

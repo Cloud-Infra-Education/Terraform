@@ -10,13 +10,13 @@ output "private_subnet_ids" {
 output "private_eks_subnet_ids" {
   value = [
     for s in aws_subnet.private : s.id
-    if startswith(try(s.tags["Name"], ""), "PrivateSubnet-EKS-")
+    if startswith(try(s.tags["Name"], ""), "y2om-PrivateSubnet-EKS-")
   ]
 }
 output "private_db_subnet_ids" {
   value = [
     for s in aws_subnet.private : s.id
-    if startswith(try(s.tags["Name"], ""), "PrivateSubnet-DB-")
+    if startswith(try(s.tags["Name"], ""), "y2om-PrivateSubnet-DB-")
   ]
 }
 

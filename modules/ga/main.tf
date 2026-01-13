@@ -35,7 +35,7 @@ resource "aws_globalaccelerator_listener" "http" {
 }
 
 resource "aws_globalaccelerator_endpoint_group" "seoul_http" {
-  listener_arn         = aws_globalaccelerator_listener.http.id
+  listener_arn          = aws_globalaccelerator_listener.http.id
   endpoint_group_region = var.seoul_region
 
   traffic_dial_percentage = var.http_traffic_dial_percentage
@@ -50,7 +50,7 @@ resource "aws_globalaccelerator_endpoint_group" "seoul_http" {
 }
 
 resource "aws_globalaccelerator_endpoint_group" "oregon_http" {
-  listener_arn         = aws_globalaccelerator_listener.http.id
+  listener_arn          = aws_globalaccelerator_listener.http.id
   endpoint_group_region = var.oregon_region
 
   traffic_dial_percentage = var.http_traffic_dial_percentage

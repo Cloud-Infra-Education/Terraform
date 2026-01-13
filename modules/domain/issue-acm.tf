@@ -15,8 +15,8 @@
 #  validation_method = "DNS"
 #}
 resource "aws_acm_certificate_validation" "www" {
-  provider                = aws.acm
-#  certificate_arn         = aws_acm_certificate.www.arn
+  provider = aws.acm
+  #  certificate_arn         = aws_acm_certificate.www.arn
   certificate_arn         = var.acm_arn_www
   validation_record_fqdns = [for r in aws_route53_record.www_cert_validation : r.fqdn]
 }
@@ -28,8 +28,8 @@ resource "aws_acm_certificate_validation" "www" {
 #  validation_method = "DNS"
 #}
 resource "aws_acm_certificate_validation" "api_seoul" {
-  provider                = aws.seoul
-#  certificate_arn         = aws_acm_certificate.api_seoul.arn
+  provider = aws.seoul
+  #  certificate_arn         = aws_acm_certificate.api_seoul.arn
   certificate_arn         = var.acm_arn_api_seoul
   validation_record_fqdns = [for r in aws_route53_record.api_cert_validation : r.fqdn]
 }
@@ -41,8 +41,8 @@ resource "aws_acm_certificate_validation" "api_seoul" {
 #  validation_method = "DNS"
 #}
 resource "aws_acm_certificate_validation" "api_oregon" {
-  provider                = aws.oregon
-#  certificate_arn         = aws_acm_certificate.api_oregon.arn
+  provider = aws.oregon
+  #  certificate_arn         = aws_acm_certificate.api_oregon.arn
   certificate_arn         = var.acm_arn_api_oregon
   validation_record_fqdns = [for r in aws_route53_record.api_cert_validation : r.fqdn]
 }

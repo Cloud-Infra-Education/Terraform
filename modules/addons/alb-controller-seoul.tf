@@ -31,6 +31,8 @@ resource "helm_release" "aws_load_balancer_controller" {
   chart      = "aws-load-balancer-controller"
   namespace  = "kube-system"
 
+  disable_openapi_validation = true
+
   set {
     name  = "clusterName"
     value = var.eks_seoul_cluster_name

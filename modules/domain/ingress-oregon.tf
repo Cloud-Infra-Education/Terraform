@@ -1,3 +1,11 @@
+resource "kubernetes_namespace_v1" "formation_lap_oregon" {
+  provider = kubernetes.oregon
+
+  metadata {
+    name = "formation-lap"
+  }
+}
+
 resource "kubernetes_manifest" "msa_ingress_oregon" {
   provider = kubernetes.oregon
 

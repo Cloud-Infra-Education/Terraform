@@ -1,3 +1,9 @@
+resource "kubernetes_namespace_v1" "formation_lap_seoul" {
+  metadata {
+    name = "formation-lap"
+  }
+}
+
 resource "kubernetes_manifest" "msa_ingress_seoul" {
   #  provider = kubernetes.seoul
 

@@ -1,0 +1,760 @@
+========== DESTROY: 09-domain-access-logs ==========
+
+[0m[1mInitializing the backend...[0m
+
+[0m[1mInitializing provider plugins...[0m
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Reusing previous version of hashicorp/archive from the dependency lock file
+- Using previously-installed hashicorp/aws v5.100.0
+- Using previously-installed hashicorp/archive v2.7.1
+
+[0m[1m[32mTerraform has been successfully initialized![0m[32m[0m
+[0m[32m
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.[0m
+[0m[1mvar.route53_zone_id[0m
+  Route53 Public Hosted Zone ID
+
+  [1mEnter a value:[0m [0m[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "eks_admin_principal_arn"
+[33m│[0m [0mbut a value was found in file "/root/Terraform/terraform.tfvars". If you
+[33m│[0m [0mmeant to use this value, add a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "onprem_public_ip" but a
+[33m│[0m [0mvalue was found in file "/root/Terraform/terraform.tfvars". If you meant to
+[33m│[0m [0muse this value, add a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValues for undeclared variables[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mIn addition to the other similar warnings shown, 9 other variable(s)
+[33m│[0m [0mdefined without being declared.
+[33m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mNo value for required variable[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on variables.tf line 7:
+[31m│[0m [0m   7: [4mvariable "route53_zone_id"[0m {[0m
+[31m│[0m [0m
+[31m│[0m [0mThe root module input variable "route53_zone_id" is not set, and has no
+[31m│[0m [0mdefault value. Use a -var or -var-file command line argument to provide a
+[31m│[0m [0mvalue for this variable.
+[31m╵[0m[0m
+⚠️  Warning: Destroy failed for 09-domain-access-logs (exit code: 1), but continuing to next stack...
+
+========== DESTROY: 08-domain-ga ==========
+
+[0m[1mInitializing the backend...[0m
+[0m[1mInitializing modules...[0m
+
+[0m[1mInitializing provider plugins...[0m
+- terraform.io/builtin/terraform is built in to Terraform
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Using previously-installed hashicorp/aws v5.100.0
+
+[0m[1m[32mTerraform has been successfully initialized![0m[32m[0m
+[0m[32m
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.[0m
+
+[0m[1m[32mNo changes.[0m[1m No objects need to be destroyed.[0m
+
+[0mEither you have not created any objects yet or the existing objects were
+already deleted outside of Terraform.
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "admin_cidr" but a value
+[33m│[0m [0mwas found in file "/root/Terraform/terraform.tfvars". If you meant to use
+[33m│[0m [0mthis value, add a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "db_password" but a value
+[33m│[0m [0mwas found in file "/root/Terraform/terraform.tfvars". If you meant to use
+[33m│[0m [0mthis value, add a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValues for undeclared variables[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mIn addition to the other similar warnings shown, 8 other variable(s)
+[33m│[0m [0mdefined without being declared.
+[33m╵[0m[0m
+[0m[1m[32m
+Destroy complete! Resources: 0 destroyed.
+[0m
+========== DESTROY: 07-domain-cf ==========
+
+[0m[1mInitializing the backend...[0m
+[0m[1mInitializing modules...[0m
+
+[0m[1mInitializing provider plugins...[0m
+- terraform.io/builtin/terraform is built in to Terraform
+- Reusing previous version of hashicorp/kubernetes from the dependency lock file
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Using previously-installed hashicorp/kubernetes v2.38.0
+- Using previously-installed hashicorp/aws v5.100.0
+
+[33m[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mReference to undefined provider[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on main.tf line 13, in module "domain":
+[33m│[0m [0m  13:     [4mkubernetes[0m        = kubernetes[0m
+[33m│[0m [0m
+[33m│[0m [0mThere is no explicit declaration for local provider name "kubernetes" in
+[33m│[0m [0mmodule.domain, so Terraform is assuming you mean to pass a configuration
+[33m│[0m [0mfor "hashicorp/kubernetes".
+[33m│[0m [0m
+[33m│[0m [0mIf you also control the child module, add a required_providers entry named
+[33m│[0m [0m"kubernetes" with the source address "hashicorp/kubernetes".
+[33m│[0m [0m
+[33m│[0m [0m(and 3 more similar warnings elsewhere)
+[33m╵[0m[0m
+[0m[0m
+[0m[1m[32mTerraform has been successfully initialized![0m[32m[0m
+[0m[32m
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "eks_admin_principal_arn"
+[33m│[0m [0mbut a value was found in file "/root/Terraform/terraform.tfvars". If you
+[33m│[0m [0mmeant to use this value, add a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "eks_public_access_cidrs"
+[33m│[0m [0mbut a value was found in file "/root/Terraform/terraform.tfvars". If you
+[33m│[0m [0mmeant to use this value, add a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValues for undeclared variables[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mIn addition to the other similar warnings shown, 8 other variable(s)
+[33m│[0m [0mdefined without being declared.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mReference to undefined provider[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on main.tf line 13, in module "domain":
+[33m│[0m [0m  13:     [4mkubernetes[0m        = kubernetes[0m
+[33m│[0m [0m
+[33m│[0m [0mThere is no explicit declaration for local provider name "kubernetes" in
+[33m│[0m [0mmodule.domain, so Terraform is assuming you mean to pass a configuration
+[33m│[0m [0mfor "hashicorp/kubernetes".
+[33m│[0m [0m
+[33m│[0m [0mIf you also control the child module, add a required_providers entry named
+[33m│[0m [0m"kubernetes" with the source address "hashicorp/kubernetes".
+[33m│[0m [0m
+[33m│[0m [0m(and one more similar warning elsewhere)
+[33m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mUnsupported argument[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on main.tf line 22, in module "domain":
+[31m│[0m [0m  22:   [4mcloudfront_waf_web_acl_arn[0m = data.terraform_remote_state.certificate.outputs.cloudfront_waf_web_acl_arn[0m
+[31m│[0m [0m
+[31m│[0m [0mAn argument named "cloudfront_waf_web_acl_arn" is not expected here.
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mUnsupported argument[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on main.tf line 23, in module "domain":
+[31m│[0m [0m  23:   [4mseoul_waf_web_acl_arn[0m      = data.terraform_remote_state.certificate.outputs.seoul_waf_web_acl_arn[0m
+[31m│[0m [0m
+[31m│[0m [0mAn argument named "seoul_waf_web_acl_arn" is not expected here.
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mUnsupported argument[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on main.tf line 24, in module "domain":
+[31m│[0m [0m  24:   [4moregon_waf_web_acl_arn[0m     = data.terraform_remote_state.certificate.outputs.oregon_waf_web_acl_arn[0m
+[31m│[0m [0m
+[31m│[0m [0mAn argument named "oregon_waf_web_acl_arn" is not expected here.
+[31m╵[0m[0m
+⚠️  Warning: Destroy failed for 07-domain-cf (exit code: 1), but continuing to next stack...
+
+========== DESTROY: 06-certificate ==========
+
+[0m[1mInitializing the backend...[0m
+[0m[1mInitializing modules...[0m
+- waf in 
+[31m[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mUnreadable module directory[0m
+[31m│[0m [0m
+[31m│[0m [0m[0mUnable to evaluate directory symlink: lstat ../modules/waf: no such file or
+[31m│[0m [0mdirectory
+[31m╵[0m[0m
+[0m[0m
+[31m[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mUnreadable module directory[0m
+[31m│[0m [0m
+[31m│[0m [0m[0mThe directory  could not be read for module "waf" at main.tf:19.
+[31m╵[0m[0m
+[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mModule not installed[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on main.tf line 19:
+[31m│[0m [0m  19: [4mmodule "waf"[0m {[0m
+[31m│[0m [0m
+[31m│[0m [0mThis module's local cache directory  could not be read. Run "terraform
+[31m│[0m [0minit" to install all modules required by this configuration.
+[31m╵[0m[0m
+⚠️  Warning: Destroy failed for 06-certificate (exit code: 1), but continuing to next stack...
+
+========== DESTROY: 05-argocd ==========
+
+[0m[1mInitializing the backend...[0m
+[0m[1mInitializing modules...[0m
+
+[0m[1mInitializing provider plugins...[0m
+- terraform.io/builtin/terraform is built in to Terraform
+- Reusing previous version of hashicorp/kubernetes from the dependency lock file
+- Reusing previous version of hashicorp/helm from the dependency lock file
+- Using previously-installed hashicorp/helm v2.17.0
+- Using previously-installed hashicorp/kubernetes v2.38.0
+
+[33m[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mReference to undefined provider[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on main.tf line 9, in module "argocd":
+[33m│[0m [0m   9:     [4mhelm[0m              = helm[0m
+[33m│[0m [0m
+[33m│[0m [0mThere is no explicit declaration for local provider name "helm" in
+[33m│[0m [0mmodule.argocd, so Terraform is assuming you mean to pass a configuration
+[33m│[0m [0mfor "hashicorp/helm".
+[33m│[0m [0m
+[33m│[0m [0mIf you also control the child module, add a required_providers entry named
+[33m│[0m [0m"helm" with the source address "hashicorp/helm".
+[33m│[0m [0m
+[33m│[0m [0m(and 7 more similar warnings elsewhere)
+[33m╵[0m[0m
+[0m[0m
+[0m[1m[32mTerraform has been successfully initialized![0m[32m[0m
+[0m[32m
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.[0m
+
+[0m[1m[32mNo changes.[0m[1m No objects need to be destroyed.[0m
+
+[0mEither you have not created any objects yet or the existing objects were
+already deleted outside of Terraform.
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "onprem_public_ip" but a
+[33m│[0m [0mvalue was found in file "/root/Terraform/terraform.tfvars". If you meant to
+[33m│[0m [0muse this value, add a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "key_name_usa" but a
+[33m│[0m [0mvalue was found in file "/root/Terraform/terraform.tfvars". If you meant to
+[33m│[0m [0muse this value, add a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValues for undeclared variables[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mIn addition to the other similar warnings shown, 9 other variable(s)
+[33m│[0m [0mdefined without being declared.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mReference to undefined provider[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on main.tf line 9, in module "argocd":
+[33m│[0m [0m   9:     [4mhelm[0m              = helm[0m
+[33m│[0m [0m
+[33m│[0m [0mThere is no explicit declaration for local provider name "helm" in
+[33m│[0m [0mmodule.argocd, so Terraform is assuming you mean to pass a configuration
+[33m│[0m [0mfor "hashicorp/helm".
+[33m│[0m [0m
+[33m│[0m [0mIf you also control the child module, add a required_providers entry named
+[33m│[0m [0m"helm" with the source address "hashicorp/helm".
+[33m│[0m [0m
+[33m│[0m [0m(and 3 more similar warnings elsewhere)
+[33m╵[0m[0m
+[0m[1m[32m
+Destroy complete! Resources: 0 destroyed.
+[0m
+========== DESTROY: 04-addons ==========
+
+[0m[1mInitializing the backend...[0m
+[0m[1mInitializing modules...[0m
+
+[0m[1mInitializing provider plugins...[0m
+- terraform.io/builtin/terraform is built in to Terraform
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Reusing previous version of hashicorp/kubernetes from the dependency lock file
+- Reusing previous version of hashicorp/helm from the dependency lock file
+- Using previously-installed hashicorp/aws v5.100.0
+- Using previously-installed hashicorp/kubernetes v2.38.0
+- Using previously-installed hashicorp/helm v2.17.0
+
+[33m[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mReference to undefined provider[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on main.tf line 9, in module "addons":
+[33m│[0m [0m   9:     [4maws[0m.seoul         = aws.seoul[0m
+[33m│[0m [0m
+[33m│[0m [0mThere is no explicit declaration for local provider name "aws.seoul" in
+[33m│[0m [0mmodule.addons, so Terraform is assuming you mean to pass a configuration
+[33m│[0m [0mfor "hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0mIf you also control the child module, add a required_providers entry named
+[33m│[0m [0m"aws.seoul" with the source address "hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0m(and 11 more similar warnings elsewhere)
+[33m╵[0m[0m
+[0m[0m
+[0m[1m[32mTerraform has been successfully initialized![0m[32m[0m
+[0m[32m
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.[0m
+
+[0m[1m[32mNo changes.[0m[1m No objects need to be destroyed.[0m
+
+[0mEither you have not created any objects yet or the existing objects were
+already deleted outside of Terraform.
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "admin_cidr" but a value
+[33m│[0m [0mwas found in file "/root/Terraform/terraform.tfvars". If you meant to use
+[33m│[0m [0mthis value, add a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "domain_name" but a value
+[33m│[0m [0mwas found in file "/root/Terraform/terraform.tfvars". If you meant to use
+[33m│[0m [0mthis value, add a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValues for undeclared variables[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mIn addition to the other similar warnings shown, 9 other variable(s)
+[33m│[0m [0mdefined without being declared.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mReference to undefined provider[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on main.tf line 9, in module "addons":
+[33m│[0m [0m   9:     [4maws[0m.seoul         = aws.seoul[0m
+[33m│[0m [0m
+[33m│[0m [0mThere is no explicit declaration for local provider name "aws.seoul" in
+[33m│[0m [0mmodule.addons, so Terraform is assuming you mean to pass a configuration
+[33m│[0m [0mfor "hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0mIf you also control the child module, add a required_providers entry named
+[33m│[0m [0m"aws.seoul" with the source address "hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0m(and 5 more similar warnings elsewhere)
+[33m╵[0m[0m
+[0m[1m[32m
+Destroy complete! Resources: 0 destroyed.
+[0m
+========== DESTROY: 03-database ==========
+
+[0m[1mInitializing the backend...[0m
+[0m[1mInitializing modules...[0m
+
+[0m[1mInitializing provider plugins...[0m
+- terraform.io/builtin/terraform is built in to Terraform
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Using previously-installed hashicorp/aws v5.100.0
+
+[33m[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mReference to undefined provider[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on main.tf line 10, in module "database":
+[33m│[0m [0m  10:     [4maws[0m.seoul  = aws.seoul[0m
+[33m│[0m [0m
+[33m│[0m [0mThere is no explicit declaration for local provider name "aws.seoul" in
+[33m│[0m [0mmodule.database, so Terraform is assuming you mean to pass a configuration
+[33m│[0m [0mfor "hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0mIf you also control the child module, add a required_providers entry named
+[33m│[0m [0m"aws.seoul" with the source address "hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0m(and 3 more similar warnings elsewhere)
+[33m╵[0m[0m
+[0m[0m
+[0m[1m[32mTerraform has been successfully initialized![0m[32m[0m
+[0m[32m
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.[0m
+
+[0m[1m[32mNo changes.[0m[1m No objects need to be destroyed.[0m
+
+[0mEither you have not created any objects yet or the existing objects were
+already deleted outside of Terraform.
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "key_name_kor" but a
+[33m│[0m [0mvalue was found in file "/root/Terraform/terraform.tfvars". If you meant to
+[33m│[0m [0muse this value, add a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "eks_admin_principal_arn"
+[33m│[0m [0mbut a value was found in file "/root/Terraform/terraform.tfvars". If you
+[33m│[0m [0mmeant to use this value, add a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValues for undeclared variables[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mIn addition to the other similar warnings shown, 7 other variable(s)
+[33m│[0m [0mdefined without being declared.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mReference to undefined provider[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on main.tf line 10, in module "database":
+[33m│[0m [0m  10:     [4maws[0m.seoul  = aws.seoul[0m
+[33m│[0m [0m
+[33m│[0m [0mThere is no explicit declaration for local provider name "aws.seoul" in
+[33m│[0m [0mmodule.database, so Terraform is assuming you mean to pass a configuration
+[33m│[0m [0mfor "hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0mIf you also control the child module, add a required_providers entry named
+[33m│[0m [0m"aws.seoul" with the source address "hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0m(and one more similar warning elsewhere)
+[33m╵[0m[0m
+[0m[1m[32m
+Destroy complete! Resources: 0 destroyed.
+[0m
+========== DESTROY: 02-kubernetes ==========
+
+[0m[1mInitializing the backend...[0m
+[0m[1mInitializing modules...[0m
+
+[0m[1mInitializing provider plugins...[0m
+- terraform.io/builtin/terraform is built in to Terraform
+- Reusing previous version of hashicorp/tls from the dependency lock file
+- Reusing previous version of hashicorp/time from the dependency lock file
+- Reusing previous version of hashicorp/null from the dependency lock file
+- Reusing previous version of hashicorp/cloudinit from the dependency lock file
+- Reusing previous version of hashicorp/helm from the dependency lock file
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Using previously-installed hashicorp/tls v4.1.0
+- Using previously-installed hashicorp/time v0.13.1
+- Using previously-installed hashicorp/null v3.2.4
+- Using previously-installed hashicorp/cloudinit v2.3.7
+- Using previously-installed hashicorp/helm v2.17.0
+- Using previously-installed hashicorp/aws v5.100.0
+
+[33m[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mReference to undefined provider[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on main.tf line 37, in module "ecr":
+[33m│[0m [0m  37:     [4maws[0m.seoul  = aws.seoul[0m
+[33m│[0m [0m
+[33m│[0m [0mThere is no explicit declaration for local provider name "aws.seoul" in
+[33m│[0m [0mmodule.ecr, so Terraform is assuming you mean to pass a configuration for
+[33m│[0m [0m"hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0mIf you also control the child module, add a required_providers entry named
+[33m│[0m [0m"aws.seoul" with the source address "hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0m(and 3 more similar warnings elsewhere)
+[33m╵[0m[0m
+[0m[0m
+[0m[1m[32mTerraform has been successfully initialized![0m[32m[0m
+[0m[32m
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.[0m
+[0m[1mdata.terraform_remote_state.infra: Reading...[0m[0m
+[0m[1mdata.terraform_remote_state.infra: Read complete after 0s[0m
+[0m[1mmodule.eks.module.eks_seoul.module.eks_managed_node_group["standard-worker"].data.aws_iam_policy_document.assume_role_policy[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_seoul.data.aws_caller_identity.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_seoul.data.aws_partition.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_seoul.module.eks_managed_node_group["standard-worker"].data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2560088296][0m
+[0m[1mmodule.ecr.data.aws_caller_identity.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_seoul.module.kms.data.aws_caller_identity.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_seoul.module.eks_managed_node_group["standard-worker"].data.aws_partition.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_seoul.data.aws_partition.current[0]: Read complete after 0s [id=aws][0m
+[0m[1mmodule.eks.module.eks_seoul.module.kms.data.aws_partition.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_seoul.module.kms.data.aws_partition.current[0]: Read complete after 0s [id=aws][0m
+[0m[1mmodule.eks.module.eks_seoul.module.eks_managed_node_group["standard-worker"].data.aws_caller_identity.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_seoul.module.eks_managed_node_group["standard-worker"].data.aws_partition.current: Read complete after 1s [id=aws][0m
+[0m[1mmodule.eks.module.eks_seoul.data.aws_iam_policy_document.custom[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_seoul.data.aws_iam_policy_document.assume_role_policy[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_seoul.data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2830595799][0m
+[0m[1mmodule.eks.module.eks_seoul.data.aws_iam_policy_document.custom[0]: Read complete after 0s [id=513122117][0m
+[0m[1mmodule.eks.module.eks_seoul.module.kms.data.aws_caller_identity.current[0]: Read complete after 1s [id=404457776061][0m
+[0m[1mmodule.eks.module.eks_seoul.data.aws_caller_identity.current[0]: Read complete after 1s [id=404457776061][0m
+[0m[1mmodule.eks.module.eks_seoul.data.aws_iam_session_context.current[0]: Reading...[0m[0m
+[0m[1mmodule.ecr.data.aws_caller_identity.current: Read complete after 1s [id=404457776061][0m
+[0m[1mmodule.eks.module.eks_seoul.data.aws_iam_session_context.current[0]: Read complete after 0s [id=arn:aws:iam::404457776061:user/Yeom_Seongsik][0m
+[0m[1mmodule.eks.module.cluster_autoscaler_irsa_oregon.data.aws_partition.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.cluster_autoscaler_irsa_seoul.data.aws_caller_identity.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.cluster_autoscaler_irsa_oregon.data.aws_caller_identity.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.cluster_autoscaler_irsa_seoul.data.aws_region.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.cluster_autoscaler_irsa_oregon.data.aws_region.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.cluster_autoscaler_irsa_seoul.data.aws_partition.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.cluster_autoscaler_irsa_oregon.data.aws_partition.current: Read complete after 0s [id=aws][0m
+[0m[1mmodule.eks.module.cluster_autoscaler_irsa_oregon.data.aws_region.current: Read complete after 0s [id=ap-northeast-2][0m
+[0m[1mmodule.eks.module.cluster_autoscaler_irsa_seoul.data.aws_partition.current: Read complete after 0s [id=aws][0m
+[0m[1mmodule.eks.module.cluster_autoscaler_irsa_seoul.data.aws_region.current: Read complete after 0s [id=ap-northeast-2][0m
+[0m[1mmodule.eks.module.eks_seoul.module.eks_managed_node_group["standard-worker"].data.aws_caller_identity.current: Read complete after 0s [id=404457776061][0m
+[0m[1mmodule.eks.module.cluster_autoscaler_irsa_seoul.data.aws_caller_identity.current: Read complete after 0s [id=404457776061][0m
+[0m[1mmodule.eks.module.cluster_autoscaler_irsa_oregon.data.aws_caller_identity.current: Read complete after 0s [id=404457776061][0m
+[0m[1mmodule.eks.module.eks_oregon.module.eks_managed_node_group["standard-worker"].data.aws_partition.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_oregon.data.aws_iam_policy_document.assume_role_policy[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_oregon.module.kms.data.aws_caller_identity.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_oregon.data.aws_caller_identity.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_oregon.module.eks_managed_node_group["standard-worker"].data.aws_caller_identity.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_oregon.module.eks_managed_node_group["standard-worker"].data.aws_iam_policy_document.assume_role_policy[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_oregon.data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2830595799][0m
+[0m[1mmodule.eks.module.eks_oregon.module.eks_managed_node_group["standard-worker"].data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2560088296][0m
+[0m[1mmodule.eks.module.eks_oregon.module.eks_managed_node_group["standard-worker"].data.aws_partition.current: Read complete after 0s [id=aws][0m
+[0m[1mmodule.eks.module.eks_oregon.data.aws_partition.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_oregon.module.kms.data.aws_partition.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_oregon.module.kms.data.aws_partition.current[0]: Read complete after 0s [id=aws][0m
+[0m[1mmodule.eks.module.eks_oregon.data.aws_partition.current[0]: Read complete after 0s [id=aws][0m
+[0m[1mmodule.eks.module.eks_oregon.data.aws_iam_policy_document.custom[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_oregon.data.aws_iam_policy_document.custom[0]: Read complete after 0s [id=513122117][0m
+[0m[1mmodule.eks.module.eks_oregon.data.aws_caller_identity.current[0]: Read complete after 1s [id=404457776061][0m
+[0m[1mmodule.eks.module.eks_oregon.data.aws_iam_session_context.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_oregon.data.aws_iam_session_context.current[0]: Read complete after 0s [id=arn:aws:iam::404457776061:user/Yeom_Seongsik][0m
+[0m[1mmodule.eks.module.eks_oregon.module.kms.data.aws_caller_identity.current[0]: Read complete after 1s [id=404457776061][0m
+[0m[1mmodule.eks.module.eks_oregon.module.eks_managed_node_group["standard-worker"].data.aws_caller_identity.current: Read complete after 1s [id=404457776061][0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "onprem_private_cidr" but
+[33m│[0m [0ma value was found in file "/root/Terraform/terraform.tfvars". If you meant
+[33m│[0m [0mto use this value, add a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "admin_cidr" but a value
+[33m│[0m [0mwas found in file "/root/Terraform/terraform.tfvars". If you meant to use
+[33m│[0m [0mthis value, add a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValues for undeclared variables[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mIn addition to the other similar warnings shown, 7 other variable(s)
+[33m│[0m [0mdefined without being declared.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mReference to undefined provider[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on main.tf line 37, in module "ecr":
+[33m│[0m [0m  37:     [4maws[0m.seoul  = aws.seoul[0m
+[33m│[0m [0m
+[33m│[0m [0mThere is no explicit declaration for local provider name "aws.seoul" in
+[33m│[0m [0mmodule.ecr, so Terraform is assuming you mean to pass a configuration for
+[33m│[0m [0m"hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0mIf you also control the child module, add a required_providers entry named
+[33m│[0m [0m"aws.seoul" with the source address "hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0m(and one more similar warning elsewhere)
+[33m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mUnsupported attribute[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on main.tf line 24, in module "eks":
+[31m│[0m [0m  24:   kor_vpc_id                 = data.terraform_remote_state.infra.outputs[4m.kor_vpc_id[0m[0m
+[31m│[0m [0m    [90m├────────────────[0m
+[31m│[0m [0m[0m    [90m│[0m [1mdata.terraform_remote_state.infra.outputs[0m is object with no attributes
+[31m│[0m [0m[0m
+[31m│[0m [0mThis object does not have an attribute named "kor_vpc_id".
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mUnsupported attribute[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on main.tf line 25, in module "eks":
+[31m│[0m [0m  25:   kor_private_eks_subnet_ids = data.terraform_remote_state.infra.outputs[4m.kor_private_eks_subnet_ids[0m[0m
+[31m│[0m [0m    [90m├────────────────[0m
+[31m│[0m [0m[0m    [90m│[0m [1mdata.terraform_remote_state.infra.outputs[0m is object with no attributes
+[31m│[0m [0m[0m
+[31m│[0m [0mThis object does not have an attribute named "kor_private_eks_subnet_ids".
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mUnsupported attribute[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on main.tf line 26, in module "eks":
+[31m│[0m [0m  26:   usa_vpc_id                 = data.terraform_remote_state.infra.outputs[4m.usa_vpc_id[0m[0m
+[31m│[0m [0m    [90m├────────────────[0m
+[31m│[0m [0m[0m    [90m│[0m [1mdata.terraform_remote_state.infra.outputs[0m is object with no attributes
+[31m│[0m [0m[0m
+[31m│[0m [0mThis object does not have an attribute named "usa_vpc_id".
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mUnsupported attribute[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on main.tf line 27, in module "eks":
+[31m│[0m [0m  27:   usa_private_eks_subnet_ids = data.terraform_remote_state.infra.outputs[4m.usa_private_eks_subnet_ids[0m[0m
+[31m│[0m [0m    [90m├────────────────[0m
+[31m│[0m [0m[0m    [90m│[0m [1mdata.terraform_remote_state.infra.outputs[0m is object with no attributes
+[31m│[0m [0m[0m
+[31m│[0m [0mThis object does not have an attribute named "usa_private_eks_subnet_ids".
+[31m╵[0m[0m
+⚠️  Warning: Destroy failed for 02-kubernetes (exit code: 1), but continuing to next stack...
+
+========== DESTROY: 01-infra ==========
+
+[0m[1mInitializing the backend...[0m
+[0m[1mInitializing modules...[0m
+
+[0m[1mInitializing provider plugins...[0m
+- Reusing previous version of hashicorp/time from the dependency lock file
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Using previously-installed hashicorp/time v0.13.1
+- Using previously-installed hashicorp/aws v5.100.0
+
+[33m[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mReference to undefined provider[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on main.tf line 10, in module "network":
+[33m│[0m [0m  10:     [4maws[0m.seoul  = aws.seoul[0m
+[33m│[0m [0m
+[33m│[0m [0mThere is no explicit declaration for local provider name "aws.seoul" in
+[33m│[0m [0mmodule.network, so Terraform is assuming you mean to pass a configuration
+[33m│[0m [0mfor "hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0mIf you also control the child module, add a required_providers entry named
+[33m│[0m [0m"aws.seoul" with the source address "hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0m(and 3 more similar warnings elsewhere)
+[33m╵[0m[0m
+[0m[0m
+[0m[1m[32mTerraform has been successfully initialized![0m[32m[0m
+[0m[32m
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mError acquiring the state lock[0m
+[31m│[0m [0m
+[31m│[0m [0m[0mError message: resource temporarily unavailable
+[31m│[0m [0mLock Info:
+[31m│[0m [0m  ID:        311bfa04-a9ea-6ec8-6ea3-c5beb887216e
+[31m│[0m [0m  Path:      terraform.tfstate
+[31m│[0m [0m  Operation: OperationTypeApply
+[31m│[0m [0m  Who:       root@u22
+[31m│[0m [0m  Version:   1.6.6
+[31m│[0m [0m  Created:   2026-01-12 07:06:31.085611593 +0000 UTC
+[31m│[0m [0m  Info:      
+[31m│[0m [0m
+[31m│[0m [0m
+[31m│[0m [0mTerraform acquires a state lock to protect the state from being written
+[31m│[0m [0mby multiple users at the same time. Please resolve the issue above and try
+[31m│[0m [0magain. For most commands, you can disable locking with the "-lock=false"
+[31m│[0m [0mflag, but this is not recommended.
+[31m╵[0m[0m
+⚠️  Warning: Destroy failed for 01-infra (exit code: 1), but continuing to next stack...
+
+========== Destroy 스크립트 실행 완료 ==========

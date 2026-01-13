@@ -24,14 +24,14 @@ output "dvo_www" {
 }
 
 # ===== WAF =====
-output "cloudfront_waf_web_acl_arn" {
-  value = module.waf.cloudfront_web_acl_arn
-}
-
-output "seoul_waf_web_acl_arn" {
-  value = module.waf.seoul_web_acl_arn
-}
-
-output "oregon_waf_web_acl_arn" {
-  value = module.waf.oregon_web_acl_arn
-}
+# output "cloudfront_waf_web_acl_arn" {
+#   value = module.waf.cloudfront_web_acl_arn
+# }
+#
+# output "seoul_waf_web_acl_arn" {
+#   value = module.waf.seoul_web_acl_arn
+# }
+#
+# output "oregon_waf_web_acl_arn" {
+#   value = module.waf.oregon_web_acl_arn
+# }

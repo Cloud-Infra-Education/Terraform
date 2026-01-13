@@ -22,7 +22,7 @@ variable "argocd_app_name" {
 variable "argocd_app_repo_url" {
   description = "깃허브 Manifest 레포 URL"
   type        = string
-  default     = "https://github.com/MaxJagger/formation-lap-eve-manifests.git"
+  default     = "https://github.com/Cloud-Infra-Education/Manifests.git"
 }
 
 variable "argocd_app_path" {
@@ -32,7 +32,7 @@ variable "argocd_app_path" {
 
 variable "argocd_app_target_revision" {
   type    = string
-  default = "main"
+  default = "feat/#1"  # 현재 Manifests 저장소의 기본 브랜치
 }
 
 variable "argocd_app_destination_namespace" {

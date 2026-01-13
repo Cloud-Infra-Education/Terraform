@@ -19,6 +19,10 @@ output "seoul_eks_workers_sg_id" {
   value = module.eks_seoul.node_security_group_id
 }
 
+output "seoul_cluster_autoscaler_irsa_role_arn" {
+  value = module.cluster_autoscaler_irsa_seoul.iam_role_arn
+}
+
 # ========== Oregon Region ============
 output "oregon_cluster_name" {
   value = module.eks_oregon.cluster_name
@@ -38,4 +42,8 @@ output "oregon_oidc_provider_arn" {
 
 output "oregon_eks_workers_sg_id" {
   value = module.eks_oregon.node_security_group_id
+}
+
+output "oregon_cluster_autoscaler_irsa_role_arn" {
+  value = module.cluster_autoscaler_irsa_oregon.iam_role_arn
 }

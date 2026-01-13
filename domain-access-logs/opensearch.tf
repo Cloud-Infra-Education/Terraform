@@ -14,9 +14,8 @@ resource "aws_opensearch_domain" "route53_logs" {
     volume_type = "gp3"
   }
 
-  # 보안 설정: IAM 기반 접근 제어 + Fine-grained access control
+  # 보안 설정: IAM 기반 접근 제어
   # Lambda 함수와 현재 AWS 계정의 IAM 사용자/역할이 접근 가능
-  # anonymous 사용자도 허용하되, 실제 인증은 FGAC에서 처리
   access_policies = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -32,14 +31,6 @@ resource "aws_opensearch_domain" "route53_logs" {
         Effect = "Allow"
         Principal = {
           AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
-        }
-        Action   = "es:*"
-        Resource = "arn:aws:es:${var.aws_region}:${data.aws_caller_identity.current.account_id}:domain/${var.opensearch_domain_name}/*"
-      },
-      {
-        Effect = "Allow"
-        Principal = {
-          AWS = "*"
         }
         Action   = "es:*"
         Resource = "arn:aws:es:${var.aws_region}:${data.aws_caller_identity.current.account_id}:domain/${var.opensearch_domain_name}/*"

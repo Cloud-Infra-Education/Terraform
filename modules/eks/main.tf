@@ -48,32 +48,7 @@ module "cluster_autoscaler_irsa_seoul" {
   }
 }
 
-resource "helm_release" "cluster_autoscaler_seoul" {
-  name       = "y2om-eks-autoscaler-seoul"
-  repository = "https://kubernetes.github.io/autoscaler"
-  chart      = "cluster-autoscaler"
-  namespace  = "kube-system"
-  version    = "9.37.0"
-
-  set {
-    name  = "autoDiscovery.clusterName"
-    value = module.eks_seoul.cluster_name
-  }
-  set {
-    name  = "awsRegion"
-    value = "ap-northeast-2"
-  }
-  set {
-    name  = "rbac.serviceAccount.name"
-    value = "cluster-autoscaler"
-  }
-  set {
-    name  = "rbac.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.cluster_autoscaler_irsa_seoul.iam_role_arn
-  }
-
-  depends_on = [module.eks_seoul]
-}
+# Helm 리소스는 02-kubernetes/helm.tf로 이동됨
 
 # ================= Oregon Region ==================
 module "eks_oregon" {
@@ -125,30 +100,4 @@ module "cluster_autoscaler_irsa_oregon" {
   }
 }
 
-resource "helm_release" "cluster_autoscaler_oregon" {
-  provider   = helm.oregon
-  name       = "y2om-eks-autoscaler-oregon"
-  repository = "https://kubernetes.github.io/autoscaler"
-  chart      = "cluster-autoscaler"
-  namespace  = "kube-system"
-  version    = "9.37.0"
-
-  set {
-    name  = "autoDiscovery.clusterName"
-    value = module.eks_oregon.cluster_name
-  }
-  set {
-    name  = "awsRegion"
-    value = "us-west-2"
-  }
-  set {
-    name  = "rbac.serviceAccount.name"
-    value = "cluster-autoscaler"
-  }
-  set {
-    name  = "rbac.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.cluster_autoscaler_irsa_oregon.iam_role_arn
-  }
-
-  depends_on = [module.eks_oregon]
-}
+# Helm 리소스는 02-kubernetes/helm.tf로 이동됨

@@ -1,6 +1,5 @@
 resource "aws_iam_policy" "alb_controller" {
-  #name = "AWSLoadBalancerControllerIAMPolicy"
-  name = "yuh-AWSLoadBalancerControllerIAMPolicy"
+  name = "AWSLoadBalancerControllerIAMPolicy"
 
   policy = file("${path.module}/iam_policy.json")
 }

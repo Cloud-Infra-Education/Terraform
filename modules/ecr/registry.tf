@@ -19,7 +19,8 @@ resource "aws_ecr_repository" "product" {
 
 
 
-/*
+
+
 resource "aws_ecr_repository" "user_oregon" {
   provider             = aws.oregon
   name                 = "user-service"
@@ -38,4 +39,4 @@ resource "aws_ecr_repository" "product_oregon" {
   image_tag_mutability = "IMMUTABLE"
   force_delete         = true 
 }
-*/
+

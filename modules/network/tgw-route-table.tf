@@ -3,7 +3,7 @@ resource "aws_ec2_transit_gateway_route_table" "kor" {
   transit_gateway_id = aws_ec2_transit_gateway.kor.id
 
   tags = {
-    Name = "KOR1-TGW-RT"
+    Name = "KOR-TGW-RT"
   }
 }
 
@@ -12,6 +12,6 @@ resource "aws_ec2_transit_gateway_route_table" "usa" {
   transit_gateway_id = aws_ec2_transit_gateway.usa.id
 
   tags = {
-    Name = "USA1-TGW-RT"
+    Name = "USA-TGW-RT"
   }
 }

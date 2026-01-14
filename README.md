@@ -6,7 +6,10 @@
 3. [테스트 가이드](#테스트-가이드)
 4. [Git 협업 가이드](#git-협업-가이드)
 5. [프로젝트 구조](#프로젝트-구조)
-6. [현재 상태](#현재-상태)
+6. [Backend API 배포](#backend-api-배포)
+7. [데이터베이스 연결 문제 해결](#데이터베이스-연결-문제-해결)
+8. [Keycloak 설정 및 토큰 발급](#keycloak-설정-및-토큰-발급)
+9. [현재 상태](#현재-상태)
 
 ---
 
@@ -1054,3 +1057,97 @@ cd /root/Terraform
 2. ArgoCD 앱 설치 (클러스터 활성화 후 진행)
 3. Domain 설정 (CloudFront, ACM, Ingress)
 4. Global Accelerator 구성
+
+---
+
+## Backend API 배포 (Terraform)
+
+### 개요
+
+Backend API를 EKS 워커 노드에 파드로 배포하는 Terraform 설정입니다.
+
+### EKS 워커 노드 보안 그룹 설정
+
+EKS 워커 노드는 다음 보안 그룹 규칙이 자동으로 설정됩니다:
+
+1. **RDS Proxy 접근 권한** (이미 설정됨)
+   - EKS 워커 노드 보안 그룹 → RDS Proxy 보안 그룹 (포트 3306)
+   - 설정 위치: `modules/database/security-group.tf`
+   - 규칙: `kor_eks_to_proxy`, `usa_eks_to_proxy`
+
+2. **ALB에서 파드로의 트래픽**
+   - ALB는 파드의 IP 주소로 직접 트래픽을 전달합니다 (target-type: ip)
+   - 별도의 보안 그룹 규칙이 필요하지 않습니다
+   - ALB Ingress Controller가 자동으로 처리합니다
+
+### Terraform 변수 설정
+
+`terraform.tfvars` 파일에 다음 변수들을 추가하거나 수정:
+
+```hcl
+# ECR 리포지토리 URL
+ecr_repository_url = "404457776061.dkr.ecr.ap-northeast-2.amazonaws.com/backend-api"
+
+# 데이터베이스 설정
+db_name = "y2om_db"
+
+# Keycloak 설정
+keycloak_client_secret = "your-client-secret"  # Keycloak에서 생성 후 설정
+keycloak_admin_username = "admin"
+keycloak_admin_password = "admin"
+
+# Meilisearch 설정 (Kubernetes 서비스 사용 시 빈 값)
+meilisearch_url = ""  # 또는 "http://meilisearch-service:7700"
+meilisearch_api_key = "masterKey123"
+```
+
+### Terraform 적용
+
+```bash
+cd /root/Terraform
+terraform init
+terraform plan -target=module.domain
+terraform apply -target=module.domain
+```
+
+또는 자동화 스크립트 사용:
+
+```bash
+cd /root/Terraform
+./scripts/deploy-backend-api.sh
+```
+
+### 배포 확인
+
+```bash
+# 파드 상태 확인
+kubectl get pods -n formation-lap -l app=backend-api
+
+# 서비스 확인
+kubectl get svc -n formation-lap backend-api-service
+
+# 로그 확인
+kubectl logs -n formation-lap -l app=backend-api --tail=50
+
+# Ingress 확인
+kubectl get ingress -n formation-lap msa-ingress
+```
+
+### 접근 경로
+
+#### 외부 접근
+- **ALB를 통한 접근**: `https://api.matchacake.click/api/v1/health`
+- **Swagger UI (API 문서)**: `https://api.matchacake.click/docs`
+  - Swagger UI에서 테스트하는 모든 엔드포인트(예: `/api/v1/auth/register`)는 EKS 워커 노드에서 실행 중인 서비스를 호출합니다
+  - 로컬 서버가 아닌 EKS 클러스터의 실제 서비스를 가리킵니다
+- **Ingress 설정**: `modules/domain/ingress-seoul.tf`에서 `/api` 경로가 `backend-api-service`로 라우팅됩니다
+
+#### 클러스터 내부 접근
+- **서비스 이름**: `backend-api-service.formation-lap.svc.cluster.local:8000`
+- **단축 이름**: `backend-api-service:8000` (같은 네임스페이스 내)
+
+### 보안 그룹 규칙
+- EKS 워커 노드 → RDS Proxy (포트 3306) - 이미 설정됨
+- RDS Proxy → RDS Cluster (포트 3306) - 이미 설정됨
+
+**자세한 내용은 `/root/Backend/README.md`를 참고하세요.**

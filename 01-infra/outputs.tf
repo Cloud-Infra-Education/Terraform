@@ -25,3 +25,27 @@ output "usa_private_db_subnet_ids" {
 output "origin_bucket_name" {
   value = module.s3.origin_bucket_name
 }
+
+output "kor_bastion_security_group_id" {
+  value = module.network.kor_bastion_security_group_id
+}
+
+output "usa_bastion_security_group_id" {
+  value = module.network.usa_bastion_security_group_id
+}
+
+output "kor_bastion_public_ip" {
+  value = module.network.kor_bastion_public_ip
+}
+
+output "usa_bastion_public_ip" {
+  value = module.network.usa_bastion_public_ip
+}
+
+output "kor_bastion_instance_id" {
+  value = module.network.kor_bastion_instance_id
+}
+
+output "usa_bastion_instance_id" {
+  value = module.network.usa_bastion_instance_id
+}

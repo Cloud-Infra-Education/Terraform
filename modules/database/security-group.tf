@@ -55,6 +55,19 @@ resource "aws_security_group_rule" "kor_eks_to_proxy" {
   source_security_group_id = var.seoul_eks_workers_sg_id
 }
 
+# ----- Bastion ----> Proxy (for Backend development/testing)
+resource "aws_security_group_rule" "kor_bastion_to_proxy" {
+  provider = aws.seoul
+  count    = var.seoul_bastion_sg_id != null ? 1 : 0
+
+  type                     = "ingress"
+  from_port                = var.db_port
+  to_port                  = var.db_port
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.proxy_kor.id
+  source_security_group_id = var.seoul_bastion_sg_id
+}
+
 # ============= Oregon Region DB Cluster =============
 resource "aws_security_group" "db_usa" {
   provider = aws.oregon
@@ -111,3 +124,15 @@ resource "aws_security_group_rule" "usa_eks_to_proxy" {
   source_security_group_id = var.oregon_eks_workers_sg_id
 }
 
+# ----- Bastion ----> Proxy (for Backend development/testing)
+resource "aws_security_group_rule" "usa_bastion_to_proxy" {
+  provider = aws.oregon
+  count    = var.oregon_bastion_sg_id != null ? 1 : 0
+
+  type                     = "ingress"
+  from_port                = var.db_port
+  to_port                  = var.db_port
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.proxy_usa.id
+  source_security_group_id = var.oregon_bastion_sg_id
+}

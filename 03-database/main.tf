@@ -19,6 +19,9 @@ module "database" {
   seoul_eks_workers_sg_id  = data.terraform_remote_state.kubernetes.outputs.seoul_eks_workers_sg_id
   oregon_eks_workers_sg_id = data.terraform_remote_state.kubernetes.outputs.oregon_eks_workers_sg_id
 
+  seoul_bastion_sg_id  = data.terraform_remote_state.infra.outputs.kor_bastion_security_group_id
+  oregon_bastion_sg_id = data.terraform_remote_state.infra.outputs.usa_bastion_security_group_id
+
   db_username = var.db_username
   db_password = var.db_password
   our_team    = var.our_team

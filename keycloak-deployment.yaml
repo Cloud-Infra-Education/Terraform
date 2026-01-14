@@ -35,31 +35,33 @@ spec:
         image: quay.io/keycloak/keycloak:latest
         args:
           - start-dev
-            env:
-              - name: KEYCLOAK_ADMIN
-                value: "admin"
-              - name: KEYCLOAK_ADMIN_PASSWORD
-                value: "admin"
-              - name: KC_BOOTSTRAP_ADMIN_USERNAME
-                value: "admin"
-              - name: KC_BOOTSTRAP_ADMIN_PASSWORD
-                value: "admin"
-              - name: KC_DB
-                value: "dev-file"
-              - name: KC_HOSTNAME
-                value: "keycloak.matchacake.click"
-              - name: KC_HOSTNAME_STRICT
-                value: "false"
-              - name: KC_HOSTNAME_STRICT_HTTPS
-                value: "false"
-              - name: KC_HTTP_ENABLED
-                value: "true"
-              - name: KC_HOSTNAME_STRICT_BACKCHANNEL
-                value: "false"
-              - name: KC_PROXY
-                value: "edge"
-              - name: KC_PROXY_HEADERS
-                value: "xforwarded"
+        env:
+          - name: KEYCLOAK_ADMIN
+            value: "admin"
+          - name: KEYCLOAK_ADMIN_PASSWORD
+            value: "admin"
+          - name: KC_BOOTSTRAP_ADMIN_USERNAME
+            value: "admin"
+          - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+            value: "admin"
+          - name: KC_DB
+            value: "dev-file"
+          - name: KC_HOSTNAME
+            value: "api.matchacake.click"
+          - name: KC_HTTP_RELATIVE_PATH
+            value: "/keycloak"
+          - name: KC_HOSTNAME_STRICT
+            value: "false"
+          - name: KC_HOSTNAME_STRICT_HTTPS
+            value: "false"
+          - name: KC_HTTP_ENABLED
+            value: "true"
+          - name: KC_HOSTNAME_STRICT_BACKCHANNEL
+            value: "false"
+          - name: KC_PROXY
+            value: "edge"
+          - name: KC_PROXY_HEADERS
+            value: "xforwarded"
         ports:
         - containerPort: 8080
           name: http

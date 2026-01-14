@@ -34,6 +34,46 @@ resource "kubernetes_manifest" "msa_ingress_seoul" {
           http = {
             paths = [
               {
+                path     = "/api"
+                pathType = "Prefix"
+                backend = {
+                  service = {
+                    name = "backend-api-service"
+                    port = { number = 8000 }
+                  }
+                }
+              },
+              {
+                path     = "/api/docs"
+                pathType = "Exact"
+                backend = {
+                  service = {
+                    name = "backend-api-service"
+                    port = { number = 8000 }
+                  }
+                }
+              },
+              {
+                path     = "/api/openapi.json"
+                pathType = "Exact"
+                backend = {
+                  service = {
+                    name = "backend-api-service"
+                    port = { number = 8000 }
+                  }
+                }
+              },
+              {
+                path     = "/docs"
+                pathType = "Prefix"
+                backend = {
+                  service = {
+                    name = "backend-api-service"
+                    port = { number = 8000 }
+                  }
+                }
+              },
+              {
                 path     = "/users"
                 pathType = "Prefix"
                 backend = {
@@ -60,6 +100,16 @@ resource "kubernetes_manifest" "msa_ingress_seoul" {
                   service = {
                     name = "product-service"
                     port = { number = 8000 }
+                  }
+                }
+              },
+              {
+                path     = "/keycloak"
+                pathType = "Prefix"
+                backend = {
+                  service = {
+                    name = "keycloak-service"
+                    port = { number = 8080 }
                   }
                 }
               }

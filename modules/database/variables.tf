@@ -33,6 +33,18 @@ variable "oregon_eks_workers_sg_id" {
   default = null
 }
 
+variable "seoul_bastion_sg_id" {
+  description = "Seoul region bastion security group ID"
+  type        = string
+  default     = null
+}
+
+variable "oregon_bastion_sg_id" {
+  description = "Oregon region bastion security group ID"
+  type        = string
+  default     = null
+}
+
 variable "our_team" {
   type = string
 }

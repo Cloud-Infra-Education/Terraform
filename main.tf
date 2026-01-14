@@ -19,8 +19,6 @@ module "eks" {
   providers = {
     aws.seoul   = aws.seoul
     aws.oregon  = aws.oregon
-    helm        = helm
-    helm.oregon = helm.oregon
   }
 
   kor_vpc_id                 = module.network.kor_vpc_id
@@ -123,13 +121,25 @@ module "domain" {
   domain_name = var.domain_name
   our_team    = var.our_team
 
-  origin_bucket_name = module.s3.origin_bucket_name
-  acm_arn_api_seoul  = module.acm.acm_arn_api_seoul
-  acm_arn_api_oregon = module.acm.acm_arn_api_oregon
-  acm_arn_www        = module.acm.acm_arn_www
-  dvo_api_seoul      = module.acm.dvo_api_seoul
-  dvo_api_oregon     = module.acm.dvo_api_oregon
-  dvo_www            = module.acm.dvo_www
+  origin_bucket_name      = module.s3.origin_bucket_name
+  acm_arn_api_seoul       = module.acm.acm_arn_api_seoul
+  acm_arn_api_oregon      = module.acm.acm_arn_api_oregon
+  acm_arn_www             = module.acm.acm_arn_www
+  dvo_api_seoul           = module.acm.dvo_api_seoul
+  dvo_api_oregon          = module.acm.dvo_api_oregon
+  dvo_www                 = module.acm.dvo_www
+
+  # Backend API 배포 관련 변수
+  ecr_repository_url      = var.ecr_repository_url != "" ? var.ecr_repository_url : ""
+  kor_db_proxy_endpoint   = module.database.kor_db_proxy_endpoint
+  db_username             = var.db_username
+  db_password             = var.db_password
+  db_name                 = var.db_name != "" ? var.db_name : "y2om_db"
+  keycloak_client_secret  = var.keycloak_client_secret != "" ? var.keycloak_client_secret : ""
+  keycloak_admin_username = var.keycloak_admin_username != "" ? var.keycloak_admin_username : "admin"
+  keycloak_admin_password = var.keycloak_admin_password != "" ? var.keycloak_admin_password : "admin"
+  meilisearch_url         = var.meilisearch_url != "" ? var.meilisearch_url : ""
+  meilisearch_api_key     = var.meilisearch_api_key != "" ? var.meilisearch_api_key : "masterKey123"
 }
 
 module "ga" {

@@ -18,11 +18,6 @@ variable "www_subdomain" {
   default = "www"
 }
 
-variable "keycloak_subdomain" {
-  type    = string
-  default = "keycloak"
-  description = "Keycloak subdomain (e.g., 'keycloak' for keycloak.matchacake.click)"
-}
 # ===============
 # CloudFront 관련 
 # ===============
@@ -74,14 +69,6 @@ variable "acm_arn_api_oregon" {
 variable "acm_arn_www" {
   type = string
 }
-variable "acm_arn_keycloak_seoul" {
-  type = string
-  description = "ACM certificate ARN for Keycloak in Seoul region"
-}
-variable "acm_arn_keycloak_oregon" {
-  type = string
-  description = "ACM certificate ARN for Keycloak in Oregon region"
-}
 variable "dvo_api_seoul" {
   type = list(object({
     domain_name           = string
@@ -106,23 +93,73 @@ variable "dvo_www" {
     resource_record_value = string
   }))
 }
-variable "dvo_keycloak_seoul" {
-  type    = list(object({
-    domain_name           = string
-    resource_record_name  = string
-    resource_record_type  = string
-    resource_record_value = string
-  }))
-  default = []
+
+# ===============
+# Backend API 배포 관련 변수
+# ===============
+variable "ecr_repository_url" {
+  type        = string
+  description = "ECR repository URL for Backend API image"
+  default     = ""
 }
-variable "dvo_keycloak_oregon" {
-  type    = list(object({
-    domain_name           = string
-    resource_record_name  = string
-    resource_record_type  = string
-    resource_record_value = string
-  }))
-  default = []
+
+variable "kor_db_proxy_endpoint" {
+  type        = string
+  description = "Korea RDS Proxy endpoint"
+  default     = ""
+}
+
+variable "db_username" {
+  type        = string
+  description = "Database username"
+  default     = ""
+  sensitive   = true
+}
+
+variable "db_password" {
+  type        = string
+  description = "Database password"
+  default     = ""
+  sensitive   = true
+}
+
+variable "db_name" {
+  type        = string
+  description = "Database name"
+  default     = "y2om_db"
+}
+
+variable "keycloak_client_secret" {
+  type        = string
+  description = "Keycloak client secret"
+  default     = ""
+  sensitive   = true
+}
+
+variable "keycloak_admin_username" {
+  type        = string
+  description = "Keycloak admin username"
+  default     = "admin"
+}
+
+variable "keycloak_admin_password" {
+  type        = string
+  description = "Keycloak admin password"
+  default     = "admin"
+  sensitive   = true
+}
+
+variable "meilisearch_url" {
+  type        = string
+  description = "Meilisearch URL"
+  default     = ""
+}
+
+variable "meilisearch_api_key" {
+  type        = string
+  description = "Meilisearch API key"
+  default     = "masterKey123"
+  sensitive   = true
 }
 
 

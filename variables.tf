@@ -159,4 +159,52 @@ variable "db_password" {
   sensitive   = true
 }
 
+variable "db_name" {
+  description = "Database name"
+  type        = string
+  default     = "y2om_db"
+}
+
+# ================
+# Backend API 배포 관련 변수
+# ================
+variable "ecr_repository_url" {
+  description = "ECR repository URL for Backend API image (e.g., 123456789012.dkr.ecr.ap-northeast-2.amazonaws.com/backend-api)"
+  type        = string
+  default     = ""
+}
+
+variable "keycloak_client_secret" {
+  description = "Keycloak client secret"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
+variable "keycloak_admin_username" {
+  description = "Keycloak admin username"
+  type        = string
+  default     = "admin"
+}
+
+variable "keycloak_admin_password" {
+  description = "Keycloak admin password"
+  type        = string
+  default     = "admin"
+  sensitive   = true
+}
+
+variable "meilisearch_url" {
+  description = "Meilisearch URL (if empty, uses default Kubernetes service)"
+  type        = string
+  default     = ""
+}
+
+variable "meilisearch_api_key" {
+  description = "Meilisearch API key"
+  type        = string
+  default     = "masterKey123"
+  sensitive   = true
+}
+
 

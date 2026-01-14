@@ -64,6 +64,16 @@ resource "kubernetes_manifest" "msa_ingress_oregon" {
                     port = { number = 8000 }
                   }
                 }
+              },
+              {
+                path     = "/keycloak"
+                pathType = "Prefix"
+                backend = {
+                  service = {
+                    name = "keycloak-service"
+                    port = { number = 8080 }
+                  }
+                }
               }
             ]
           }

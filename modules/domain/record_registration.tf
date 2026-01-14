@@ -72,37 +72,23 @@ resource "aws_route53_record" "api_cert_validation" {
   allow_overwrite = true
 }
 
-#============= Keycloak 인증서 검증용 CNAME 레코드 =============
-# Keycloak 인증서가 생성되면 자동으로 검증 레코드 생성
-locals {
-  keycloak_seoul_dvo = length(var.dvo_keycloak_seoul) > 0 ? {
-    for dvo in var.dvo_keycloak_seoul :
-    "${dvo.resource_record_name}|${dvo.resource_record_type}" => {
-      name  = dvo.resource_record_name
-      type  = dvo.resource_record_type
-      value = dvo.resource_record_value
-    }
-  } : {}
-
-  keycloak_oregon_dvo = length(var.dvo_keycloak_oregon) > 0 ? {
-    for dvo in var.dvo_keycloak_oregon :
-    "${dvo.resource_record_name}|${dvo.resource_record_type}" => {
-      name  = dvo.resource_record_name
-      type  = dvo.resource_record_type
-      value = dvo.resource_record_value
-    }
-  } : {}
-
-  keycloak_validation_records = merge(local.keycloak_seoul_dvo, local.keycloak_oregon_dvo)
+#============= API ALB 직접 연결 (Global Accelerator 없이) =============
+# Seoul ALB를 data source로 가져오기
+data "aws_lb" "api_seoul" {
+  provider = aws.seoul
+  name     = "matchacake-alb-test-seoul"
 }
 
-resource "aws_route53_record" "keycloak_cert_validation" {
-  for_each = local.keycloak_validation_records
+# api.matchacake.click A 레코드 (Seoul ALB 직접 연결)
+resource "aws_route53_record" "api_a" {
+  zone_id = data.aws_route53_zone.public.zone_id
+  name    = "${var.api_subdomain}.${var.domain_name}"
+  type    = "A"
 
-  zone_id         = data.aws_route53_zone.public.zone_id
-  name            = each.value.name
-  type            = each.value.type
-  ttl             = 60
-  records         = [each.value.value]
-  allow_overwrite = true
+  alias {
+    name                   = data.aws_lb.api_seoul.dns_name
+    zone_id                = data.aws_lb.api_seoul.zone_id
+    evaluate_target_health = true
+  }
 }
+

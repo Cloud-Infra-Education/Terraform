@@ -73,3 +73,9 @@ variable "proxy_connection_borrow_timeout" {
   type        = number
   default     = 120
 }
+
+variable "db_name" {
+  description = "Database name"
+  type        = string
+  default     = "ott_db"
+}

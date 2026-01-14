@@ -17,9 +17,23 @@ resource "aws_ecr_repository" "product" {
   force_delete         = true 
 }
 
+resource "aws_ecr_repository" "video_processor" {
+  provider             = aws.seoul
+  name                 = "video-processor"
+  image_tag_mutability = "IMMUTABLE"
+  force_delete         = true 
+}
+
+resource "aws_ecr_repository" "alert_service" {
+  provider             = aws.seoul
+  name                 = "alert-service"
+  image_tag_mutability = "IMMUTABLE"
+  force_delete         = true 
+}
 
 
-/*
+
+
 resource "aws_ecr_repository" "user_oregon" {
   provider             = aws.oregon
   name                 = "user-service"
@@ -38,4 +52,15 @@ resource "aws_ecr_repository" "product_oregon" {
   image_tag_mutability = "IMMUTABLE"
   force_delete         = true 
 }
-*/
+resource "aws_ecr_repository" "video_processor_oregon" {
+  provider             = aws.oregon
+  name                 = "video-processor"
+  image_tag_mutability = "IMMUTABLE"
+  force_delete         = true
+}
+resource "aws_ecr_repository" "alert_service_oregon" {
+  provider             = aws.oregon
+  name                 = "alert-service"
+  image_tag_mutability = "IMMUTABLE"
+  force_delete         = true
+}

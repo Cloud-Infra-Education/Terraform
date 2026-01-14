@@ -21,5 +21,14 @@ module "network" {
 module "s3" {
   source = "../modules/s3"
 
+  providers = {
+    aws = aws.seoul
+  }
+
   origin_bucket_name = var.origin_bucket_name
+  our_team          = var.our_team
+
+  # VPC 및 Route Table 정보 (S3 Gateway Endpoint용)
+  vpc_id                 = module.network.kor_vpc_id
+  private_route_table_ids = module.network.kor_private_route_table_ids
 }

@@ -1,0 +1,245 @@
+[0m[1mdata.terraform_remote_state.kubernetes: Reading...[0m[0m
+[0m[1mdata.terraform_remote_state.infra: Reading...[0m[0m
+[0m[1mdata.terraform_remote_state.infra: Read complete after 0s[0m
+[0m[1mdata.terraform_remote_state.kubernetes: Read complete after 0s[0m
+[0m[1mmodule.database.data.aws_iam_policy_document.rds_proxy_assume_role: Reading...[0m[0m
+[0m[1maws_iam_role.video_exec: Refreshing state... [id=formation-lap-video-processor-role][0m
+[0m[1maws_iam_policy.video_custom: Refreshing state... [id=arn:aws:iam::404457776061:policy/formation-lap-video-custom-policy][0m
+[0m[1mmodule.database.data.aws_iam_policy_document.rds_proxy_assume_role: Read complete after 0s [id=2562693050][0m
+[0m[1mmodule.database.data.aws_secretsmanager_secret.kor_db: Reading...[0m[0m
+[0m[1mmodule.database.aws_db_subnet_group.kor: Refreshing state... [id=yuh-kor-db-subnet-group][0m
+[0m[1mmodule.database.aws_security_group.lambda_sg: Refreshing state... [id=sg-0840c00410dafcfe3][0m
+[0m[1mmodule.database.aws_security_group.db_kor: Refreshing state... [id=sg-0dc6a10bfd26b1f02][0m
+[0m[1mmodule.database.aws_iam_role.kor_rds_proxy: Refreshing state... [id=formation-lap-yuh-KOR-RDS-Proxy-Role][0m
+[0m[1mmodule.database.aws_secretsmanager_secret.bastion_ssh_key: Refreshing state... [id=arn:aws:secretsmanager:ap-northeast-2:404457776061:secret:formation-lap/bastion/ssh-key-QfyWzt][0m
+[0m[1mmodule.database.aws_security_group.proxy_kor: Refreshing state... [id=sg-046949dd3cb94acd2][0m
+[0m[1mmodule.database.data.aws_secretsmanager_secret.kor_db: Read complete after 0s [id=arn:aws:secretsmanager:ap-northeast-2:404457776061:secret:formation-lap/db/dev/credentials-4rct3d][0m
+[0m[1mmodule.database.data.aws_secretsmanager_secret_version.kor_db: Reading...[0m[0m
+[0m[1mmodule.database.aws_security_group_rule.kor_eks_to_proxy[0]: Refreshing state... [id=sgrule-1429008731][0m
+[0m[1mmodule.database.aws_security_group_rule.kor_lambda_to_proxy: Refreshing state... [id=sgrule-3894256966][0m
+[0m[1mmodule.database.aws_security_group_rule.kor_proxy_to_db: Refreshing state... [id=sgrule-1812877062][0m
+[0m[1mmodule.database.aws_security_group_rule.kor_lambda_to_db: Refreshing state... [id=sgrule-1086092626][0m
+[0m[1mmodule.database.data.aws_secretsmanager_secret_version.kor_db: Read complete after 0s [id=arn:aws:secretsmanager:ap-northeast-2:404457776061:secret:formation-lap/db/dev/credentials-4rct3d|AWSCURRENT][0m
+[0m[1mmodule.database.aws_rds_cluster.kor: Refreshing state... [id=yuh-kor-aurora-mysql][0m
+[0m[1mmodule.database.aws_rds_cluster_instance.kor_reader: Refreshing state... [id=kor-reader-yuh][0m
+[0m[1mmodule.database.aws_rds_cluster_instance.kor_writer: Refreshing state... [id=kor-writer-yuh][0m
+[0m[1mmodule.database.data.aws_secretsmanager_secret.usa_db: Reading...[0m[0m
+[0m[1mmodule.database.aws_security_group.db_usa: Refreshing state... [id=sg-090b4ce6d3a124ae3][0m
+[0m[1mmodule.database.aws_security_group.proxy_usa: Refreshing state... [id=sg-0d822241ea9af1e59][0m
+[0m[1mmodule.database.aws_iam_role.usa_rds_proxy: Refreshing state... [id=formation-lap-yuh-USA-RDS-Proxy-Role][0m
+[0m[1mmodule.database.aws_db_subnet_group.usa: Refreshing state... [id=yuh-usa-db-subnet-group][0m
+[0m[1mmodule.database.data.aws_secretsmanager_secret.usa_db: Read complete after 1s [id=arn:aws:secretsmanager:us-west-2:404457776061:secret:formation-lap/db/dev/credentials-wcqjhT][0m
+[0m[1mmodule.database.data.aws_secretsmanager_secret_version.usa_db: Reading...[0m[0m
+[0m[1mmodule.database.aws_security_group_rule.usa_eks_to_proxy[0]: Refreshing state... [id=sgrule-4267478455][0m
+[0m[1mmodule.database.aws_security_group_rule.usa_proxy_to_db: Refreshing state... [id=sgrule-2589780761][0m
+[0m[1maws_iam_role_policy_attachment.video_vpc: Refreshing state... [id=formation-lap-video-processor-role-20260114062930331900000002][0m
+[0m[1maws_iam_role_policy_attachment.video_custom_attach: Refreshing state... [id=formation-lap-video-processor-role-20260114062930320000000001][0m
+[0m[1mmodule.database.data.aws_secretsmanager_secret_version.usa_db: Read complete after 0s [id=arn:aws:secretsmanager:us-west-2:404457776061:secret:formation-lap/db/dev/credentials-wcqjhT|AWSCURRENT][0m
+[0m[1mmodule.database.aws_rds_cluster.usa: Refreshing state... [id=yuh-usa-aurora-mysql][0m
+[0m[1mmodule.database.aws_iam_role_policy.kor_rds_proxy: Refreshing state... [id=formation-lap-yuh-KOR-RDS-Proxy-Role:formation-lap-KOR-RDS-Proxy-Secrets-Policy][0m
+[0m[1mmodule.database.aws_db_proxy.kor: Refreshing state... [id=formation-lap-yuh-kor-rds-proxy][0m
+[0m[1mmodule.database.aws_db_proxy_default_target_group.kor: Refreshing state... [id=formation-lap-yuh-kor-rds-proxy][0m
+[0m[1mmodule.database.aws_db_proxy_target.kor_cluster: Refreshing state... [id=formation-lap-yuh-kor-rds-proxy/default/TRACKED_CLUSTER/yuh-kor-aurora-mysql][0m
+[0m[1mmodule.database.aws_rds_cluster_instance.usa_writer: Refreshing state... [id=usa-writer-yuh][0m
+[0m[1mmodule.database.aws_rds_cluster_instance.usa_reader: Refreshing state... [id=usa-reader-yuh][0m
+[0m[1mmodule.database.aws_iam_role_policy.usa_rds_proxy: Refreshing state... [id=formation-lap-yuh-USA-RDS-Proxy-Role:formation-lap-USA-RDS-Proxy-Secrets-Policy][0m
+[0m[1mmodule.database.aws_db_proxy.usa: Refreshing state... [id=formation-lap-yuh-usa-rds-proxy][0m
+[0m[1mmodule.database.aws_db_proxy_default_target_group.usa: Refreshing state... [id=formation-lap-yuh-usa-rds-proxy][0m
+[0m[1mmodule.database.aws_db_proxy_target.usa_cluster: Refreshing state... [id=formation-lap-yuh-usa-rds-proxy/default/TRACKED_CLUSTER/yuh-usa-aurora-mysql][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [32m+[0m create[0m
+
+Terraform will perform the following actions:
+
+[1m  # aws_lambda_function.video_processor[0m will be created
+[0m  [32m+[0m[0m resource "aws_lambda_function" "video_processor" {
+      [32m+[0m[0m architectures                  = (known after apply)
+      [32m+[0m[0m arn                            = (known after apply)
+      [32m+[0m[0m code_sha256                    = (known after apply)
+      [32m+[0m[0m function_name                  = "formation-lap-video-processor"
+      [32m+[0m[0m id                             = (known after apply)
+      [32m+[0m[0m image_uri                      = "404457776061.dkr.ecr.ap-northeast-2.amazonaws.com/yuh-video-processor:v1"
+      [32m+[0m[0m invoke_arn                     = (known after apply)
+      [32m+[0m[0m last_modified                  = (known after apply)
+      [32m+[0m[0m memory_size                    = 2048
+      [32m+[0m[0m package_type                   = "Image"
+      [32m+[0m[0m publish                        = false
+      [32m+[0m[0m qualified_arn                  = (known after apply)
+      [32m+[0m[0m qualified_invoke_arn           = (known after apply)
+      [32m+[0m[0m reserved_concurrent_executions = -1
+      [32m+[0m[0m role                           = "arn:aws:iam::404457776061:role/formation-lap-video-processor-role"
+      [32m+[0m[0m signing_job_arn                = (known after apply)
+      [32m+[0m[0m signing_profile_version_arn    = (known after apply)
+      [32m+[0m[0m skip_destroy                   = false
+      [32m+[0m[0m source_code_hash               = (known after apply)
+      [32m+[0m[0m source_code_size               = (known after apply)
+      [32m+[0m[0m tags_all                       = (known after apply)
+      [32m+[0m[0m timeout                        = 600
+      [32m+[0m[0m version                        = (known after apply)
+
+      [32m+[0m[0m environment {
+          [32m+[0m[0m variables = {
+              [32m+[0m[0m "BASTION_HOST"          = "10.33.1.74"
+              [32m+[0m[0m "BASTION_USER"          = "ec2-user"
+              [32m+[0m[0m "DB_CREDENTIALS_SECRET" = "formation-lap/db/dev/credentials"
+              [32m+[0m[0m "DB_HOST"               = "formation-lap-yuh-kor-rds-proxy.proxy-c902seqsaaps.ap-northeast-2.rds.amazonaws.com"
+              [32m+[0m[0m "DB_NAME"               = "ott_db"
+              [32m+[0m[0m "DB_PASSWORD"           = (sensitive value)
+              [32m+[0m[0m "DB_USER"               = "admin"
+              [32m+[0m[0m "PROXY_ENDPOINT"        = "formation-lap-yuh-kor-rds-proxy.proxy-c902seqsaaps.ap-northeast-2.rds.amazonaws.com"
+              [32m+[0m[0m "RDS_PORT"              = "3306"
+            }
+        }
+
+      [32m+[0m[0m ephemeral_storage (known after apply)
+
+      [32m+[0m[0m logging_config (known after apply)
+
+      [32m+[0m[0m tracing_config (known after apply)
+
+      [32m+[0m[0m vpc_config {
+          [32m+[0m[0m ipv6_allowed_for_dual_stack = false
+          [32m+[0m[0m security_group_ids          = [
+              [32m+[0m[0m "sg-0840c00410dafcfe3",
+            ]
+          [32m+[0m[0m subnet_ids                  = [
+              [32m+[0m[0m "subnet-01f8fd2a6fc08dbf8",
+              [32m+[0m[0m "subnet-0826d0496d6ce074e",
+            ]
+          [32m+[0m[0m vpc_id                      = (known after apply)
+        }
+    }
+
+[1m  # aws_lambda_permission.allow_s3[0m will be created
+[0m  [32m+[0m[0m resource "aws_lambda_permission" "allow_s3" {
+      [32m+[0m[0m action              = "lambda:InvokeFunction"
+      [32m+[0m[0m function_name       = "formation-lap-video-processor"
+      [32m+[0m[0m id                  = (known after apply)
+      [32m+[0m[0m principal           = "s3.amazonaws.com"
+      [32m+[0m[0m source_arn          = "arn:aws:s3:::yuh-team-formation-lap-origin-s3"
+      [32m+[0m[0m statement_id        = "AllowS3Invoke"
+      [32m+[0m[0m statement_id_prefix = (known after apply)
+    }
+
+[1m  # aws_s3_bucket_notification.video_trigger[0m will be created
+[0m  [32m+[0m[0m resource "aws_s3_bucket_notification" "video_trigger" {
+      [32m+[0m[0m bucket      = "yuh-team-formation-lap-origin-s3"
+      [32m+[0m[0m eventbridge = false
+      [32m+[0m[0m id          = (known after apply)
+
+      [32m+[0m[0m lambda_function {
+          [32m+[0m[0m events              = [
+              [32m+[0m[0m "s3:ObjectCreated:*",
+            ]
+          [32m+[0m[0m filter_prefix       = "videos/"
+          [32m+[0m[0m filter_suffix       = ".mp4"
+          [32m+[0m[0m id                  = (known after apply)
+          [32m+[0m[0m lambda_function_arn = (known after apply)
+        }
+    }
+
+[1m  # module.database.aws_secretsmanager_secret.bastion_ssh_key[0m will be created
+[0m  [32m+[0m[0m resource "aws_secretsmanager_secret" "bastion_ssh_key" {
+      [32m+[0m[0m arn                            = (known after apply)
+      [32m+[0m[0m description                    = "SSH private key for Bastion host access"
+      [32m+[0m[0m force_overwrite_replica_secret = false
+      [32m+[0m[0m id                             = (known after apply)
+      [32m+[0m[0m name                           = "formation-lap/bastion/ssh-key"
+      [32m+[0m[0m name_prefix                    = (known after apply)
+      [32m+[0m[0m policy                         = (known after apply)
+      [32m+[0m[0m recovery_window_in_days        = 30
+      [32m+[0m[0m tags                           = {
+          [32m+[0m[0m "Name" = "formation-lap-bastion-ssh-key"
+        }
+      [32m+[0m[0m tags_all                       = {
+          [32m+[0m[0m "Name" = "formation-lap-bastion-ssh-key"
+        }
+
+      [32m+[0m[0m replica (known after apply)
+    }
+
+[1mPlan:[0m [0m4 to add, 0 to change, 0 to destroy.
+[0m[1mmodule.database.aws_secretsmanager_secret.bastion_ssh_key: Creating...[0m[0m
+[0m[1maws_lambda_function.video_processor: Creating...[0m[0m
+[0m[1mmodule.database.aws_secretsmanager_secret.bastion_ssh_key: Still creating... [00m10s elapsed][0m[0m
+[0m[1maws_lambda_function.video_processor: Still creating... [00m10s elapsed][0m[0m
+[0m[1mmodule.database.aws_secretsmanager_secret.bastion_ssh_key: Still creating... [00m20s elapsed][0m[0m
+[0m[1maws_lambda_function.video_processor: Still creating... [00m20s elapsed][0m[0m
+[0m[1mmodule.database.aws_secretsmanager_secret.bastion_ssh_key: Still creating... [00m30s elapsed][0m[0m
+[0m[1maws_lambda_function.video_processor: Still creating... [00m30s elapsed][0m[0m
+[0m[1mmodule.database.aws_secretsmanager_secret.bastion_ssh_key: Still creating... [00m40s elapsed][0m[0m
+[0m[1maws_lambda_function.video_processor: Still creating... [00m40s elapsed][0m[0m
+[0m[1mmodule.database.aws_secretsmanager_secret.bastion_ssh_key: Still creating... [00m50s elapsed][0m[0m
+[0m[1maws_lambda_function.video_processor: Still creating... [00m50s elapsed][0m[0m
+[0m[1mmodule.database.aws_secretsmanager_secret.bastion_ssh_key: Still creating... [01m00s elapsed][0m[0m
+[0m[1maws_lambda_function.video_processor: Still creating... [01m00s elapsed][0m[0m
+[0m[1mmodule.database.aws_secretsmanager_secret.bastion_ssh_key: Still creating... [01m10s elapsed][0m[0m
+[0m[1maws_lambda_function.video_processor: Still creating... [01m10s elapsed][0m[0m
+[0m[1mmodule.database.aws_secretsmanager_secret.bastion_ssh_key: Still creating... [01m20s elapsed][0m[0m
+[0m[1maws_lambda_function.video_processor: Still creating... [01m20s elapsed][0m[0m
+[0m[1mmodule.database.aws_secretsmanager_secret.bastion_ssh_key: Still creating... [01m30s elapsed][0m[0m
+[0m[1maws_lambda_function.video_processor: Still creating... [01m30s elapsed][0m[0m
+[0m[1mmodule.database.aws_secretsmanager_secret.bastion_ssh_key: Still creating... [01m40s elapsed][0m[0m
+[0m[1maws_lambda_function.video_processor: Still creating... [01m40s elapsed][0m[0m
+[0m[1mmodule.database.aws_secretsmanager_secret.bastion_ssh_key: Still creating... [01m50s elapsed][0m[0m
+[0m[1maws_lambda_function.video_processor: Still creating... [01m50s elapsed][0m[0m
+[0m[1maws_lambda_function.video_processor: Still creating... [02m00s elapsed][0m[0m
+[0m[1maws_lambda_function.video_processor: Still creating... [02m10s elapsed][0m[0m
+[0m[1maws_lambda_function.video_processor: Creation complete after 2m12s [id=formation-lap-video-processor][0m
+[0m[1maws_lambda_permission.allow_s3: Creating...[0m[0m
+[0m[1maws_lambda_permission.allow_s3: Creation complete after 0s [id=AllowS3Invoke][0m
+[0m[1maws_s3_bucket_notification.video_trigger: Creating...[0m[0m
+[0m[1maws_s3_bucket_notification.video_trigger: Creation complete after 0s [id=yuh-team-formation-lap-origin-s3][0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "key_name_kor" but a
+[33m│[0m [0mvalue was found in file "terraform.tfvars". If you meant to use this value,
+[33m│[0m [0madd a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe root module does not declare a variable named "key_name_usa" but a
+[33m│[0m [0mvalue was found in file "terraform.tfvars". If you meant to use this value,
+[33m│[0m [0madd a "variable" block to the configuration.
+[33m│[0m [0m
+[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
+[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
+[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValues for undeclared variables[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mIn addition to the other similar warnings shown, 8 other variable(s)
+[33m│[0m [0mdefined without being declared.
+[33m╵[0m[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mReference to undefined provider[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on main.tf line 11, in module "database":
+[33m│[0m [0m  11:     [4maws[0m.seoul  = aws.seoul[0m
+[33m│[0m [0m
+[33m│[0m [0mThere is no explicit declaration for local provider name "aws.seoul" in
+[33m│[0m [0mmodule.database, so Terraform is assuming you mean to pass a configuration
+[33m│[0m [0mfor "hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0mIf you also control the child module, add a required_providers entry named
+[33m│[0m [0m"aws.seoul" with the source address "hashicorp/aws".
+[33m│[0m [0m
+[33m│[0m [0m(and one more similar warning elsewhere)
+[33m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mcreating Secrets Manager Secret (formation-lap/bastion/ssh-key): operation error Secrets Manager: CreateSecret, https response error StatusCode: 400, RequestID: 587825b5-c989-4ab4-b67c-450d5bac2e71, InvalidRequestException: You can't create this secret because a secret with this name is already scheduled for deletion.[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  with module.database.aws_secretsmanager_secret.bastion_ssh_key,
+[31m│[0m [0m  on ../modules/database/bastion-ssh-key.tf line 2, in resource "aws_secretsmanager_secret" "bastion_ssh_key":
+[31m│[0m [0m   2: resource "aws_secretsmanager_secret" "bastion_ssh_key" [4m{[0m[0m
+[31m│[0m [0m
+[31m╵[0m[0m

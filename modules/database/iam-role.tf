@@ -28,7 +28,10 @@ resource "aws_iam_role_policy" "kor_rds_proxy" {
       {
         Effect   = "Allow"
         Action   = ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"]
-        Resource = data.aws_secretsmanager_secret.kor_db.arn
+        Resource = [
+          data.aws_secretsmanager_secret.kor_db.arn
+          # aws_secretsmanager_secret.admin_kor.arn  # 주석 처리됨
+        ]
       }
     ]
   })
@@ -57,4 +60,3 @@ resource "aws_iam_role_policy" "usa_rds_proxy" {
     ]
   })
 }
-

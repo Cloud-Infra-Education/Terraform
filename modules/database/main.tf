@@ -15,6 +15,7 @@ resource "aws_rds_cluster" "kor" {
 
   cluster_identifier = "kor-aurora-mysql"
   engine             = "aurora-mysql"
+  database_name      = "ott_db"
 
   master_username = var.db_username
   master_password = var.db_password
@@ -51,6 +52,7 @@ resource "aws_rds_cluster" "usa" {
 
   cluster_identifier = "usa-aurora-mysql"
   engine             = "aurora-mysql"
+  database_name      = var.db_name
 
   master_username = var.db_username
   master_password = var.db_password

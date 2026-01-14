@@ -5,15 +5,13 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 STACKS=(
   "01-infra"
-  "02-kubernetes"
+  #"02-kubernetes"
   "03-database"
-  "04-addons"
-  "05-argocd"
-  "06-certificate"
-  "07-domain-cf"
-  "08-domain-ga"
-#  "09-"
-  "10-app-monitoring"
+  #"04-addons"
+  #"05-argocd"
+  #"06-certificate"
+  #"07-domain-cf"
+  #"08-domain-ga"
 )
 
 for s in "${STACKS[@]}"; do
@@ -24,4 +22,3 @@ for s in "${STACKS[@]}"; do
     terraform apply -auto-approve
   )
 done
-

@@ -25,3 +25,7 @@ output "usa_private_db_subnet_ids" {
 output "origin_bucket_name" {
   value = module.s3.origin_bucket_name
 }
+
+output "origin_bucket_arn" {
+  value = module.s3.bucket_arn
+}

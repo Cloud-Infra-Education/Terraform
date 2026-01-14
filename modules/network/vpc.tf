@@ -30,6 +30,7 @@ module "kor_vpc" {
   admin_cidr    = var.admin_cidr
   tgw_id        = aws_ec2_transit_gateway.kor.id
   peer_vpc_cidr = "10.1.0.0/16"
+  onprem_private_cidr = var.onprem_private_cidr
 }
 
 module "usa_vpc" {
@@ -64,4 +65,5 @@ module "usa_vpc" {
   admin_cidr    = var.admin_cidr
   tgw_id        = aws_ec2_transit_gateway.usa.id
   peer_vpc_cidr = "10.0.0.0/16"
+  onprem_private_cidr = var.onprem_private_cidr
 }

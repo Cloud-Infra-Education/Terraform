@@ -23,3 +23,8 @@ variable "origin_bucket_region" {
   default = "ap-northeast-2"
 }
 
+variable "keycloak_subdomain" {
+  type    = string
+  default = "keycloak"
+  description = "Keycloak subdomain (e.g., 'keycloak' for keycloak.matchacake.click)"
+}

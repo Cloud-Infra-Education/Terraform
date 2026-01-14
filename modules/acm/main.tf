@@ -5,7 +5,8 @@ locals {
 }
 
 locals {
-  api_fqdn = "${var.api_subdomain}.${var.domain_name}"
+  api_fqdn      = "${var.api_subdomain}.${var.domain_name}"
+  keycloak_fqdn = "keycloak.${var.domain_name}"
 }
 
 
@@ -32,3 +33,16 @@ resource "aws_acm_certificate" "a_www" {
   validation_method = "DNS"
 }
 
+# Keycloak용 인증서 - 서울 리전
+resource "aws_acm_certificate" "keycloak_seoul" {
+  provider          = aws.seoul
+  domain_name       = local.keycloak_fqdn
+  validation_method = "DNS"
+}
+
+# Keycloak용 인증서 - 오레곤 리전
+resource "aws_acm_certificate" "keycloak_oregon" {
+  provider          = aws.oregon
+  domain_name       = local.keycloak_fqdn
+  validation_method = "DNS"
+}

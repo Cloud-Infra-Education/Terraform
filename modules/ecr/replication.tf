@@ -12,7 +12,7 @@ resource "aws_ecr_replication_configuration" "seoul_to_oregon" {
         region      = "us-west-2"
         registry_id = data.aws_caller_identity.current.account_id
       }
-
+/*
       dynamic "repository_filter" {
         for_each = toset(var.ecr_replication_repo_prefixes)
         content {
@@ -20,6 +20,7 @@ resource "aws_ecr_replication_configuration" "seoul_to_oregon" {
           filter_type = "PREFIX_MATCH"
         }
       }
+*/
     }
   }
 }

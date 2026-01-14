@@ -11,13 +11,14 @@ resource "kubernetes_manifest" "msa_ingress_oregon" {
         "alb.ingress.kubernetes.io/scheme"        = "internet-facing"
         "alb.ingress.kubernetes.io/target-type"   = "ip"
         "alb.ingress.kubernetes.io/load-balancer-name" = "matchacake-alb-test-oregon"
+ 
+        "alb.ingress.kubernetes.io/wafv2-acl-arn" = var.oregon_waf_web_acl_arn
 
-        # ✅ 핵심: Oregon 리전 ACM ARN 주입
         "alb.ingress.kubernetes.io/certificate-arn" = var.acm_arn_api_oregon
         "alb.ingress.kubernetes.io/listen-ports" = "[{\"HTTPS\":443}]"
         
         # 80 -> 443 Redirect
-        # "alb.ingress.kubernetes.io/ssl-redirect" = "443"
+        "alb.ingress.kubernetes.io/ssl-redirect" = "443"
       }
     }
     spec = {

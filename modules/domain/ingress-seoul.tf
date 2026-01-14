@@ -11,12 +11,14 @@ resource "kubernetes_manifest" "msa_ingress_seoul" {
         "alb.ingress.kubernetes.io/scheme"        = "internet-facing"
         "alb.ingress.kubernetes.io/target-type"   = "ip"
         "alb.ingress.kubernetes.io/load-balancer-name" = "matchacake-alb-test-seoul"
+        
+        "alb.ingress.kubernetes.io/wafv2-acl-arn" = var.seoul_waf_web_acl_arn
 
         "alb.ingress.kubernetes.io/certificate-arn" = var.acm_arn_api_seoul
         "alb.ingress.kubernetes.io/listen-ports" = "[{\"HTTPS\":443}]"
 
         # 80 -> 443 Redirect
-        # "alb.ingress.kubernetes.io/ssl-redirect" = "443"
+        "alb.ingress.kubernetes.io/ssl-redirect" = "443"
       }
     }
     spec = {

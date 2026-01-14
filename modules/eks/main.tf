@@ -26,8 +26,8 @@ module "eks_seoul" {
       max_size       = 10
 
       tags = {
-        "k8s.io/cluster-autoscaler/enabled"                   = "true"
-        "k8s.io/cluster-autoscaler/formation-lap-seoul" = "owned"
+        "k8s.io/cluster-autoscaler/enabled"                      = "true"
+        "k8s.io/cluster-autoscaler/yuh-formation-lap-seoul" = "owned"
       }
     }
   }
@@ -50,32 +50,40 @@ module "cluster_autoscaler_irsa_seoul" {
   }
 }
 
-resource "helm_release" "cluster_autoscaler_seoul" {
-  name       = "eks-autoscaler-seoul"
-  repository = "https://kubernetes.github.io/autoscaler"
-  chart      = "cluster-autoscaler"
-  namespace  = "kube-system"
-  version    = "9.37.0"
+# 주의: 현재 서버에서 EKS 클러스터 접근이 안 되는 경우,
+# cluster_autoscaler는 나중에 수동으로 설치하거나
+# EKS 클러스터에 접근 가능한 환경에서 설치하세요.
+# 네트워크 연결 문제 해결 후 주석 해제
 
-  set {
-    name  = "autoDiscovery.clusterName"
-    value = module.eks_seoul.cluster_name
-  }
-  set {
-    name  = "awsRegion"
-    value = "ap-northeast-2"
-  }
-  set {
-    name  = "rbac.serviceAccount.name"
-    value = "cluster-autoscaler"
-  }
-  set {
-    name  = "rbac.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.cluster_autoscaler_irsa_seoul.iam_role_arn
-  }
-
-  depends_on = [module.eks_seoul]
-}
+# resource "helm_release" "cluster_autoscaler_seoul" {
+#   name       = "eks-autoscaler-seoul"
+#   repository = "https://kubernetes.github.io/autoscaler"
+#   chart      = "cluster-autoscaler"
+#   namespace  = "kube-system"
+#   version    = "9.37.0"
+#
+#   set {
+#     name  = "autoDiscovery.clusterName"
+#     value = module.eks_seoul.cluster_name
+#   }
+#   set {
+#     name  = "awsRegion"
+#     value = "ap-northeast-2"
+#   }
+#   set {
+#     name  = "rbac.serviceAccount.name"
+#     value = "cluster-autoscaler"
+#   }
+#   set {
+#     name  = "rbac.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+#     value = module.cluster_autoscaler_irsa_seoul.iam_role_arn
+#   }
+#
+#   depends_on = [
+#     module.eks_seoul,
+#     module.cluster_autoscaler_irsa_seoul
+#   ]
+# }
 
 # ================= Oregon Region ==================
 module "eks_oregon" {
@@ -105,8 +113,8 @@ module "eks_oregon" {
       max_size       = 5
 
       tags = {
-        "k8s.io/cluster-autoscaler/enabled"              = "true"
-        "k8s.io/cluster-autoscaler/formation-lap-oregon" = "owned"
+        "k8s.io/cluster-autoscaler/enabled"                      = "true"
+        "k8s.io/cluster-autoscaler/yuh-formation-lap-oregon" = "owned"
       }
     }
   }
@@ -129,30 +137,38 @@ module "cluster_autoscaler_irsa_oregon" {
   }
 }
 
-resource "helm_release" "cluster_autoscaler_oregon" {
-  provider   = helm.oregon
-  name       = "eks-autoscaler-oregon"
-  repository = "https://kubernetes.github.io/autoscaler"
-  chart      = "cluster-autoscaler"
-  namespace  = "kube-system"
-  version    = "9.37.0"
+# 주의: 현재 서버에서 EKS 클러스터 접근이 안 되는 경우,
+# cluster_autoscaler는 나중에 수동으로 설치하거나
+# EKS 클러스터에 접근 가능한 환경에서 설치하세요.
+# 네트워크 연결 문제 해결 후 주석 해제
 
-  set {
-    name  = "autoDiscovery.clusterName"
-    value = module.eks_oregon.cluster_name
-  }
-  set {
-    name  = "awsRegion"
-    value = "us-west-2"
-  }
-  set {
-    name  = "rbac.serviceAccount.name"
-    value = "cluster-autoscaler"
-  }
-  set {
-    name  = "rbac.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.cluster_autoscaler_irsa_oregon.iam_role_arn
-  }
-
-  depends_on = [module.eks_oregon]
-}
+# resource "helm_release" "cluster_autoscaler_oregon" {
+#   provider   = helm.oregon
+#   name       = "eks-autoscaler-oregon"
+#   repository = "https://kubernetes.github.io/autoscaler"
+#   chart      = "cluster-autoscaler"
+#   namespace  = "kube-system"
+#   version    = "9.37.0"
+#
+#   set {
+#     name  = "autoDiscovery.clusterName"
+#     value = module.eks_oregon.cluster_name
+#   }
+#   set {
+#     name  = "awsRegion"
+#     value = "us-west-2"
+#   }
+#   set {
+#     name  = "rbac.serviceAccount.name"
+#     value = "cluster-autoscaler"
+#   }
+#   set {
+#     name  = "rbac.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+#     value = module.cluster_autoscaler_irsa_oregon.iam_role_arn
+#   }
+#
+#   depends_on = [
+#     module.eks_oregon,
+#     module.cluster_autoscaler_irsa_oregon
+#   ]
+# }

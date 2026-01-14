@@ -90,10 +90,13 @@ resource "aws_lambda_function" "video_processor" {
 
   environment {
     variables = {
-      DB_HOST     = module.database.proxy_endpoint
-      DB_USER     = var.db_username
-      DB_PASSWORD = var.db_password
-      DB_NAME     = "ott_db"
+      DB_HOST          = module.database.proxy_endpoint
+      DB_USER          = var.db_username
+      DB_PASSWORD      = var.db_password
+      DB_NAME          = "ott_db"
+      CATALOG_API_BASE = var.catalog_api_base  # FastAPI 도메인 (예: https://api.matchacake.click/api)
+      INTERNAL_TOKEN   = var.internal_token    # FastAPI와 공유하는 내부 토큰
+      TMDB_API_KEY     = var.tmdb_api_key      # TMDB API 키 (선택사항)
     }
   }
 }

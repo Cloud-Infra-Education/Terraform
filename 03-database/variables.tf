@@ -37,3 +37,26 @@ variable "kubernetes_state_path" {
   type        = string
   default     = "../02-kubernetes/terraform.tfstate"
 }
+
+# ============================================
+# Lambda API 연동 설정
+# ============================================
+variable "catalog_api_base" {
+  description = "FastAPI 도메인 (예: https://api.matchacake.click/api)"
+  type        = string
+  default     = ""
+}
+
+variable "internal_token" {
+  description = "FastAPI와 공유하는 내부 토큰 (Lambda ↔ FastAPI 인증용)"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
+variable "tmdb_api_key" {
+  description = "TMDB API 키 (영상 정보 가져오기용, 선택사항)"
+  type        = string
+  sensitive   = true
+  default     = ""
+}

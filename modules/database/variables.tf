@@ -79,4 +79,3 @@ variable "db_name" {
   type        = string
   default     = "ott_db"
 }
-

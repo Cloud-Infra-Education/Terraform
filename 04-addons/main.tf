@@ -1,7 +1,6 @@
 # ============================================================
 # - AWS Load Balancer Controller(IRSA 포함)
-# ============================================================
-
+# ============================================================ 
 resource "null_resource" "seoul_fix_metrics_apiservice" {
   triggers = {
     cluster_name = data.terraform_remote_state.kubernetes.outputs.seoul_cluster_name
@@ -15,12 +14,26 @@ resource "null_resource" "seoul_fix_metrics_apiservice" {
   }
 }
 
+resource "null_resource" "oregon_fix_metrics_apiservice" {
+  triggers = {
+    cluster_name = data.terraform_remote_state.kubernetes.outputs.oregon_cluster_name
+  }
+
+  provisioner "local-exec" {
+    command = <<-EOT
+      aws eks update-kubeconfig --name ${data.terraform_remote_state.kubernetes.outputs.oregon_cluster_name} --region us-west-2
+      kubectl delete apiservice v1.metrics.eks.amazonaws.com --ignore-not-found=true
+    EOT
+  }
+}
+
 
 module "addons" {
   source = "../modules/addons"
 
   depends_on = [
-    null_resource.seoul_fix_metrics_apiservice
+    null_resource.seoul_fix_metrics_apiservice,
+    null_resource.oregon_fix_metrics_apiservice
   ]
 
   providers = {

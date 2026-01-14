@@ -48,6 +48,7 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
 }
 
+/* maxjagger
 resource "aws_subnet" "tgw" {
   count             = length(var.tgw_subnets)
   vpc_id            = aws_vpc.this.id
@@ -59,7 +60,7 @@ resource "aws_subnet" "tgw" {
     Name = var.tgw_subnet_names[count.index]
   }
 }
-
+*/
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.this.id
 

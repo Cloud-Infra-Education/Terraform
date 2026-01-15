@@ -1,6 +1,17 @@
+# Route 53 Hosted Zone 조회 (zone_id가 제공되지 않은 경우에만 사용)
 data "aws_route53_zone" "public" {
-  name         = var.domain_name
+  # Route 53은 글로벌 서비스이므로 기본 provider 사용 (권한 문제 방지)
+  count        = var.route53_zone_id == "" ? 1 : 0
+  name         = "${var.domain_name}."
   private_zone = false
+}
+
+# Local value로 zone_id 결정
+locals {
+  route53_zone_id = coalesce(
+    var.route53_zone_id != "" ? var.route53_zone_id : null,
+    try(data.aws_route53_zone.public[0].zone_id, null)
+  )
 }
 
 locals {
@@ -29,7 +40,8 @@ locals {
 
 #============= CloudFront용 A 레코드 등록 =============
 resource "aws_route53_record" "www_a" {
-  zone_id = data.aws_route53_zone.public.zone_id
+  # Route 53은 글로벌 서비스이므로 기본 provider 사용 (권한 문제 방지)
+  zone_id = local.route53_zone_id
   name    = local.www_fqdn
   type    = "A"
 
@@ -42,6 +54,7 @@ resource "aws_route53_record" "www_a" {
 
 #============= CloudFront용 CNAME 레코드 등록 =============
 resource "aws_route53_record" "www_cert_validation" {
+  # Route 53은 글로벌 서비스이므로 기본 provider 사용 (권한 문제 방지)
   for_each = {
     #    for dvo in aws_acm_certificate.www.domain_validation_options : dvo.domain_name => {
     for dvo in var.dvo_www :
@@ -52,7 +65,7 @@ resource "aws_route53_record" "www_cert_validation" {
     }
   }
 
-  zone_id = data.aws_route53_zone.public.zone_id
+  zone_id = local.route53_zone_id
   name    = each.value.name
   type    = each.value.type
   ttl     = 60
@@ -61,10 +74,11 @@ resource "aws_route53_record" "www_cert_validation" {
 
 #============= Global Accelerator(ALB)용 CNAME 레코드 등록 =============
 resource "aws_route53_record" "api_cert_validation" {
+  # Route 53은 글로벌 서비스이므로 기본 provider 사용 (권한 문제 방지)
   #for_each = var.acm_validation_records ?  local.validation_records : {}
   for_each = local.validation_records
 
-  zone_id         = data.aws_route53_zone.public.zone_id
+  zone_id         = local.route53_zone_id
   name            = each.value.name
   type            = each.value.type
   ttl             = 60
@@ -73,22 +87,24 @@ resource "aws_route53_record" "api_cert_validation" {
 }
 
 #============= API ALB 직접 연결 (Global Accelerator 없이) =============
+# 주석: Global Accelerator를 사용하므로 이 레코드는 08-domain-ga에서 생성됩니다
 # Seoul ALB를 data source로 가져오기
-data "aws_lb" "api_seoul" {
-  provider = aws.seoul
-  name     = "matchacake-alb-test-seoul"
-}
+# data "aws_lb" "api_seoul" {
+#   provider = aws.seoul
+#   name     = "matchacake-alb-test-seoul"
+# }
 
 # api.matchacake.click A 레코드 (Seoul ALB 직접 연결)
-resource "aws_route53_record" "api_a" {
-  zone_id = data.aws_route53_zone.public.zone_id
-  name    = "${var.api_subdomain}.${var.domain_name}"
-  type    = "A"
-
-  alias {
-    name                   = data.aws_lb.api_seoul.dns_name
-    zone_id                = data.aws_lb.api_seoul.zone_id
-    evaluate_target_health = true
-  }
-}
+# 주석: Global Accelerator를 사용하므로 이 리소스는 비활성화
+# resource "aws_route53_record" "api_a" {
+#   zone_id = local.route53_zone_id
+#   name    = "${var.api_subdomain}.${var.domain_name}"
+#   type    = "A"
+#
+#   alias {
+#     name                   = data.aws_lb.api_seoul.dns_name
+#     zone_id                = data.aws_lb.api_seoul.zone_id
+#     evaluate_target_health = true
+#   }
+# }
 

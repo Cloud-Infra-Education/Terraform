@@ -1,5 +1,7 @@
 # Backend API Deployment for Seoul
 resource "kubernetes_deployment_v1" "backend_api_seoul" {
+  wait_for_rollout = false  # 이미지가 없을 때도 deployment 생성 허용
+
   metadata {
     name      = "backend-api"
     namespace = "formation-lap"
@@ -25,9 +27,11 @@ resource "kubernetes_deployment_v1" "backend_api_seoul" {
       }
 
       spec {
+        service_account_name = kubernetes_service_account_v1.backend_api_sa.metadata[0].name
+        
         container {
           name  = "backend-api"
-          image = "${var.ecr_repository_url}/backend-api:latest"  # ECR 이미지 URL 필요
+          image = "${var.ecr_repository_url}:latest"  # ECR 이미지 URL (레포지토리 이름 포함)
 
           port {
             container_port = 8000
@@ -145,6 +149,11 @@ resource "kubernetes_config_map_v1" "backend_config_seoul" {
     # Database (RDS Proxy 사용)
     DB_PORT = "3306"
     DB_NAME = var.db_name
+
+    # S3 & CloudFront
+    S3_BUCKET_NAME     = var.origin_bucket_name
+    S3_REGION          = var.origin_bucket_region
+    CLOUDFRONT_DOMAIN  = "${var.www_subdomain}.${var.domain_name}"
   }
 }
 
@@ -164,7 +173,7 @@ resource "kubernetes_secret_v1" "backend_secrets_seoul" {
     KEYCLOAK_ADMIN_PASSWORD  = var.keycloak_admin_password != "" ? var.keycloak_admin_password : "admin"
 
     # Meilisearch
-    MEILISEARCH_API_KEY = var.meilisearch_api_key != "" ? var.meilisearch_api_key : "masterKey123"
+    MEILISEARCH_API_KEY = var.meilisearch_api_key != "" ? var.meilisearch_api_key : "masterKey1234567890"
 
     # Database (RDS Proxy endpoint 사용, TLS 필수)
     # ssl_disabled=false를 제거해야 pymysql이 SSL을 사용함 (database.py에서 SSL 설정)

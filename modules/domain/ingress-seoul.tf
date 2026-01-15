@@ -34,16 +34,6 @@ resource "kubernetes_manifest" "msa_ingress_seoul" {
           http = {
             paths = [
               {
-                path     = "/api"
-                pathType = "Prefix"
-                backend = {
-                  service = {
-                    name = "backend-api-service"
-                    port = { number = 8000 }
-                  }
-                }
-              },
-              {
                 path     = "/api/docs"
                 pathType = "Exact"
                 backend = {
@@ -56,6 +46,16 @@ resource "kubernetes_manifest" "msa_ingress_seoul" {
               {
                 path     = "/api/openapi.json"
                 pathType = "Exact"
+                backend = {
+                  service = {
+                    name = "backend-api-service"
+                    port = { number = 8000 }
+                  }
+                }
+              },
+              {
+                path     = "/api/v1"
+                pathType = "Prefix"
                 backend = {
                   service = {
                     name = "backend-api-service"

@@ -28,7 +28,7 @@ resource "aws_iam_role_policy" "kor_rds_proxy" {
       {
         Effect   = "Allow"
         Action   = ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"]
-        Resource = data.aws_secretsmanager_secret.kor_db.arn
+        Resource = aws_secretsmanager_secret.kor_db.arn
       }
     ]
   })
@@ -52,7 +52,7 @@ resource "aws_iam_role_policy" "usa_rds_proxy" {
       {
         Effect   = "Allow"
         Action   = ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"]
-        Resource = data.aws_secretsmanager_secret.usa_db.arn
+        Resource = aws_secretsmanager_secret.usa_db.arn
       }
     ]
   })

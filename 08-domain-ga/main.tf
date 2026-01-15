@@ -14,5 +14,6 @@ module "ga" {
 
   ga_name              = var.ga_name
   domain_name          = var.domain_name
+  route53_zone_id       = var.route53_zone_id
   alb_lookup_tag_value = var.alb_lookup_tag_value
 }

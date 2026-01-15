@@ -55,14 +55,13 @@ provider "kubernetes" {
 }
 
 # Helm providers (required by addons and argocd modules)
-# Note: Helm provider 설정이 Terraform 버전에 따라 다를 수 있음
-# Backend 배포에는 직접 필요하지 않지만, addons 모듈에서 필요함
+# Helm provider 3.0+ requires kubernetes as nested object, not block
 provider "helm" {
-  kubernetes {
+  kubernetes = {
     host                   = module.eks.seoul_cluster_endpoint
     cluster_ca_certificate = base64decode(module.eks.seoul_cluster_certificate_authority_data)
 
-    exec {
+    exec = {
       api_version = "client.authentication.k8s.io/v1beta1"
       command     = "aws"
       args = [
@@ -77,11 +76,11 @@ provider "helm" {
 provider "helm" {
   alias = "oregon"
 
-  kubernetes {
+  kubernetes = {
     host                   = module.eks.oregon_cluster_endpoint
     cluster_ca_certificate = base64decode(module.eks.oregon_cluster_certificate_authority_data)
 
-    exec {
+    exec = {
       api_version = "client.authentication.k8s.io/v1beta1"
       command     = "aws"
       args = [

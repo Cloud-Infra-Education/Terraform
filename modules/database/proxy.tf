@@ -14,11 +14,11 @@ resource "aws_db_proxy" "kor" {
 
   auth {
     auth_scheme = "SECRETS"
-    secret_arn  = data.aws_secretsmanager_secret.kor_db.arn
+    secret_arn  = aws_secretsmanager_secret.kor_db.arn
     iam_auth    = "DISABLED"
   }
 
-  depends_on = [data.aws_secretsmanager_secret_version.kor_db]
+  depends_on = [aws_secretsmanager_secret_version.kor_db]
 }
 
 resource "aws_db_proxy_default_target_group" "kor" {
@@ -57,11 +57,11 @@ resource "aws_db_proxy" "usa" {
 
   auth {
     auth_scheme = "SECRETS"
-    secret_arn  = data.aws_secretsmanager_secret.usa_db.arn
+    secret_arn  = aws_secretsmanager_secret.usa_db.arn
     iam_auth    = "DISABLED"
   }
 
-  depends_on = [data.aws_secretsmanager_secret_version.usa_db]
+  depends_on = [aws_secretsmanager_secret_version.usa_db]
 }
 
 resource "aws_db_proxy_default_target_group" "usa" {

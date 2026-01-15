@@ -17,6 +17,13 @@ resource "aws_ecr_repository" "product" {
   force_delete         = true
 }
 
+resource "aws_ecr_repository" "backend_api" {
+  provider             = aws.seoul
+  name                 = "backend-api"
+  image_tag_mutability = "MUTABLE"  # latest 태그 사용을 위해 MUTABLE
+  force_delete         = true
+}
+
 
 
 /*

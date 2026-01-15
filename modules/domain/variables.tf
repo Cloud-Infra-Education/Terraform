@@ -8,6 +8,12 @@ variable "domain_name" {
   type = string
 }
 
+variable "route53_zone_id" {
+  type        = string
+  description = "Route 53 Hosted Zone ID (optional, if not provided will try to lookup by domain name)"
+  default     = ""
+}
+
 variable "api_subdomain" {
   type    = string
   default = "api"
@@ -160,6 +166,12 @@ variable "meilisearch_api_key" {
   description = "Meilisearch API key"
   default     = "masterKey123"
   sensitive   = true
+}
+
+variable "eks_cluster_name" {
+  type        = string
+  description = "EKS cluster name for IRSA"
+  default     = "y2om-formation-lap-seoul"
 }
 
 

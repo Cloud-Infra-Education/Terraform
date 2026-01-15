@@ -16,3 +16,9 @@ variable "alb_lookup_tag_value" {
 variable "domain_name" {
   type = string
 }
+
+variable "route53_zone_id" {
+  type        = string
+  description = "Route 53 Hosted Zone ID (optional, if not provided will try to lookup by domain name)"
+  default     = ""
+}

@@ -5,12 +5,9 @@ locals {
 }
 
 locals {
-  api_fqdn      = "${var.api_subdomain}.${var.domain_name}"
-  keycloak_fqdn = "keycloak.${var.domain_name}"
+  api_fqdn = "${var.api_subdomain}.${var.domain_name}"
+  # keycloak은 api.exampleott.click/keycloak 경로로 사용하므로 별도 서브도메인 불필요
 }
-
-
-
 
 # 서울리전 CNAME 생성
 resource "aws_acm_certificate" "cname_api_seoul" {
@@ -33,16 +30,5 @@ resource "aws_acm_certificate" "a_www" {
   validation_method = "DNS"
 }
 
-# Keycloak용 인증서 - 서울 리전
-resource "aws_acm_certificate" "keycloak_seoul" {
-  provider          = aws.seoul
-  domain_name       = local.keycloak_fqdn
-  validation_method = "DNS"
-}
-
-# Keycloak용 인증서 - 오레곤 리전
-resource "aws_acm_certificate" "keycloak_oregon" {
-  provider          = aws.oregon
-  domain_name       = local.keycloak_fqdn
-  validation_method = "DNS"
-}
+# Keycloak은 api.exampleott.click/keycloak 경로로 사용하므로 별도 인증서 불필요
+# keycloak 서브도메인 인증서는 제거됨

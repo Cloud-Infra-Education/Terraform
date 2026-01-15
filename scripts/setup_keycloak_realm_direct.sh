@@ -1,7 +1,7 @@
 #!/bin/bash
 # Keycloak Realm 및 Client 설정 (직접 실행 버전)
 
-KEYCLOAK_URL="https://api.matchacake.click/keycloak"
+KEYCLOAK_URL="https://api.exampleott.click/keycloak"
 ADMIN_USERNAME="admin"
 ADMIN_PASSWORD="admin"
 REALM_NAME="formation-lap"
@@ -21,7 +21,7 @@ import httpx
 import asyncio
 import json
 
-KEYCLOAK_URL = "https://api.matchacake.click/keycloak"
+KEYCLOAK_URL = "https://api.exampleott.click/keycloak"
 ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "admin"
 REALM_NAME = "formation-lap"

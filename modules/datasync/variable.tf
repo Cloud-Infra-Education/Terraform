@@ -29,3 +29,8 @@ variable "onprem_mg_private_cidr" {
   description = "온프레미스 네트워크 대역"
   type        = string
 }
+
+variable "target_bucket_arn" {
+  description = "인프라에서 생성된 S3 버킷의 ARN"
+  type        = string
+}

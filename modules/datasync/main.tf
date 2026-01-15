@@ -1,26 +1,16 @@
-# 1. 고유한 버킷 생성을 위한 랜덤 ID
-resource "random_id" "bucket_id" {
-  byte_length = 4
-}
-
-# 2. 목적지 S3 버킷
-resource "aws_s3_bucket" "migration_target" {
-  bucket = "${var.our_team}-migration-${random_id.bucket_id.hex}"
-}
-
-# 3. S3 Location
+# 1. 목적지 S3 Location 설정 (인프라 버킷 참조)
 resource "aws_datasync_location_s3" "destination" {
-  s3_bucket_arn = aws_s3_bucket.migration_target.arn
+  s3_bucket_arn = var.target_bucket_arn
   subdirectory  = "/migrated_data"
 
   s3_config {
     bucket_access_role_arn = aws_iam_role.this.arn
   }
-  
+
   depends_on = [aws_iam_role_policy.s3_access]
 }
 
-# 4. On-Premise Location (NFS)
+# 2. On-Premise Location (NFS)
 resource "aws_datasync_location_nfs" "source" {
   server_hostname = var.onprem_private_ip
   subdirectory    = var.onprem_source_path
@@ -30,7 +20,7 @@ resource "aws_datasync_location_nfs" "source" {
   }
 }
 
-# 5. DataSync Task
+# 3. DataSync Task
 resource "aws_datasync_task" "this" {
   name                     = "${var.our_team}-sync-task"
   source_location_arn      = aws_datasync_location_nfs.source.arn
@@ -42,3 +32,5 @@ resource "aws_datasync_task" "this" {
     atime       = "BEST_EFFORT"
   }
 }
+
+

@@ -1,6 +1,7 @@
 variable "our_team" {
   type = string
 }
+
 # =========================
 # Route53 도메인 & A 레코드
 # =========================
@@ -9,32 +10,38 @@ variable "domain_name" {
 }
 
 variable "api_subdomain" {
-  type = string
+  type    = string
   default = "api"
 }
 
 variable "www_subdomain" {
-  type = string
+  type    = string
   default = "www"
 }
+
 # ===============
-# CloudFront 관련 
+# CloudFront 관련
 # ===============
-#버킷명 
+# 버킷명 (원본용)
 variable "origin_bucket_name" {
+  type = string
+}
+
+# [추가] CloudFront 전용 로그 버킷명
+variable "log_bucket_name" {
   type        = string
+  description = "The name of the S3 bucket for CloudFront access logs"
 }
 
 variable "origin_bucket_region" {
-  type        = string
-  default     = "ap-northeast-2"
+  type    = string
+  default = "ap-northeast-2"
 }
 
 variable "default_root_object" {
-  type        = string
-  default     = "index.html"
+  type    = string
+  default = "index.html"
 }
-
 
 # ===============
 # WAF (WAFv2)
@@ -53,7 +60,6 @@ variable "seoul_waf_web_acl_arn" {
 variable "oregon_waf_web_acl_arn" {
   type = string
 }
-
 
 # ======= ACM Output 참조변수 =======
 variable "acm_arn_api_seoul" {
@@ -89,5 +95,3 @@ variable "dvo_www" {
     resource_record_value = string
   }))
 }
-
-

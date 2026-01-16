@@ -1,11 +1,4 @@
-<<<<<<< Updated upstream
-=======
-# ============================================================
-# EKS Cluster Module (Seoul & Oregon)
-# - 팀장님 지시사항: 외부 IP 자동 추출 로직 삭제 및 tfvars 고정 IP 사용
-# ============================================================
 
->>>>>>> Stashed changes
 # ================= Seoul Region ==================
 module "eks_seoul" {
   source  = "terraform-aws-modules/eks/aws"
@@ -23,22 +16,12 @@ module "eks_seoul" {
 
   cluster_endpoint_private_access      = true
   cluster_endpoint_public_access       = true
-<<<<<<< Updated upstream
-=======
-
-  # [수정] 팀장님 지시: 외부 호출(data.http) 없이 오직 변수에 선언된 IP 리스트만 허용
->>>>>>> Stashed changes
   cluster_endpoint_public_access_cidrs = var.eks_public_access_cidrs
-
-  eks_managed_node_groups = {
-    standard-worker = {
-      instance_types = ["t3.large"]
-      desired_size   = 3
       min_size       = 2
       max_size       = 10
 
       tags = {
-        "k8s.io/cluster-autoscaler/enabled"                   = "true"
+        "k8s.io/cluster-autoscaler/enabled"                  = "true"
         "k8s.io/cluster-autoscaler/formation-lap-seoul" = "owned"
       }
     }
@@ -105,29 +88,9 @@ module "eks_oregon" {
 
   cluster_endpoint_private_access      = true
   cluster_endpoint_public_access       = true
-<<<<<<< Updated upstream
-=======
 
-  # [수정] 오레곤 클러스터도 동일하게 고정 IP 변수만 사용
->>>>>>> Stashed changes
+  # 2) 오레곤 클러스터에도 동일하게 실행자 IP를 자동으로 추가
   cluster_endpoint_public_access_cidrs = var.eks_public_access_cidrs
-
-  eks_managed_node_groups = {
-    standard-worker = {
-      instance_types = ["t3.small"]
-      desired_size   = 2
-      min_size       = 2
-      max_size       = 5
-
-      tags = {
-        "k8s.io/cluster-autoscaler/enabled"               = "true"
-        "k8s.io/cluster-autoscaler/formation-lap-oregon" = "owned"
-      }
-    }
-  }
-}
-
-module "cluster_autoscaler_irsa_oregon" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "~> 5.0"
 

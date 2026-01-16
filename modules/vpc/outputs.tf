@@ -10,13 +10,13 @@ output "private_subnet_ids" {
 output "private_eks_subnet_ids" {
   value = [
     for s in aws_subnet.private : s.id
-    if startswith(try(s.tags["Name"], ""), "PrivateSubnet-EKS-")
+    if startswith(try(s.tags["Name"], ""), "y2om-PrivateSubnet-EKS-")
   ]
 }
 output "private_db_subnet_ids" {
   value = [
     for s in aws_subnet.private : s.id
-    if startswith(try(s.tags["Name"], ""), "PrivateSubnet-DB-")
+    if startswith(try(s.tags["Name"], ""), "y2om-PrivateSubnet-DB-")
   ]
 }
 
@@ -25,4 +25,19 @@ output "private_route_table_ids" {
 }
 output "public_route_table_ids" {
   value = [aws_route_table.public.id]
+}
+
+output "bastion_security_group_id" {
+  description = "Bastion host security group ID"
+  value       = aws_security_group.bastion.id
+}
+
+output "bastion_instance_id" {
+  description = "Bastion host instance ID"
+  value       = aws_instance.bastion.id
+}
+
+output "bastion_public_ip" {
+  description = "Bastion host public IP address"
+  value       = aws_instance.bastion.public_ip
 }

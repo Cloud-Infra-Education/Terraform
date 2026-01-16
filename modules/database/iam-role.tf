@@ -13,13 +13,13 @@ data "aws_iam_policy_document" "rds_proxy_assume_role" {
 # ============= Seoul Region ================
 resource "aws_iam_role" "kor_rds_proxy" {
   provider           = aws.seoul
-  name               = "${var.our_team}-KOR-RDS-Proxy-Role"
+  name               = "y2om-${var.our_team}-KOR-RDS-Proxy-Role"
   assume_role_policy = data.aws_iam_policy_document.rds_proxy_assume_role.json
 }
 
 resource "aws_iam_role_policy" "kor_rds_proxy" {
   provider = aws.seoul
-  name     = "${var.our_team}-KOR-RDS-Proxy-Secrets-Policy"
+  name     = "y2om-${var.our_team}-KOR-RDS-Proxy-Secrets-Policy"
   role     = aws_iam_role.kor_rds_proxy.id
 
   policy = jsonencode({
@@ -28,7 +28,7 @@ resource "aws_iam_role_policy" "kor_rds_proxy" {
       {
         Effect   = "Allow"
         Action   = ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"]
-        Resource = data.aws_secretsmanager_secret.kor_db.arn
+        Resource = aws_secretsmanager_secret.kor_db.arn
       }
     ]
   })
@@ -37,13 +37,13 @@ resource "aws_iam_role_policy" "kor_rds_proxy" {
 # ============= Oregon Region ================
 resource "aws_iam_role" "usa_rds_proxy" {
   provider           = aws.oregon
-  name               = "${var.our_team}-USA-RDS-Proxy-Role"
+  name               = "y2om-${var.our_team}-USA-RDS-Proxy-Role"
   assume_role_policy = data.aws_iam_policy_document.rds_proxy_assume_role.json
 }
 
 resource "aws_iam_role_policy" "usa_rds_proxy" {
   provider = aws.oregon
-  name     = "${var.our_team}-USA-RDS-Proxy-Secrets-Policy"
+  name     = "y2om-${var.our_team}-USA-RDS-Proxy-Secrets-Policy"
   role     = aws_iam_role.usa_rds_proxy.id
 
   policy = jsonencode({
@@ -52,7 +52,7 @@ resource "aws_iam_role_policy" "usa_rds_proxy" {
       {
         Effect   = "Allow"
         Action   = ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"]
-        Resource = data.aws_secretsmanager_secret.usa_db.arn
+        Resource = aws_secretsmanager_secret.usa_db.arn
       }
     ]
   })

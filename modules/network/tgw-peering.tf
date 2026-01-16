@@ -5,7 +5,7 @@ resource "aws_ec2_transit_gateway_peering_attachment" "kor_to_usa" {
   peer_region             = "us-west-2"
 
   tags = {
-    Name = "KOR-USA-TGW-Peering"
+    Name = "y2om-KOR-USA-TGW-Peering"
   }
 }
 
@@ -14,6 +14,6 @@ resource "aws_ec2_transit_gateway_peering_attachment_accepter" "usa_accept" {
   transit_gateway_attachment_id = aws_ec2_transit_gateway_peering_attachment.kor_to_usa.id
 
   tags = {
-    Name = "USA-Accept-KOR-TGW"
+    Name = "y2om-USA-Accept-KOR-TGW"
   }
 }

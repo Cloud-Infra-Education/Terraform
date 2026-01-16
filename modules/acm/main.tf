@@ -1,15 +1,13 @@
 locals {
-  www_fqdn = "${var.www_subdomain}.${var.domain_name}"
-  s3_rest_domain    = "${var.origin_bucket_name}.s3.${var.origin_bucket_region}.amazonaws.com"
-  origin_id         = "${var.our_team}-origin-s3"
+  www_fqdn       = "${var.www_subdomain}.${var.domain_name}"
+  s3_rest_domain = "${var.origin_bucket_name}.s3.${var.origin_bucket_region}.amazonaws.com"
+  origin_id      = "${var.our_team}-origin-s3"
 }
 
 locals {
   api_fqdn = "${var.api_subdomain}.${var.domain_name}"
+  # keycloak은 api.exampleott.click/keycloak 경로로 사용하므로 별도 서브도메인 불필요
 }
-
-
-
 
 # 서울리전 CNAME 생성
 resource "aws_acm_certificate" "cname_api_seoul" {
@@ -32,3 +30,5 @@ resource "aws_acm_certificate" "a_www" {
   validation_method = "DNS"
 }
 
+# Keycloak은 api.exampleott.click/keycloak 경로로 사용하므로 별도 인증서 불필요
+# keycloak 서브도메인 인증서는 제거됨

@@ -1,12 +1,12 @@
 variable "db_username" {
   description = "DB master username"
-  type = string
+  type        = string
 }
 
 variable "db_password" {
   description = "DB master password"
-  type      = string
-  sensitive = true
+  type        = string
+  sensitive   = true
 }
 
 variable "kor_vpc_id" {
@@ -33,18 +33,30 @@ variable "oregon_eks_workers_sg_id" {
   default = null
 }
 
+variable "seoul_bastion_sg_id" {
+  description = "Seoul region bastion security group ID"
+  type        = string
+  default     = null
+}
+
+variable "oregon_bastion_sg_id" {
+  description = "Oregon region bastion security group ID"
+  type        = string
+  default     = null
+}
+
 variable "our_team" {
   type = string
 }
 
 variable "db_port" {
-  type        = number
-  default     = 3306
+  type    = number
+  default = 3306
 }
 
 variable "proxy_require_tls" {
-  type        = bool
-  default     = false
+  type    = bool
+  default = false
 }
 
 variable "proxy_idle_client_timeout" {
@@ -54,18 +66,18 @@ variable "proxy_idle_client_timeout" {
 }
 
 variable "proxy_debug_logging" {
-  type        = bool
-  default     = false
+  type    = bool
+  default = false
 }
 
 variable "proxy_max_connections_percent" {
-  type        = number
-  default     = 100
+  type    = number
+  default = 100
 }
 
 variable "proxy_max_idle_connections_percent" {
-  type        = number
-  default     = 50
+  type    = number
+  default = 50
 }
 
 variable "proxy_connection_borrow_timeout" {

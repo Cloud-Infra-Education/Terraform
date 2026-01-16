@@ -6,8 +6,14 @@ variable "domain_name" {
   type = string
 }
 
+variable "route53_zone_id" {
+  type        = string
+  description = "Route 53 Hosted Zone ID (optional, if not provided will try to lookup by domain name)"
+  default     = ""
+}
+
 variable "api_subdomain" {
-  type = string
+  type    = string
   default = "api"
 }
 
@@ -27,12 +33,12 @@ variable "ip_address_type" {
 # 태그를 가지고 ALB를 지정함
 # ==========================
 variable "alb_lookup_tag_key" {
-  type        = string
-  default     = "ingress.k8s.aws/stack"
+  type    = string
+  default = "ingress.k8s.aws/stack"
 }
 
 variable "alb_lookup_tag_value" {
-  type        = string
+  type = string
 }
 
 # ======================

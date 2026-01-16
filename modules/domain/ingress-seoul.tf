@@ -1,12 +1,22 @@
+<<<<<<< Updated upstream
 resource "kubernetes_manifest" "msa_ingress_seoul" {
 #  provider = kubernetes.seoul
+=======
+# [수정] 팀장님 지시사항: ArgoCD 앱과 중복되지 않도록 네임스페이스 리소스 삭제
+
+# 서울 클러스터에 Ingress 생성
+resource "kubernetes_manifest" "msa_ingress_seoul" {
+  provider = kubernetes.seoul
+
+  # [삭제] depends_on = [kubernetes_namespace.seoul] 삭제
+>>>>>>> Stashed changes
 
   manifest = {
     apiVersion = "networking.k8s.io/v1"
     kind       = "Ingress"
     metadata = {
       name      = "msa-ingress"
-      namespace = "formation-lap"
+      namespace = "formation-lap" # 기존에 생성된 네임스페이스 이름을 명시
       annotations = {
         "alb.ingress.kubernetes.io/scheme"        = "internet-facing"
         "alb.ingress.kubernetes.io/target-type"   = "ip"

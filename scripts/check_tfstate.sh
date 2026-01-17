@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+#set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
@@ -16,7 +16,11 @@ STACKS=(
 )
 
 for s in "${STACKS[@]}"; do
-  echo "========== Be copied to: $s =========="
-  cp terraform.tfvars "${s}"
+  echo "========== Check: $s =========="
+  (
+    cd ${s}
+    terraform state list
+    cd ..
+  )
 done
 

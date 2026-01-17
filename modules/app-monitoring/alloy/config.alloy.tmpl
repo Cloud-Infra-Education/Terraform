@@ -1,7 +1,7 @@
 // ======================================================
 // Grafana Alloy pipeline (Seoul)
 // - Logs   : Kubernetes pod logs -> Loki
-// - Metrics: Simple scrape of services -> Mimir (remote_write)
+// - Metrics: Simple scrape of services -> AMP (remote_write via SigV4 proxy)
 // - Traces : OTLP receiver -> Tempo
 //
 // NOTE
@@ -39,7 +39,7 @@ loki.write "loki" {
 }
 
 // ----------------------
-// Metrics -> Mimir
+// Metrics -> AMP
 // ----------------------
 
 discovery.kubernetes "services" {
@@ -48,17 +48,12 @@ discovery.kubernetes "services" {
 
 prometheus.scrape "services" {
   targets    = discovery.kubernetes.services.targets
-  forward_to = [prometheus.remote_write.mimir.receiver]
+  forward_to = [prometheus.remote_write.amp.receiver]
 }
 
-prometheus.remote_write "mimir" {
+prometheus.remote_write "amp" {
   endpoint {
-    url = "${mimir_remote_write_url}"
-
-    // Multi-tenancy header for Mimir
-    headers = {
-      "X-Scope-OrgID" = "${tenant_id}",
-    }
+    url = "${amp_remote_write_url}"
   }
 }
 

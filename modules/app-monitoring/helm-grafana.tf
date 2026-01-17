@@ -1,3 +1,5 @@
+// modules/app-monitoring/helm-grafana.tf
+
 # ==============================
 # Layer 4 - Grafana (Helm)
 # ==============================
@@ -32,11 +34,23 @@ resource "helm_release" "grafana_seoul" {
       }
 
       adminUser     = "admin"
-      adminPassword = random_password.grafana_admin.result
+      adminPassword = coalesce(var.grafana_admin_password, random_password.grafana_admin.result)
 
       persistence = {
         enabled = false
       }
+
+      "grafana.ini" = {
+        users = {
+          default_theme = "dark"
+        }
+        dashboards = {
+          default_home_dashboard_path = local.grafana_home_dashboard_path
+        }
+      }
+
+      dashboardProviders = local.grafana_dashboard_providers
+      dashboards         = local.grafana_dashboards
 
       # Minimal provisioning: LGTM datasources with tenant header.
       datasources = {
@@ -53,21 +67,15 @@ resource "helm_release" "grafana_seoul" {
                 httpHeaderName1 = "X-Scope-OrgID"
               }
               secureJsonData = {
-                httpHeaderValue1 = "chan"
+                httpHeaderValue1 = var.tenant_org_id
               }
             },
             {
-              name      = "Mimir"
+              name      = "AMP"
               type      = "prometheus"
               access    = "proxy"
-              url       = local.mimir_nginx_url
+              url       = local.amp_query_base_url
               isDefault = true
-              jsonData = {
-                httpHeaderName1 = "X-Scope-OrgID"
-              }
-              secureJsonData = {
-                httpHeaderValue1 = "chan"
-              }
             },
             {
               name   = "Tempo"
@@ -78,7 +86,7 @@ resource "helm_release" "grafana_seoul" {
                 httpHeaderName1 = "X-Scope-OrgID"
               }
               secureJsonData = {
-                httpHeaderValue1 = "chan"
+                httpHeaderValue1 = var.tenant_org_id
               }
             }
           ]
@@ -89,6 +97,7 @@ resource "helm_release" "grafana_seoul" {
 
   depends_on = [
     kubernetes_namespace_v1.monitoring,
+    kubernetes_service_v1.amp_query_sigv4_proxy_seoul,
   ]
 }
 

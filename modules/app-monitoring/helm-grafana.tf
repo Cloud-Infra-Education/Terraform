@@ -1,3 +1,5 @@
+// modules/app-monitoring/helm-grafana.tf
+
 # ==============================
 # Layer 4 - Grafana (Helm)
 # ==============================
@@ -38,6 +40,18 @@ resource "helm_release" "grafana_seoul" {
         enabled = false
       }
 
+      "grafana.ini" = {
+        users = {
+          default_theme = "dark"
+        }
+        dashboards = {
+          default_home_dashboard_path = local.grafana_home_dashboard_path
+        }
+      }
+
+      dashboardProviders = local.grafana_dashboard_providers
+      dashboards         = local.grafana_dashboards
+
       # Minimal provisioning: LGTM datasources with tenant header.
       datasources = {
         "datasources.yaml" = {
@@ -53,7 +67,7 @@ resource "helm_release" "grafana_seoul" {
                 httpHeaderName1 = "X-Scope-OrgID"
               }
               secureJsonData = {
-                httpHeaderValue1 = "chan"
+                httpHeaderValue1 = var.tenant_org_id
               }
             },
             {
@@ -72,7 +86,7 @@ resource "helm_release" "grafana_seoul" {
                 httpHeaderName1 = "X-Scope-OrgID"
               }
               secureJsonData = {
-                httpHeaderValue1 = "chan"
+                httpHeaderValue1 = var.tenant_org_id
               }
             }
           ]

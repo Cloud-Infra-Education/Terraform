@@ -1,6 +1,7 @@
 module "kor_vpc" {
   source    = "../vpc"
   providers = { aws = aws.seoul }
+  onprem_private_cidr = var.onprem_private_cidr
 
   name = "KOR-Primary-VPC"
   cidr = "10.0.0.0/16"
@@ -35,6 +36,7 @@ module "kor_vpc" {
 module "usa_vpc" {
   source    = "../vpc"
   providers = { aws = aws.oregon }
+  onprem_private_cidr = var.onprem_private_cidr
 
   name = "USA-Primary-VPC"
   cidr = "10.1.0.0/16"

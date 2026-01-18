@@ -33,7 +33,7 @@ variable "onprem_private_cidrs" {
 variable "manage_vpc_routes" {
   description = "서울 VPC 라우팅테이블에 onprem -> TGW 라우트를 Terraform이 추가할지"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "vpc_route_table_ids" {

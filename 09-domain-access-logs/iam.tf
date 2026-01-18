@@ -1,6 +1,6 @@
 # Lambda 실행 역할
 resource "aws_iam_role" "lambda_exec_role" {
-  name = "y2om-route53-dns-log-lambda-role"
+  name = "route53-dns-log-lambda-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -16,13 +16,13 @@ resource "aws_iam_role" "lambda_exec_role" {
   })
 
   tags = {
-    Name = "y2om-Route53 DNS Log Lambda Role"
+    Name = "Route53 DNS Log Lambda Role"
   }
 }
 
 # Lambda 기본 실행 정책: CloudWatch Logs에 로그 작성
 resource "aws_iam_role_policy" "lambda_basic_execution" {
-  name = "y2om-lambda-basic-execution"
+  name = "lambda-basic-execution"
   role = aws_iam_role.lambda_exec_role.id
 
   policy = jsonencode({
@@ -43,7 +43,7 @@ resource "aws_iam_role_policy" "lambda_basic_execution" {
 
 # Lambda OpenSearch 접근 정책
 resource "aws_iam_role_policy" "lambda_opensearch_access" {
-  name = "y2om-lambda-opensearch-access"
+  name = "lambda-opensearch-access"
   role = aws_iam_role.lambda_exec_role.id
 
   policy = jsonencode({

@@ -31,3 +31,8 @@ variable "kubernetes_state_path" {
   type        = string
   default     = "../02-kubernetes/terraform.tfstate"
 }
+
+variable "admin_cidr" {
+  type = string
+}
+

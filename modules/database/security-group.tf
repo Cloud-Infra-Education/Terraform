@@ -37,7 +37,7 @@ resource "aws_security_group_rule" "allow_terraform_kor_db" {
   protocol          = "tcp"
 
   security_group_id = aws_security_group.db_kor.id
-  cidr_blocks       = [var.onprem_public_ip]  # Terraform 실행 머신 공인 IP
+  cidr_blocks       = [var.admin_cidr]  # Terraform 실행 머신 공인 IP
 }
 
 # ============= Seoul Region RDS Proxy =============
@@ -74,7 +74,7 @@ resource "aws_security_group_rule" "allow_terraform_kor_proxy" {
   from_port         = var.db_port
   to_port           = var.db_port
   protocol          = "tcp"
-  cidr_blocks       = [var.onprem_public_ip]  # Terraform 실행 머신의 공인 IP
+  cidr_blocks       = [var.admin_cidr]  # Terraform 실행 머신의 공인 IP
   security_group_id = aws_security_group.proxy_kor.id
 }
 
@@ -87,7 +87,7 @@ resource "aws_security_group_rule" "allow_vpc_to_kor_proxy" {
   protocol          = "tcp"
 
   # 오레곤 VPC 내부 대역 전체 허용 (예: 10.10.0.0/16)
-  cidr_blocks       = ["10.10.0.0/16"]
+  cidr_blocks       = var.kor_vpc_cidr_blocks
 
   security_group_id = aws_security_group.proxy_usa.id
 }
@@ -117,7 +117,7 @@ resource "aws_security_group_rule" "allow_terraform_usa_db" {
   protocol          = "tcp"
 
   security_group_id = aws_security_group.db_usa.id
-  cidr_blocks       = [var.onprem_public_ip]  # Terraform 실행 머신 공인 IP
+  cidr_blocks       = [var.admin_cidr]  # Terraform 실행 머신 공인 IP
 }
 
 # ----- RDS Proxy ----> DB Cluster
@@ -168,7 +168,7 @@ resource "aws_security_group_rule" "allow_terraform_usa_proxy" {
   from_port         = var.db_port
   to_port           = var.db_port
   protocol          = "tcp"
-  cidr_blocks       = [var.onprem_public_ip]  # Terraform 실행 머신의 공인 IP
+  cidr_blocks       = [var.admin_cidr]  # Terraform 실행 머신의 공인 IP
   security_group_id = aws_security_group.proxy_usa.id
 }
 resource "aws_security_group_rule" "allow_vpc_to_usa_proxy" {
@@ -179,7 +179,7 @@ resource "aws_security_group_rule" "allow_vpc_to_usa_proxy" {
   to_port           = var.db_port
   protocol          = "tcp"
 
-  cidr_blocks       = ["10.11.0.0/16"]
+  cidr_blocks       = var.usa_vpc_cidr_blocks
 
   security_group_id = aws_security_group.proxy_usa.id
 }

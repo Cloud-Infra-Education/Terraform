@@ -111,6 +111,8 @@ resource "aws_dms_endpoint" "target" {
 }
 
 resource "aws_dms_replication_task" "this" {
+  start_replication_task = var.start_replication_task
+
   replication_task_id       = local.replication_task_id
   replication_instance_arn  = aws_dms_replication_instance.this.replication_instance_arn
   source_endpoint_arn       = aws_dms_endpoint.source.endpoint_arn

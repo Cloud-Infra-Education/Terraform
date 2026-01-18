@@ -11,7 +11,8 @@ resource "aws_db_subnet_group" "usa" {
 }
 
 resource "aws_rds_global_cluster" "global" {
-  global_cluster_identifier = "global-aurora-mysql"
+# maxjagger  global_cluster_identifier = "global-aurora-mysql"
+  global_cluster_identifier = "chan-global-aurora-mysql"
   engine                    = "aurora-mysql"
 
   storage_encrypted         = true
@@ -25,7 +26,8 @@ resource "aws_rds_global_cluster" "global" {
 resource "aws_rds_cluster" "kor" {
   provider = aws.seoul
 
-  cluster_identifier = "kor-aurora-mysql"
+#  cluster_identifier = "kor-aurora-mysql"
+  cluster_identifier = "chan-kor-aurora-mysql"
   engine             = "aurora-mysql"
 
   master_username = var.db_username
@@ -73,7 +75,8 @@ resource "aws_rds_cluster" "usa" {
   depends_on = [aws_rds_cluster.kor]
   provider = aws.oregon
 
-  cluster_identifier = "usa-aurora-mysql"
+#  cluster_identifier = "usa-aurora-mysql"
+  cluster_identifier = "chan-usa-aurora-mysql"
   engine             = "aurora-mysql" 
 
 # master_username = var.db_username

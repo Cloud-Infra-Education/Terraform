@@ -1,4 +1,3 @@
-/* maxjagger
 resource "aws_ec2_transit_gateway" "kor" {
   provider    = aws.seoul
   description = "KOR Transit Gateway"
@@ -27,4 +26,4 @@ resource "time_sleep" "wait_for_tgw" {
 
   create_duration = "180s"
 }
-*/
+

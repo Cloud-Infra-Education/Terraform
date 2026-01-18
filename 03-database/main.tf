@@ -18,6 +18,13 @@ module "database" {
 
   seoul_eks_workers_sg_id  = data.terraform_remote_state.kubernetes.outputs.seoul_eks_workers_sg_id
   oregon_eks_workers_sg_id = data.terraform_remote_state.kubernetes.outputs.oregon_eks_workers_sg_id
+  
+  admin_cidr = var.admin_cidr
+#  kor_vpc_cidr_blocks = data.terraform_remote_state.infra.outputs.kor_vpc_cidr
+#  usa_vpc_cidr_blocks = data.terraform_remote_state.infra.outputs.usa_vpc_cidr
+
+  kor_vpc_cidr_blocks = [data.terraform_remote_state.infra.outputs.kor_vpc_cidr]
+  usa_vpc_cidr_blocks = [data.terraform_remote_state.infra.outputs.usa_vpc_cidr]
 
   db_username = var.db_username
   db_password = var.db_password

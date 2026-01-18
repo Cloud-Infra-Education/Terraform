@@ -1,157 +1,49 @@
-// modules/app-monitoring/dashboard.tf
-
-############################################
-# Grafana Dashboard Provisioning (via Helm)
-# - AMP (Prometheus): metrics
-# - Loki: logs
-# - Tempo: traces
-############################################
+// ==============================
+// Grafana dashboard provisioning
+// ==============================
 
 locals {
-  grafana_dashboard_provider_name = "app-observability"
-  grafana_dashboard_folder        = "✨ App Observability"
-
-  grafana_dashboard_path      = "/var/lib/grafana/dashboards/${local.grafana_dashboard_provider_name}"
-  grafana_home_dashboard_path = "${local.grafana_dashboard_path}/app-observability.json"
-
-  # Grafana chart reads this and creates provisioning file under /etc/grafana/provisioning/dashboards/
-  grafana_dashboard_providers = {
-    "dashboardproviders.yaml" = {
-      apiVersion = 1
-      providers = [
-        {
-          name                  = local.grafana_dashboard_provider_name
-          orgId                 = 1
-          folder                = local.grafana_dashboard_folder
-          type                  = "file"
-          disableDeletion       = false
-          editable              = true
-          allowUiUpdates        = true
-          updateIntervalSeconds = 10
-          options = {
-            path = local.grafana_dashboard_path
-          }
-        }
-      ]
-    }
-  }
-
-  # Grafana chart reads this and creates ConfigMap(s) with dashboard JSON files.
-  grafana_dashboards = {
-    (local.grafana_dashboard_provider_name) = {
-      "app-observability" = {
-        json = local.grafana_dashboard_app_observability_json
-      }
-    }
-  }
-
-  # Dashboard JSON (stored as a JSON string)
-  grafana_dashboard_app_observability_json = jsonencode({
-    uid   = "app-obs-lgtm"
-    title = "🌈 App Observability (AMP + Loki + Tempo)"
-
-    timezone      = "browser"
-    schemaVersion = 39
+  grafana_dashboard_app_observability = {
+    uid           = "app-observability"
+    title         = "App Observability"
+    tags          = ["app-monitoring", "lgtm"]
+    timezone      = ""
+    schemaVersion = 41
     version       = 1
     refresh       = "30s"
 
-    tags = ["lgtm", "amp", "loki", "tempo", "kubernetes", "golden-signals"]
-
     time = {
-      from = "now-6h"
+      from = "now-1h"
       to   = "now"
-    }
-
-    links = [
-      {
-        title = "Explore Metrics (AMP)"
-        type  = "link"
-        url   = "/explore?left=%7B%22datasource%22:%22AMP%22%7D"
-      },
-      {
-        title = "Explore Logs (Loki)"
-        type  = "link"
-        url   = "/explore?left=%7B%22datasource%22:%22Loki%22%7D"
-      },
-      {
-        title = "Explore Traces (Tempo)"
-        type  = "link"
-        url   = "/explore?left=%7B%22datasource%22:%22Tempo%22%7D"
-      }
-    ]
-
-    annotations = {
-      list = [
-        {
-          builtIn    = 1
-          datasource = "-- Grafana --"
-          enable     = true
-          hide       = true
-          iconColor  = "rgba(0, 211, 255, 1)"
-          name       = "Annotations & Alerts"
-          type       = "dashboard"
-        }
-      ]
     }
 
     templating = {
       list = [
         {
-          name       = "namespace"
-          label      = "Namespace"
-          type       = "query"
-          datasource = "AMP"
-          refresh    = 2
-          multi      = true
-          includeAll = true
-          allValue   = ".*"
-          sort       = 1
-          query      = "label_values(up, namespace)"
-          current = {
-            text  = "All"
-            value = "$__all"
-          }
-        },
-        {
-          name       = "pod"
-          label      = "Pod"
-          type       = "query"
-          datasource = "AMP"
-          refresh    = 2
-          multi      = true
-          includeAll = true
-          allValue   = ".*"
-          sort       = 1
-          query      = "label_values(up{namespace=~\"$namespace\"}, pod)"
-          current = {
-            text  = "All"
-            value = "$__all"
-          }
-        },
-        {
           name       = "service"
           label      = "Service"
-          type       = "query"
-          datasource = "AMP"
-          refresh    = 2
-          multi      = false
+          type       = "custom"
+          hide       = 0
+          multi      = true
           includeAll = true
           allValue   = ".*"
-          sort       = 1
-          query      = "label_values(up{namespace=~\"$namespace\"}, service)"
+          query      = "order-service,product-service,user-service"
           current = {
-            text  = "All"
-            value = "$__all"
+            selected = true
+            text     = "All"
+            value    = "$__all"
           }
         },
         {
           name  = "search"
           label = "Log search"
           type  = "textbox"
+          hide  = 0
           query = ""
           current = {
-            text  = ""
-            value = ""
+            selected = false
+            text     = ""
+            value    = ""
           }
         }
       ]
@@ -159,399 +51,874 @@ locals {
 
     panels = [
       {
-        id    = 1
+        id    = 100
         type  = "row"
-        title = "🔭 Overview"
-        gridPos = { x = 0, y = 0, w = 24, h = 1 }
-        collapsed = false
-        panels    = []
-      },
-      {
-        id         = 2
-        type       = "stat"
-        title      = "🚀 Requests / sec"
-        datasource = "AMP"
-        gridPos    = { x = 0, y = 1, w = 6, h = 5 }
-        options = {
-          reduceOptions = { calcs = ["lastNotNull"], fields = "", values = false }
-          orientation   = "horizontal"
-          textMode      = "value_and_name"
-          colorMode     = "value"
-          graphMode     = "area"
-          justifyMode   = "center"
+        title = "Overview"
+        gridPos = {
+          h = 1
+          w = 24
+          x = 0
+          y = 0
         }
+        collapsed = false
+      },
+
+      // ---- Overview stats ----
+      {
+        id    = 1
+        type  = "stat"
+        title = "Requests / sec"
+        datasource = {
+          type = "prometheus"
+          uid  = "amp"
+        }
+        gridPos = {
+          h = 5
+          w = 6
+          x = 0
+          y = 1
+        }
+        targets = [
+          {
+            refId      = "A"
+            expr       = "sum(rate(http_requests_total[5m]))"
+            legendFormat = "rps"
+          }
+        ]
         fieldConfig = {
           defaults = {
-            unit = "req/s"
-            min  = 0
+            unit     = "reqps"
+            decimals = 4
+            min      = 0
             thresholds = {
               mode  = "absolute"
-              steps = [{ color = "green", value = null }, { color = "yellow", value = 10 }, { color = "red", value = 100 }]
+              steps = [
+                { color = "green", value = null }
+              ]
             }
           }
           overrides = []
         }
-        targets = [{ refId = "A", expr = "sum(rate(http_requests_total{namespace=~\"$namespace\"}[5m]))", legendFormat = "rps" }]
+        options = {
+          reduceOptions = {
+            calcs  = ["lastNotNull"]
+            fields = ""
+            values = false
+          }
+          orientation       = "auto"
+          textMode          = "auto"
+          colorMode         = "background"
+          graphMode         = "area"
+          justifyMode       = "auto"
+          showPercentChange = false
+          wideLayout        = true
+        }
       },
       {
-        id         = 3
-        type       = "stat"
-        title      = "🧨 5xx error ratio"
-        datasource = "AMP"
-        gridPos    = { x = 6, y = 1, w = 6, h = 5 }
-        options = {
-          reduceOptions = { calcs = ["lastNotNull"], fields = "", values = false }
-          orientation   = "horizontal"
-          textMode      = "value_and_name"
-          colorMode     = "background"
-          graphMode     = "none"
-          justifyMode   = "center"
+        id    = 2
+        type  = "stat"
+        title = "5xx error ratio"
+        datasource = {
+          type = "prometheus"
+          uid  = "amp"
         }
+        gridPos = {
+          h = 5
+          w = 6
+          x = 6
+          y = 1
+        }
+        targets = [
+          {
+            refId = "A"
+            expr  = "(sum(rate(http_requests_total{status=~\"5..|5xx\"}[5m])) or vector(0)) / clamp_min((sum(rate(http_requests_total[5m])) or vector(0)), 1e-9)"
+          }
+        ]
         fieldConfig = {
           defaults = {
             unit     = "percentunit"
+            decimals = 2
             min      = 0
             max      = 1
-            decimals = 2
             thresholds = {
-              mode  = "absolute"
-              steps = [{ color = "green", value = null }, { color = "yellow", value = 0.01 }, { color = "red", value = 0.05 }]
+              mode = "absolute"
+              steps = [
+                { color = "green", value = null },
+                { color = "yellow", value = 0.01 },
+                { color = "red", value = 0.05 }
+              ]
             }
           }
           overrides = []
         }
-        targets = [{
-          refId        = "A"
-          expr         = "sum(rate(http_requests_total{namespace=~\"$namespace\",status=~\"5..\"}[5m])) / sum(rate(http_requests_total{namespace=~\"$namespace\"}[5m]))"
-          legendFormat = "5xx ratio"
-        }]
+        options = {
+          reduceOptions = {
+            calcs  = ["lastNotNull"]
+            fields = ""
+            values = false
+          }
+          orientation       = "auto"
+          textMode          = "auto"
+          colorMode         = "background"
+          graphMode         = "none"
+          justifyMode       = "auto"
+          showPercentChange = false
+          wideLayout        = true
+        }
       },
       {
-        id         = 4
-        type       = "stat"
-        title      = "⏱️ p95 latency"
-        datasource = "AMP"
-        gridPos    = { x = 12, y = 1, w = 6, h = 5 }
-        options = {
-          reduceOptions = { calcs = ["lastNotNull"], fields = "", values = false }
-          orientation   = "horizontal"
-          textMode      = "value_and_name"
-          colorMode     = "value"
-          graphMode     = "area"
-          justifyMode   = "center"
+        id    = 3
+        type  = "stat"
+        title = "p95 latency"
+        datasource = {
+          type = "prometheus"
+          uid  = "amp"
         }
+        gridPos = {
+          h = 5
+          w = 6
+          x = 12
+          y = 1
+        }
+        targets = [
+          {
+            refId = "A"
+            expr  = "1000 * histogram_quantile(0.95, sum(rate(http_request_duration_highr_seconds_bucket[5m])) by (le))"
+          }
+        ]
         fieldConfig = {
           defaults = {
-            unit     = "s"
-            min      = 0
+            unit     = "ms"
             decimals = 3
+            min      = 0
             thresholds = {
-              mode  = "absolute"
-              steps = [{ color = "green", value = null }, { color = "yellow", value = 0.25 }, { color = "red", value = 1.0 }]
+              mode = "absolute"
+              steps = [
+                { color = "green", value = null },
+                { color = "yellow", value = 200 },
+                { color = "red", value = 500 }
+              ]
             }
           }
           overrides = []
         }
-        targets = [{
-          refId        = "A"
-          expr         = "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{namespace=~\"$namespace\"}[5m])) by (le))"
-          legendFormat = "p95"
-        }]
+        options = {
+          reduceOptions = {
+            calcs  = ["lastNotNull"]
+            fields = ""
+            values = false
+          }
+          orientation       = "auto"
+          textMode          = "auto"
+          colorMode         = "background"
+          graphMode         = "area"
+          justifyMode       = "auto"
+          showPercentChange = false
+          wideLayout        = true
+        }
       },
       {
-        id         = 5
-        type       = "stat"
-        title      = "🧠 CPU (cores)"
-        datasource = "AMP"
-        gridPos    = { x = 18, y = 1, w = 6, h = 5 }
-        options = {
-          reduceOptions = { calcs = ["lastNotNull"], fields = "", values = false }
-          orientation   = "horizontal"
-          textMode      = "value_and_name"
-          colorMode     = "value"
-          graphMode     = "area"
-          justifyMode   = "center"
+        id    = 4
+        type  = "stat"
+        title = "CPU (cores)"
+        datasource = {
+          type = "prometheus"
+          uid  = "amp"
         }
+        gridPos = {
+          h = 5
+          w = 6
+          x = 18
+          y = 1
+        }
+        targets = [
+          {
+            refId = "A"
+            expr  = "sum(rate(process_cpu_seconds_total[5m]))"
+          }
+        ]
         fieldConfig = {
           defaults = {
             unit     = "cores"
-            min      = 0
             decimals = 2
-            thresholds = {
-              mode  = "absolute"
-              steps = [{ color = "green", value = null }, { color = "yellow", value = 1 }, { color = "red", value = 4 }]
-            }
+            min      = 0
           }
           overrides = []
         }
-        targets = [{ refId = "A", expr = "sum(rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\",container!=\"\"}[5m]))", legendFormat = "cpu" }]
+        options = {
+          reduceOptions = {
+            calcs  = ["lastNotNull"]
+            fields = ""
+            values = false
+          }
+          orientation       = "auto"
+          textMode          = "auto"
+          colorMode         = "background"
+          graphMode         = "area"
+          justifyMode       = "auto"
+          showPercentChange = false
+          wideLayout        = true
+        }
       },
+
+      // ---- Golden signals ----
       {
-        id         = 6
-        type       = "timeseries"
-        title      = "📈 Golden signals"
-        datasource = "AMP"
-        gridPos    = { x = 0, y = 6, w = 24, h = 8 }
+        id    = 5
+        type  = "timeseries"
+        title = "Golden signals"
+        datasource = {
+          type = "prometheus"
+          uid  = "amp"
+        }
+        gridPos = {
+          h = 8
+          w = 24
+          x = 0
+          y = 6
+        }
+        targets = [
+          {
+            refId        = "A"
+            expr         = "sum(rate(http_requests_total[5m]))"
+            legendFormat = "rps"
+          },
+          {
+            refId        = "B"
+            expr         = "1000 * histogram_quantile(0.95, sum(rate(http_request_duration_highr_seconds_bucket[5m])) by (le))"
+            legendFormat = "p95 latency"
+          }
+        ]
         fieldConfig = {
           defaults = {
-            unit = "short"
-            thresholds = { mode = "absolute", steps = [{ color = "green", value = null }, { color = "red", value = 0 }] }
+            min = 0
           }
           overrides = [
-            { matcher = { id = "byName", options = "p95 latency" }, properties = [{ id = "unit", value = "s" }] },
-            { matcher = { id = "byName", options = "5xx ratio" }, properties = [{ id = "unit", value = "percentunit" }] },
+            {
+              matcher = {
+                id      = "byName"
+                options = "p95 latency"
+              }
+              properties = [
+                {
+                  id    = "unit"
+                  value = "ms"
+                },
+                {
+                  id = "custom.axisPlacement"
+                  value = "right"
+                }
+              ]
+            },
+            {
+              matcher = {
+                id      = "byName"
+                options = "rps"
+              }
+              properties = [
+                {
+                  id    = "unit"
+                  value = "reqps"
+                }
+              ]
+            }
           ]
         }
         options = {
-          legend  = { displayMode = "table", placement = "bottom", calcs = ["lastNotNull", "max"] }
-          tooltip = { mode = "multi" }
+          legend = {
+            showLegend  = true
+            displayMode = "list"
+            placement   = "bottom"
+          }
+          tooltip = {
+            mode = "single"
+          }
+        }
+      },
+
+      // ---- Targets (best-effort process metrics) ----
+      {
+        id    = 6
+        type  = "bargauge"
+        title = "Top CPU targets"
+        datasource = {
+          type = "prometheus"
+          uid  = "amp"
+        }
+        gridPos = {
+          h = 8
+          w = 12
+          x = 0
+          y = 14
+        }
+        pluginVersion = "12.4.0"
+        fieldConfig = {
+          defaults = {
+            unit = "cores"
+            min  = 0
+          }
+          overrides = []
+        }
+        options = {
+          orientation  = "horizontal"
+          displayMode  = "basic"
+          showUnfilled = true
+          reduceOptions = {
+            values = false
+            calcs  = ["lastNotNull"]
+            fields = ""
+          }
         }
         targets = [
-          { refId = "A", expr = "sum(rate(http_requests_total{namespace=~\"$namespace\"}[5m]))", legendFormat = "rps" },
-          { refId = "B", expr = "sum(rate(http_requests_total{namespace=~\"$namespace\",status=~\"5..\"}[5m])) / sum(rate(http_requests_total{namespace=~\"$namespace\"}[5m]))", legendFormat = "5xx ratio" },
-          { refId = "C", expr = "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{namespace=~\"$namespace\"}[5m])) by (le))", legendFormat = "p95 latency" },
+          {
+            editorMode   = "code"
+            expr      = "topk(10, sum by (instance) (rate(process_cpu_seconds_total[5m])))"
+            legendFormat = "{{instance}}"
+            instant      = true
+            refId        = "A"
+          }
         ]
+      },
+      {
+        id    = 7
+        type  = "bargauge"
+        title = "Top Memory targets"
+        datasource = {
+          type = "prometheus"
+          uid  = "amp"
+        }
+        gridPos = {
+          h = 8
+          w = 12
+          x = 12
+          y = 14
+        }
+        pluginVersion = "12.4.0"
+        fieldConfig = {
+          defaults = {
+            unit = "bytes"
+            min  = 0
+          }
+          overrides = []
+        }
+        options = {
+          orientation  = "horizontal"
+          displayMode  = "basic"
+          showUnfilled = true
+          reduceOptions = {
+            values = false
+            calcs  = ["lastNotNull"]
+            fields = ""
+          }
+        }
+        targets = [
+          {
+            editorMode   = "code"
+            expr      = "topk(10, max by (instance) (process_resident_memory_bytes))"
+            legendFormat = "{{instance}}"
+            instant      = true
+            refId        = "A"
+          }
+        ]
+      },
+      {
+        id    = 8
+        type  = "table"
+        title = "Process restarts (last 1h)"
+        datasource = {
+          type = "prometheus"
+          uid  = "amp"
+        }
+        gridPos = {
+          h = 7
+          w = 12
+          x = 0
+          y = 22
+        }
+        pluginVersion = "12.4.0"
+        fieldConfig = {
+          defaults = {}
+          overrides = []
+        }
+        targets = [
+          {
+            editorMode   = "code"
+            expr      = "topk(20, sum by (instance) (changes(process_start_time_seconds[1h])))"
+            legendFormat = "{{instance}}"
+            instant      = false
+            refId        = "A"
+          }
+        ]
+        transformations = [
+          {
+            id = "seriesToRows"
+            options = {}
+          },
+          {
+            id = "organize"
+            options = {
+              excludeByName = {}
+              renameByName = {
+                Metric = "instance"
+                Value  = "Restarts"
+              }
+              indexByName = {
+                Time     = 0
+                Restarts = 1
+                instance = 2
+              }
+            }
+          }
+        ]
+        options = {
+          showHeader = true
+        }
+      },
+      {
+        id    = 9
+        type  = "stat"
+        title = "Targets Up (ratio)"
+        datasource = {
+          type = "prometheus"
+          uid  = "amp"
+        }
+        gridPos = {
+          h = 7
+          w = 6
+          x = 12
+          y = 22
+        }
+        pluginVersion = "12.4.0"
+        fieldConfig = {
+          defaults = {
+            unit = "percentunit"
+            min  = 0
+            max  = 1
+            thresholds = {
+              mode = "absolute"
+              steps = [
+                { color = "red",    value = null },
+                { color = "yellow", value = 0.9 },
+                { color = "green",  value = 0.99 }
+              ]
+            }
+          }
+          overrides = []
+        }
+        targets = [
+          {
+            editorMode   = "code"
+            expr         = "sum(up) / clamp_min(count(up), 1)"
+            legendFormat = "ready"
+            refId        = "A"
+          }
+        ]
+        options = {
+          colorMode = "value"
+          graphMode   = "none"
+          justifyMode = "center"
+          orientation = "horizontal"
+          textMode    = "value_and_name"
+          reduceOptions = {
+            values = false
+            calcs  = ["lastNotNull"]
+            fields = ""
+          }
+        }
+      },
+      {
+        id    = 10
+        type  = "stat"
+        title = "Targets Down"
+        datasource = {
+          type = "prometheus"
+          uid  = "amp"
+        }
+        gridPos = {
+          h = 7
+          w = 6
+          x = 18
+          y = 22
+        }
+        pluginVersion = "12.4.0"
+        fieldConfig = {
+          defaults = {
+            unit = "short"
+            min  = 0
+            thresholds = {
+              mode = "absolute"
+              steps = [
+                { color = "green", value = null },
+                { color = "red",   value = 1 }
+              ]
+            }
+          }
+          overrides = []
+        }
+        targets = [
+          {
+            editorMode   = "code"
+            expr         = "sum(up == 0)"
+            legendFormat = "unhealthy"
+            refId        = "A"
+          }
+        ]
+        options = {
+          colorMode = "value"
+          graphMode   = "none"
+          justifyMode = "center"
+          orientation = "horizontal"
+          textMode    = "value_and_name"
+          reduceOptions = {
+            values = false
+            calcs  = ["lastNotNull"]
+            fields = ""
+          }
+        }
       },
 
       {
-        id    = 10
+        id    = 200
         type  = "row"
-        title = "☸️ Kubernetes"
-        gridPos = { x = 0, y = 14, w = 24, h = 1 }
+        title = "Logs (Loki)"
+        gridPos = {
+          h = 1
+          w = 24
+          x = 0
+          y = 30
+        }
         collapsed = false
-        panels    = []
       },
       {
-        id         = 11
-        type       = "bargauge"
-        title      = "🔥 Top CPU pods"
-        datasource = "AMP"
-        gridPos    = { x = 0, y = 15, w = 12, h = 8 }
-        options = {
-          displayMode   = "gradient"
-          orientation   = "horizontal"
-          reduceOptions = { calcs = ["lastNotNull"], fields = "", values = false }
-          showUnfilled  = true
+        id    = 11
+        type  = "timeseries"
+        title = "Log volume (lines/sec)"
+        datasource = {
+          type = "loki"
+          uid  = "loki"
         }
+        gridPos = {
+          h = 8
+          w = 12
+          x = 0
+          y = 31
+        }
+        targets = [
+          {
+            refId        = "A"
+            expr         = "sum(rate({job=~\".+\"}[1m]))"
+            legendFormat = "lines/sec"
+          }
+        ]
         fieldConfig = {
           defaults = {
-            unit     = "cores"
-            decimals = 2
-            min      = 0
-            thresholds = { mode = "absolute", steps = [{ color = "green", value = null }, { color = "yellow", value = 0.25 }, { color = "red", value = 1.0 }] }
+            unit = "ops"
+            min  = 0
           }
           overrides = []
         }
-        targets = [{ refId = "A", expr = "topk(10, sum(rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\",pod=~\"$pod\",container!=\"\"}[5m])) by (pod))", legendFormat = "{{pod}}" }]
+        options = {
+          legend = {
+            showLegend  = true
+            displayMode = "list"
+            placement   = "bottom"
+          }
+          tooltip = {
+            mode = "single"
+          }
+        }
       },
       {
-        id         = 12
-        type       = "bargauge"
-        title      = "🧊 Top Memory pods"
-        datasource = "AMP"
-        gridPos    = { x = 12, y = 15, w = 12, h = 8 }
-        options = {
-          displayMode   = "gradient"
-          orientation   = "horizontal"
-          reduceOptions = { calcs = ["lastNotNull"], fields = "", values = false }
-          showUnfilled  = true
+        id    = 12
+        type  = "piechart"
+        title = "Logs by level (best-effort)"
+        datasource = {
+          type = "loki"
+          uid  = "loki"
         }
+        gridPos = {
+          h = 8
+          w = 12
+          x = 12
+          y = 31
+        }
+        pluginVersion = "12.4.0"
+        targets = [
+          {
+            refId     = "A"
+            queryType = "range"
+            legendFormat = "{{level}}"
+            expr = <<EOT
+sum by (level) (
+  count_over_time(
+    {job=~".+"}
+    | regexp "(?i)(level|severity)[:=\\\" ]*(?P<level>trace|debug|info|warn|warning|error|fatal)"
+    | label_format level="{{ lower .level }}"
+    | level=~".+"
+  [5m])
+)
+EOT
+          }
+        ]
         fieldConfig = {
           defaults = {
-            unit     = "bytes"
-            decimals = 2
-            min      = 0
-            thresholds = { mode = "absolute", steps = [{ color = "green", value = null }, { color = "yellow", value = 1073741824 }, { color = "red", value = 4294967296 }] }
+            unit        = "short"
+            displayName = "$${__field.labels.level}"
           }
-          overrides = []
+          overrides = [
+            {
+              matcher = { id = "byName", options = "info" }
+              properties = [
+                { id = "color", value = { mode = "fixed", fixedColor = "#1F78C1" } }
+              ]
+            },
+            {
+              matcher = { id = "byName", options = "warn" }
+              properties = [
+                { id = "color", value = { mode = "fixed", fixedColor = "#F2CC0C" } }
+              ]
+            },
+            {
+              matcher = { id = "byName", options = "warning" }
+              properties = [
+                { id = "color", value = { mode = "fixed", fixedColor = "#F2CC0C" } }
+              ]
+            },
+            {
+              matcher = { id = "byName", options = "error" }
+              properties = [
+                { id = "color", value = { mode = "fixed", fixedColor = "#E02F44" } }
+              ]
+            }
+          ]
         }
-        targets = [{ refId = "A", expr = "topk(10, sum(container_memory_working_set_bytes{namespace=~\"$namespace\",pod=~\"$pod\",container!=\"\"}) by (pod))", legendFormat = "{{pod}}" }]
+        options = {
+          displayLabels = ["name", "percent"]
+          legend = {
+            showLegend  = true
+            displayMode = "list"
+            placement   = "right"
+            values      = ["value"]
+          }
+          reduceOptions = {
+            values = false
+            calcs  = ["lastNotNull"]
+            fields = ""
+          }
+        }
+        transformations = [
+          {
+            id = "renameByRegex"
+            options = {
+              regex         = ".*level=\"([^\"]+)\".*"
+              renamePattern = "$1"
+            }
+          }
+        ]
+
       },
       {
-        id         = 13
-        type       = "table"
-        title      = "🔁 Recent container restarts (last 1h)"
-        datasource = "AMP"
-        gridPos    = { x = 0, y = 23, w = 12, h = 7 }
+        id    = 13
+        type  = "logs"
+        title = "Live logs"
+        datasource = {
+          type = "loki"
+          uid  = "loki"
+        }
+        gridPos = {
+          h = 8
+          w = 24
+          x = 0
+          y = 39
+        }
+        targets = [
+          {
+            refId = "A"
+            expr  = "{job=~\".+\"} |= \"$search\""
+          }
+        ]
+        options = {
+          showTime      = true
+          showLabels    = true
+          wrapLogMessage = true
+          sortOrder     = "Descending"
+          enableLogDetails = true
+        }
+      },
+
+      {
+        id    = 300
+        type  = "row"
+        title = "Traces (Tempo)"
+        gridPos = {
+          h = 1
+          w = 24
+          x = 0
+          y = 51
+        }
+        collapsed = false
+      },
+      {
+        id    = 14
+        type  = "table"
+        title = "Trace search (TraceQL)"
+        datasource = {
+          type = "tempo"
+          uid  = "tempo"
+        }
+        gridPos = {
+          h = 12
+          w = 24
+          x = 0
+          y = 52
+        }
+        targets = [
+          {
+            refId     = "A"
+            queryType = "traceql"
+            query     = "{ resource.service.name =~ \"$service\" }"
+            limit     = 20
+            sps       = 3
+          }
+        ]
         options = {
           showHeader = true
-          sortBy     = [{ desc = true, displayName = "Value" }]
         }
-        fieldConfig = { defaults = { unit = "short", decimals = 0 }, overrides = [] }
-        transformations = [{
-          id = "organize"
-          options = {
-            indexByName  = { Time = 0, pod = 1, Value = 2 }
-            renameByName = { Value = "Restarts" }
-          }
-        }]
-        targets = [{ refId = "A", expr = "topk(20, sum(increase(kube_pod_container_status_restarts_total{namespace=~\"$namespace\"}[1h])) by (pod))", legendFormat = "{{pod}}", format = "table" }]
       },
       {
-        id         = 14
-        type       = "stat"
-        title      = "✅ Pods Ready (ratio)"
-        datasource = "AMP"
-        gridPos    = { x = 12, y = 23, w = 6, h = 7 }
-        options = {
-          reduceOptions = { calcs = ["lastNotNull"], fields = "", values = false }
-          orientation   = "vertical"
-          colorMode     = "value"
-          textMode      = "value_and_name"
-          graphMode     = "area"
-          justifyMode   = "center"
+        id    = 15
+        type  = "stat"
+        title = "Traces seen (best-effort)"
+        datasource = {
+          type = "tempo"
+          uid  = "tempo"
         }
-        fieldConfig = {
-          defaults = {
-            unit     = "percentunit"
-            min      = 0
-            max      = 1
-            decimals = 2
-            thresholds = { mode = "absolute", steps = [{ color = "red", value = null }, { color = "yellow", value = 0.8 }, { color = "green", value = 0.95 }] }
+        gridPos = {
+          h = 5
+          w = 12
+          x = 0
+          y = 64
+        }
+        targets = [
+          {
+            refId     = "A"
+            queryType = "traceql"
+            query     = "{ resource.service.name =~ \"$service\" }"
+            limit     = 20
+            sps       = 3
           }
-          overrides = []
-        }
-        targets = [{ refId = "A", expr = "sum(kube_pod_status_ready{namespace=~\"$namespace\",condition=\"true\"}) / sum(kube_pod_status_ready{namespace=~\"$namespace\"})", legendFormat = "ready" }]
-      },
-      {
-        id         = 15
-        type       = "stat"
-        title      = "⚠️ Pending / Failed pods"
-        datasource = "AMP"
-        gridPos    = { x = 18, y = 23, w = 6, h = 7 }
-        options = {
-          reduceOptions = { calcs = ["lastNotNull"], fields = "", values = false }
-          orientation   = "vertical"
-          colorMode     = "background"
-          textMode      = "value_and_name"
-          graphMode     = "none"
-          justifyMode   = "center"
-        }
+        ]
+        transformations = [
+          {
+            id = "reduce"
+            options = {
+              mode   = "seriesToRows"
+              reducers = ["count"]
+            }
+          }
+        ]
         fieldConfig = {
           defaults = {
             unit     = "short"
-            min      = 0
             decimals = 0
-            thresholds = { mode = "absolute", steps = [{ color = "green", value = null }, { color = "yellow", value = 1 }, { color = "red", value = 5 }] }
+            thresholds = {
+              mode  = "absolute"
+              steps = [
+                { color = "green", value = null }
+              ]
+            }
           }
           overrides = []
         }
-        targets = [{ refId = "A", expr = "sum(kube_pod_status_phase{namespace=~\"$namespace\",phase=~\"Pending|Failed\"})", legendFormat = "unhealthy" }]
-      },
-
-      {
-        id    = 20
-        type  = "row"
-        title = "🧾 Logs (Loki)"
-        gridPos = { x = 0, y = 30, w = 24, h = 1 }
-        collapsed = false
-        panels    = []
-      },
-      {
-        id         = 21
-        type       = "timeseries"
-        title      = "📊 Log volume (lines/sec)"
-        datasource = "Loki"
-        gridPos    = { x = 0, y = 31, w = 12, h = 8 }
         options = {
-          legend  = { displayMode = "table", placement = "bottom", calcs = ["lastNotNull", "max"] }
-          tooltip = { mode = "multi" }
+          reduceOptions = {
+            calcs  = ["lastNotNull"]
+            fields = ""
+            values = false
+          }
+          orientation = "auto"
+          textMode    = "auto"
+          colorMode   = "background"
+          graphMode   = "none"
+          wideLayout  = true
         }
-        fieldConfig = { defaults = { unit = "ops", min = 0 }, overrides = [] }
-        targets = [{ refId = "A", expr = "sum(rate({namespace=~\"$namespace\",pod=~\"$pod\"}[1m]))", legendFormat = "lines/sec" }]
       },
       {
-        id         = 22
-        type       = "piechart"
-        title      = "🍬 Logs by level (best-effort)"
-        datasource = "Loki"
-        gridPos    = { x = 12, y = 31, w = 12, h = 8 }
+        id    = 16
+        type  = "stat"
+        title = "Slow traces (>2ms)"
+        datasource = {
+          type = "tempo"
+          uid  = "tempo"
+        }
+        gridPos = {
+          h = 5
+          w = 12
+          x = 12
+          y = 64
+        }
+        targets = [
+          {
+            refId     = "A"
+            queryType = "traceql"
+            query     = "{ resource.service.name =~ \"$service\" && duration > 2ms }"
+            limit     = 20
+            sps       = 3
+          }
+        ]
+        transformations = [
+          {
+            id = "reduce"
+            options = {
+              mode     = "seriesToRows"
+              reducers = ["count"]
+            }
+          }
+        ]
+        fieldConfig = {
+          defaults = {
+            unit     = "short"
+            decimals = 0
+            thresholds = {
+              mode = "absolute"
+              steps = [
+                { color = "green", value = null },
+                { color = "red", value = 1 }
+              ]
+            }
+          }
+          overrides = []
+        }
         options = {
-          legend        = { displayMode = "list", placement = "right" }
-          reduceOptions = { calcs = ["lastNotNull"], fields = "", values = false }
-          pieType       = "pie"
-          displayLabels = ["name", "percent"]
+          reduceOptions = {
+            calcs  = ["lastNotNull"]
+            fields = ""
+            values = false
+          }
+          orientation = "auto"
+          textMode    = "auto"
+          colorMode   = "background"
+          graphMode   = "none"
+          wideLayout  = true
         }
-        fieldConfig = { defaults = { unit = "short", decimals = 0 }, overrides = [] }
-        targets = [{
-          refId        = "A"
-          expr         = "sum by (level) (count_over_time({namespace=~\"$namespace\",pod=~\"$pod\"} | json | label_format level={{.level}} [5m]))"
-          legendFormat = "{{level}}"
-        }]
-      },
-      {
-        id         = 23
-        type       = "logs"
-        title      = "🧻 Live logs"
-        datasource = "Loki"
-        gridPos    = { x = 0, y = 39, w = 24, h = 14 }
-        options = {
-          showTime         = true
-          showLabels       = true
-          showCommonLabels = true
-          wrapLogMessage   = true
-          dedupStrategy    = "signature"
-          enableLogDetails = true
-          sortOrder        = "Descending"
-        }
-        targets = [{ refId = "A", expr = "{namespace=~\"$namespace\",pod=~\"$pod\"} |= \"$search\"" }]
-      },
-
-      {
-        id    = 30
-        type  = "row"
-        title = "🧵 Traces (Tempo)"
-        gridPos = { x = 0, y = 53, w = 24, h = 1 }
-        collapsed = false
-        panels    = []
-      },
-      {
-        id         = 31
-        type       = "traces"
-        title      = "🕵️ Trace search (TraceQL)"
-        datasource = "Tempo"
-        gridPos    = { x = 0, y = 54, w = 24, h = 10 }
-        options = {
-          spanStartTimeShift = "0s"
-          spanEndTimeShift   = "0s"
-        }
-        targets = [{
-          refId     = "A"
-          queryType = "traceql"
-          query     = "{ resource.service.name =~ \"$service\" }"
-        }]
-      },
-      {
-        id         = 32
-        type       = "stat"
-        title      = "🧬 Traces seen (best-effort)"
-        datasource = "AMP"
-        gridPos    = { x = 0, y = 64, w = 8, h = 6 }
-        options = {
-          reduceOptions = { calcs = ["lastNotNull"], fields = "", values = false }
-          orientation   = "vertical"
-          colorMode     = "value"
-          textMode      = "value_and_name"
-          graphMode     = "area"
-          justifyMode   = "center"
-        }
-        fieldConfig = { defaults = { unit = "short", min = 0 }, overrides = [] }
-        targets = [{ refId = "A", expr = "sum(rate(traces_spanmetrics_calls_total{service=~\"$service\"}[5m]))", legendFormat = "calls/s" }]
-      },
-      {
-        id         = 33
-        type       = "timeseries"
-        title      = "🧷 Span latency (p95, best-effort)"
-        datasource = "AMP"
-        gridPos    = { x = 8, y = 64, w = 16, h = 6 }
-        options = {
-          legend  = { displayMode = "table", placement = "bottom", calcs = ["lastNotNull", "max"] }
-          tooltip = { mode = "multi" }
-        }
-        fieldConfig = { defaults = { unit = "s", min = 0, decimals = 3 }, overrides = [] }
-        targets = [{ refId = "A", expr = "histogram_quantile(0.95, sum(rate(traces_spanmetrics_latency_bucket{service=~\"$service\"}[5m])) by (le))", legendFormat = "span p95" }]
       }
     ]
-  })
+  }
+}
+
+resource "kubernetes_config_map_v1" "grafana_dashboard_app_observability" {
+  metadata {
+    name      = "grafana-dashboard-app-observability"
+    namespace = var.namespace
+
+    labels = {
+      grafana_dashboard = "1"
+    }
+  }
+
+  data = {
+    "app-observability.json" = jsonencode(local.grafana_dashboard_app_observability)
+  }
+
+  depends_on = [kubernetes_namespace_v1.monitoring]
 }
 

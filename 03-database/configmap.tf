@@ -24,7 +24,6 @@ resource "kubernetes_config_map" "db_config" {
   ]
 }
 
-
 # Backend API ConfigMap 생성 (하드코딩된 값 제거)
 resource "kubernetes_config_map" "backend_config" {
   provider = kubernetes.seoul
@@ -42,7 +41,7 @@ resource "kubernetes_config_map" "backend_config" {
     HOST              = "0.0.0.0"
     PORT              = "8000"
     ROOT_PATH         = "/api"
-    KEYCLOAK_URL      = var.keycloak_url != "" ? var.keycloak_url : "https://api.${var.domain_name}/keycloak"
+    KEYCLOAK_URL      = coalesce(var.keycloak_url, "https://api.${var.domain_name}/keycloak")
     KEYCLOAK_REALM    = "formation-lap"
     KEYCLOAK_CLIENT_ID = "backend-client"
     JWT_ALGORITHM     = "RS256"
@@ -51,7 +50,7 @@ resource "kubernetes_config_map" "backend_config" {
     DB_NAME           = "ott_db"
     S3_BUCKET_NAME    = data.terraform_remote_state.infra.outputs.origin_bucket_name
     S3_REGION         = "ap-northeast-2"
-    CLOUDFRONT_DOMAIN = var.cloudfront_domain != "" ? var.cloudfront_domain : "www.${var.domain_name}"
+    CLOUDFRONT_DOMAIN = coalesce(var.cloudfront_domain, "www.${var.domain_name}")
   }
 
   depends_on = [
@@ -70,7 +69,7 @@ resource "kubernetes_config_map" "keycloak_config" {
   }
 
   data = {
-    KEYCLOAK_URL       = var.keycloak_url != "" ? var.keycloak_url : "https://api.${var.domain_name}/keycloak"
+    KEYCLOAK_URL       = coalesce(var.keycloak_url, "https://api.${var.domain_name}/keycloak")
     KEYCLOAK_REALM     = "formation-lap"
     KEYCLOAK_CLIENT_ID = "backend-client"
   }

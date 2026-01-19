@@ -37,6 +37,15 @@ output "oregon_oidc_provider_arn" {
 output "oregon_eks_workers_sg_id" {
   value = module.eks.oregon_eks_workers_sg_id
 }
+
+# ECR Repository URLs
 output "user_service_repository_url" {
+  description = "User Service ECR Repository URL"
   value       = module.ecr.user_service_repository_url
 }
+
+output "backend_api_repository_url" {
+  description = "Backend API ECR Repository URL"
+  value       = module.ecr.backend_api_repository_url
+}
+

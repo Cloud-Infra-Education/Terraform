@@ -18,7 +18,7 @@ variable "ecr_replication_repo_prefixes" {
   type = list(string)
   default = [
     "user-service",
-    "order-service",
-    "product-service",
+    "backend-api",
   ]
 }
+

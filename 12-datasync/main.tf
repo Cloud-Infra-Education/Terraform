@@ -17,7 +17,7 @@ module "datasync" {
 
   target_bucket_arn = "arn:aws:s3:::${data.terraform_remote_state.infra.outputs.origin_bucket_name}"
   onprem_private_ip       = var.onprem_private_ip
-  onprem_mg_private_cidr = var.onprem_mg_private_cidr
+  onprem_mg_private_cidr = var.onprem_private_cidr
   datasync_agent_arn     = var.datasync_agent_arn
   onprem_source_path     = "/mnt/my_data" # 필요 시 수정
 }

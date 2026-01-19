@@ -1,23 +1,3 @@
-variable "our_team" {
-  type    = string
-  default = "formation-lap"
-}
-
-# ================
-# DB 클러스터 계정
-# ================
-variable "db_username" {
-  description = "DB master username"
-  type        = string
-}
-
-variable "db_password" {
-  description = "DB master password"
-  type        = string
-  sensitive   = true
-}
-
-# ============================================
 # remote_state 경로 (local backend 기준)
 # ============================================
 variable "infra_state_path" {

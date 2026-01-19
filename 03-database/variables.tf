@@ -1,3 +1,23 @@
+variable "our_team" {
+  type    = string
+  default = "formation-lap"
+}
+
+# ================
+# DB 클러스터 계정
+# ================
+variable "db_username" {
+  description = "DB master username"
+  type        = string
+}
+
+variable "db_password" {
+  description = "DB master password"
+  type        = string
+  sensitive   = true
+}
+
+
 # remote_state 경로 (local backend 기준)
 # ============================================
 variable "infra_state_path" {
@@ -38,4 +58,8 @@ variable "cloudfront_domain" {
   description = "CloudFront 도메인 (선택사항, 비워두면 www.<domain_name>로 자동 생성)"
   type        = string
   default     = null
+}
+variable "admin_cidr" {
+  description = "Admin CIDR block"
+  type        = string
 }

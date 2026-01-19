@@ -32,14 +32,15 @@ module "database" {
 }
 
 module "cloudwatch" {
-  source = "./modules/cloudwatch"
+  source = "../modules/cloudwatch"
 
   providers = {
     aws.seoul = aws.seoul
   }
 
   our_team           = var.our_team
-  db_instance_id     = module.database.db_instance_id
+  aurora_cluster_id = module.database.kor_cluster_id
+  eks_cluster_name  = data.terraform_remote_state.kubernetes.outputs.seoul_cluster_name
   ecr_url_alert      = data.terraform_remote_state.kubernetes.outputs.user_service_repository_url
   slack_secret_name  = "${var.our_team}/slack/webhook"
 }

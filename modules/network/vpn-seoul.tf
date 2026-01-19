@@ -12,6 +12,12 @@ data "aws_ec2_transit_gateway" "kor" {
     name   = "tag:Name"
     values = ["TGW-KOR"]  
   }
+  filter {
+    name   = "state"
+    values = ["available"]
+  }
+  depends_on = [aws_ec2_transit_gateway.kor]  # Transit Gateway 생성 후 조회
+
 }
 
 data "aws_vpc" "kor" {
@@ -44,6 +50,8 @@ resource "aws_vpn_connection" "onprem_to_seoul_vpn" {
   transit_gateway_id  = data.aws_ec2_transit_gateway.kor.id
   type                = "ipsec.1"
   static_routes_only  = true
+
+  depends_on = [aws_ec2_transit_gateway.kor]
 
   tags = { Name = "VPN-to-Seoul-TGW" }
 }

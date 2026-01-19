@@ -1,0 +1,85 @@
+{
+    "cluster": {
+        "name": "formation-lap-seoul",
+        "arn": "arn:aws:eks:ap-northeast-2:570795932693:cluster/formation-lap-seoul",
+        "createdAt": "2026-01-19T21:49:33.606000+09:00",
+        "version": "1.34",
+        "endpoint": "https://1C03828B52F137A4F59113136D01E251.gr7.ap-northeast-2.eks.amazonaws.com",
+        "roleArn": "arn:aws:iam::570795932693:role/formation-lap-seoul-cluster-20260119124903225900000005",
+        "resourcesVpcConfig": {
+            "subnetIds": [
+                "subnet-0f36d3c34f09d13b2",
+                "subnet-01f670071167f976b"
+            ],
+            "securityGroupIds": [
+                "sg-08ad254eeea6e74da"
+            ],
+            "clusterSecurityGroupId": "sg-0c02c0cf41d4d7707",
+            "vpcId": "vpc-0d0f2b8968c482699",
+            "endpointPublicAccess": true,
+            "endpointPrivateAccess": true,
+            "publicAccessCidrs": [
+                "175.192.170.212/32"
+            ]
+        },
+        "kubernetesNetworkConfig": {
+            "serviceIpv4Cidr": "172.20.0.0/16",
+            "ipFamily": "ipv4",
+            "elasticLoadBalancing": {
+                "enabled": false
+            }
+        },
+        "logging": {
+            "clusterLogging": [
+                {
+                    "types": [
+                        "api",
+                        "audit",
+                        "authenticator"
+                    ],
+                    "enabled": true
+                },
+                {
+                    "types": [
+                        "controllerManager",
+                        "scheduler"
+                    ],
+                    "enabled": false
+                }
+            ]
+        },
+        "identity": {
+            "oidc": {
+                "issuer": "https://oidc.eks.ap-northeast-2.amazonaws.com/id/1C03828B52F137A4F59113136D01E251"
+            }
+        },
+        "status": "ACTIVE",
+        "certificateAuthority": {
+            "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJY1BCeEhHczg1ejh3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TmpBeE1Ua3hNalE1TWpsYUZ3MHpOakF4TVRjeE1qVTBNamxhTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUURlZTUycVlZRTA5MHdrYnRRREFJNWpiRFd2MjRnekUzR0t0WWJpbkNDQ0RBN2RncFUzQ1pYSXlmeUwKZGJicm54cFZlWE5BU1BOSWNhRnhkdjE4eHhLc3BvU2I0R25pMEt4TnM4TmF5ZHFWRVFNQVhnR3NxZjl1WURZNAp6WC85dGRCRDNpeDg3L1lOem1tcHFZblJuWlh2YU5EemZEakhjNnlZaGNqdzY4VEhRSWl6MkRzUG12dWRKQWszClJFWkFtcnBXUm1NUytvSHoyR3FPbjBhSXJHa1Y2N25LWG1Od1BOM3AxQXdQSGN4aXBWM2xpNGVYcUNOLzdxZWwKcnBEVVY2MnZEcHI3L1RQc2VwejE3ZEM3eGRDZjBWaGVva3FNYjF1QnZDUm1aNUtManZmKy9CYmlMK3dZSVRENgpGeDdmVkxxejJDeUh1dmxFMStGYUNLVUtwUmhaQWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJSc09QSCtnUyt5QWR1Ukl4M0xVOW8rNEltTHREQVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRREJWdWlvWVp6OQozeGtLK1RoTUR1Z1Zjd29TOGZFVDlkd3BoVGd2VUlia1JGVWt0SzZHekhWQWt0aUp0UEhkN0pla3VvUXIxMXhRCkpxdFo2b2tIc21oTHE1RlE3K3U3T2Nkb3NubnZYMkxJQ29nK3Nxell6cS9oUUYrUDljcE8xd3VQNVB1aUVUUGIKZ24zaE5FMlppdWsrMWsveHZyaDBWRmtaUzVHRlI4UTVqL1cwRGNqWHFodHJKa0NZTjV6TVJvS3lrMmVlRjhFagovMUV4R0JVaHBkL3U0YjJZTm53ZTk4WFZuajdEZnNBNHhLYWp6dXA0TlEySnJsTWhMQy9zVk5XNUo5Z1hySFkrCkdkQzcxN3NOVnVGVWcvZDF5RjE3Zi9lMFNocmloc0lvTWgzQjRNb2t1L3djZnBvWVRhVWVZT1Z6YmZPeVl1Um4KNWtTeDhtTWRsYW81Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+        },
+        "platformVersion": "eks.12",
+        "tags": {
+            "terraform-aws-modules": "eks"
+        },
+        "encryptionConfig": [
+            {
+                "resources": [
+                    "secrets"
+                ],
+                "provider": {
+                    "keyArn": "arn:aws:kms:ap-northeast-2:570795932693:key/1c4dc9a1-7ce9-4a7e-98be-64b66b9b3851"
+                }
+            }
+        ],
+        "accessConfig": {
+            "authenticationMode": "API_AND_CONFIG_MAP"
+        },
+        "upgradePolicy": {
+            "supportType": "EXTENDED"
+        },
+        "deletionProtection": false,
+        "controlPlaneScalingConfig": {
+            "tier": "standard"
+        }
+    }
+}

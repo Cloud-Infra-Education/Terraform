@@ -35,6 +35,17 @@ resource "kubernetes_manifest" "msa_ingress_seoul" {
                     name = "user-service"
                     port = { number = 8000 }
                   }
+                  
+                }
+              },
+              {
+                path     = "/api"
+                pathType = "Prefix"
+                backend = {
+                  service = {
+                    name = "backend-api"
+                    port = { number = 8000 }
+                  }
                 }
               }
             ]

@@ -36,6 +36,16 @@ resource "kubernetes_manifest" "msa_ingress_oregon" {
                     port = { number = 8000 }
                   }
                 }
+              },
+              {
+                path     = "/api"
+                pathType = "Prefix"
+                backend = {
+                  service = {
+                    name = "backend-api-service"
+                    port = { number = 8000 }
+                  }
+                }
               }
             ]
           }
@@ -44,5 +54,4 @@ resource "kubernetes_manifest" "msa_ingress_oregon" {
     }
   }
 }
-
 

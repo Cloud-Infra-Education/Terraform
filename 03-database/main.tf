@@ -23,3 +23,17 @@ module "database" {
   db_password = var.db_password
   our_team    = var.our_team
 }
+
+module "cloudwatch" {
+  source = "./modules/cloudwatch"
+
+  providers = {
+    aws.seoul = aws.seoul
+  }
+
+  our_team           = var.our_team
+  db_instance_id     = module.database.db_instance_id
+  ecr_url_alert      = data.terraform_remote_state.kubernetes.outputs.user_service_repository_url
+  slack_secret_name  = "${var.our_team}/slack/webhook"
+}
+

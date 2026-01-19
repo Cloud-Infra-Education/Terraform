@@ -17,5 +17,21 @@ resource "aws_ecr_repository" "product" {
   force_delete         = true 
 }
 
+resource "aws_ecr_repository" "backend_api" {
+  provider             = aws.seoul
+  name                 = "backend-api"
+  image_tag_mutability = "IMMUTABLE"
+  force_delete         = true 
+}
+resource "aws_ecr_repository" "alert_service" {
+  provider             = aws.seoul
+  name                 = "alert-service"
+  image_tag_mutability = "IMMUTABLE"
+  force_delete         = true
+}
 
-
+resource "aws_ecr_repository" "alert_service_oregon" {
+  provider             = aws.oregon
+  name                 = "alert-service"
+  image_tag_mutability = "IMMUTABLE"
+}

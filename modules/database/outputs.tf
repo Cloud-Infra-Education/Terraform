@@ -30,3 +30,13 @@ output "usa_db_security_group_id" {
   value = aws_security_group.db_usa.id
 }
 
+output "db_instance_id" {
+  value = aws_rds_cluster_instance.kor_writer.id
+}
+output "kor_rds_proxy_endpoint" {
+  value       = aws_db_proxy.kor.endpoint
+}
+
+output "usa_rds_proxy_endpoint" {
+  value       = aws_db_proxy.usa.endpoint
+}

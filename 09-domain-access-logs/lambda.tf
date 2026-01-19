@@ -24,7 +24,7 @@ resource "aws_lambda_function" "route53_log_processor" {
   }
 
   tags = {
-    Name = "y2om-Route53 DNS Log Processor"
+    Name = "Route53 DNS Log Processor"
   }
 }
 
@@ -33,7 +33,7 @@ resource "aws_lambda_function" "route53_log_processor" {
 resource "aws_cloudwatch_log_subscription_filter" "lambda_trigger" {
   provider = aws.us_east_1
 
-  name            = "y2om-route53-log-to-lambda"
+  name            = "route53-log-to-lambda"
   log_group_name  = aws_cloudwatch_log_group.route53_query_logs.name
   filter_pattern  = ""
   destination_arn = aws_lambda_function.route53_log_processor.arn

@@ -13,6 +13,8 @@ STACKS=(
   "07-domain-cf"
   "08-domain-ga"
   "10-app-monitoring"
+  "12-datasync"
+  "13-dms"
 )
 
 for s in "${STACKS[@]}"; do

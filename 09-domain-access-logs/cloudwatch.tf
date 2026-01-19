@@ -3,11 +3,11 @@
 resource "aws_cloudwatch_log_group" "route53_query_logs" {
   provider = aws.us_east_1
 
-  name              = "/aws/route53/y2om-query-logs"
+  name              = "/aws/route53/query-logs"
   retention_in_days = var.log_retention_days
 
   tags = {
-    Name = "y2om-Route53 Query Logs"
+    Name = "Route53 Query Logs"
   }
 }
 
@@ -15,7 +15,7 @@ resource "aws_cloudwatch_log_group" "route53_query_logs" {
 resource "aws_cloudwatch_log_resource_policy" "route53_logs_policy" {
   provider = aws.us_east_1
 
-  policy_name = "y2om-route53-query-logging-policy"
+  policy_name = "route53-query-logging-policy"
 
   policy_document = jsonencode({
     Version = "2012-10-17"

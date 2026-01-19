@@ -1,3 +1,5 @@
+// modules/app-monitoring/helm-grafana.tf
+
 # ==============================
 # Layer 4 - Grafana (Helm)
 # ==============================
@@ -38,6 +40,18 @@ resource "helm_release" "grafana_seoul" {
         enabled = false
       }
 
+      "grafana.ini" = {
+        users = {
+          default_theme = "dark"
+        }
+        dashboards = {
+          default_home_dashboard_path = local.grafana_home_dashboard_path
+        }
+      }
+
+      dashboardProviders = local.grafana_dashboard_providers
+      dashboards         = local.grafana_dashboards
+
       # Minimal provisioning: LGTM datasources with tenant header.
       datasources = {
         "datasources.yaml" = {
@@ -46,7 +60,6 @@ resource "helm_release" "grafana_seoul" {
             {
               name      = "Loki"
               type      = "loki"
-              uid       = "loki"
               access    = "proxy"
               url       = local.loki_gateway_url
               isDefault = false
@@ -54,13 +67,12 @@ resource "helm_release" "grafana_seoul" {
                 httpHeaderName1 = "X-Scope-OrgID"
               }
               secureJsonData = {
-                httpHeaderValue1 = "monitoring"
+                httpHeaderValue1 = var.tenant_org_id
               }
             },
             {
               name      = "AMP"
               type      = "prometheus"
-              uid       = "amp"
               access    = "proxy"
               url       = local.amp_query_base_url
               isDefault = true
@@ -68,44 +80,13 @@ resource "helm_release" "grafana_seoul" {
             {
               name   = "Tempo"
               type   = "tempo"
-              uid    = "tempo"
               access = "proxy"
               url    = "http://${local.releases.tempo}-query-frontend.${var.namespace}.svc.cluster.local:3200"
               jsonData = {
                 httpHeaderName1 = "X-Scope-OrgID"
               }
               secureJsonData = {
-                httpHeaderValue1 = "monitoring"
-              }
-            }
-          ]
-        }
-      }
-
-      # Auto-load dashboards from ConfigMaps labeled grafana_dashboard=1.
-      sidecar = {
-        dashboards = {
-          enabled        = true
-          label          = "grafana_dashboard"
-          labelValue     = "1"
-          searchNamespace = var.namespace
-          folder         = "/tmp/dashboards"
-        }
-      }
-
-      dashboardProviders = {
-        "dashboardproviders.yaml" = {
-          apiVersion = 1
-          providers = [
-            {
-              name            = "default"
-              orgId           = 1
-              folder          = ""
-              type            = "file"
-              disableDeletion = false
-              editable        = true
-              options = {
-                path = "/tmp/dashboards"
+                httpHeaderValue1 = var.tenant_org_id
               }
             }
           ]
@@ -119,5 +100,4 @@ resource "helm_release" "grafana_seoul" {
     kubernetes_service_v1.amp_query_sigv4_proxy_seoul,
   ]
 }
-
 

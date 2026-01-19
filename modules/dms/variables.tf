@@ -173,3 +173,10 @@ variable "tags" {
   default     = {}
 }
 
+
+variable "start_replication_task" {
+  description = "terraform apply 시 DMS task를 자동 시작할지 여부"
+  type        = bool
+  default     = false
+}
+

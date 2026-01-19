@@ -4,15 +4,15 @@ variable "aws_region" {
   default     = "ap-northeast-2"
 }
 
-variable "route53_zone_id" {
-  description = "Route53 Public Hosted Zone ID"
-  type        = string
+variable "domain_name" {
+  type = string
 }
+
 
 variable "opensearch_domain_name" {
   description = "OpenSearch 도메인 이름"
   type        = string
-  default     = "y2om-route53-dns-logs"
+  default     = "route53-dns-logs"
 }
 
 variable "opensearch_instance_type" {
@@ -42,13 +42,13 @@ variable "log_retention_days" {
 variable "lambda_function_name" {
   description = "Lambda 함수 이름"
   type        = string
-  default     = "y2om-route53-dns-log-processor"
+  default     = "route53-dns-log-processor"
 }
 
 variable "opensearch_index_name" {
   description = "OpenSearch 인덱스 이름"
   type        = string
-  default     = "y2om-route53-dns-logs"
+  default     = "route53-dns-logs"
 }
 
 variable "opensearch_create_service_linked_role" {
@@ -61,5 +61,5 @@ variable "opensearch_master_user_password" {
   description = "OpenSearch 마스터 사용자 비밀번호 (Fine-grained access control용)"
   type        = string
   sensitive   = true
-  default     = "ChangeMe123!" # 기본값 - 실제 사용 시 반드시 변경 권장
+  default     = "Root1004!" # 기본값 - 실제 사용 시 반드시 변경 권장
 }

@@ -77,7 +77,7 @@ variable "alloy_chart_version" {
 
 variable "tenant_org_id" {
   type    = string
-  default = "chan"
+  default = "monitoring"
 }
 
 # ==============================

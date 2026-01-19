@@ -1,5 +1,5 @@
 module "dms" {
-  source = "./modules/dms"
+  source = "../modules/dms"
 
   providers = {
     aws = aws.seoul
@@ -31,4 +31,7 @@ module "dms" {
   migration_type            = var.dms_migration_type
   table_mappings            = var.dms_table_mappings
   replication_task_settings = var.dms_replication_task_settings
+
+  start_replication_task = "true"
+
 }

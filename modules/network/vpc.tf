@@ -24,13 +24,13 @@ module "kor_vpc" {
     "PrivateSubnet-DB-B"
   ]
 
-#  tgw_subnets      = ["10.0.31.0/28", "10.0.32.0/28"]
-#  tgw_subnet_names = ["KOR-TGW-SubnetA", "KOR-TGW-SubnetB"]
+  tgw_subnets      = ["10.0.31.0/28", "10.0.32.0/28"]
+  tgw_subnet_names = ["KOR-TGW-SubnetA", "KOR-TGW-SubnetB"]
 
   key_name      = var.key_name_kor
   admin_cidr    = var.admin_cidr
-#  tgw_id        = aws_ec2_transit_gateway.kor.id
-#maxjagger  peer_vpc_cidr = "10.1.0.0/16" 
+  tgw_id        = aws_ec2_transit_gateway.kor.id
+  peer_vpc_cidr = "10.1.0.0/16" 
 }
 
 module "usa_vpc" {
@@ -59,11 +59,11 @@ module "usa_vpc" {
     "PrivateSubnet-DB-B"
   ]
 
-#  tgw_subnets      = ["10.1.31.0/28", "10.1.32.0/28"]
-#  tgw_subnet_names = ["USA-TGW-SubnetA", "USA-TGW-SubnetB"]
+  tgw_subnets      = ["10.1.31.0/28", "10.1.32.0/28"]
+  tgw_subnet_names = ["USA-TGW-SubnetA", "USA-TGW-SubnetB"]
 
   key_name      = var.key_name_usa
   admin_cidr    = var.admin_cidr
-#  tgw_id        = aws_ec2_transit_gateway.usa.id
-#maxjagger  peer_vpc_cidr = "10.0.0.0/16"
+  tgw_id        = aws_ec2_transit_gateway.usa.id
+  peer_vpc_cidr = "10.0.0.0/16"
 }

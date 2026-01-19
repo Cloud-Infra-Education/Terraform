@@ -88,11 +88,9 @@ resource "aws_db_proxy_endpoint" "usa_ro" {
   provider               = aws.oregon
 
   db_proxy_name          = aws_db_proxy.usa.name
-  db_proxy_endpoint_name = "${var.our_team}-usa-proxy-ro"
+  db_proxy_endpoint_name = "${var.our_team}-usa-proxy-ro" 
   vpc_subnet_ids         = var.usa_private_db_subnet_ids
-  vpc_security_group_ids = [aws_security_group.proxy_usa.id] # 기존 프록시 SG 그대로 사용
-
-  # 핵심: 현재 오리건은 Secondary이므로 이 옵션이 있어야 리더 인스턴스에 접속 가능합니다.
+  vpc_security_group_ids = [aws_security_group.proxy_usa.id]
   target_role            = "READ_ONLY"
 }
 

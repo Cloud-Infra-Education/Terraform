@@ -14,7 +14,6 @@ STACKS=(
   "08-domain-ga"
   "09-domain-access-logs"
   "10-app-monitoring"
-  "11-vpn"
   "12-datasync"
   "13-dms"
 )

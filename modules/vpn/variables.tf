@@ -19,9 +19,8 @@ variable "onprem_public_ip" {
   type        = string
 }
 
-variable "onprem_private_cidrs" {
-  description = "온프레 내부 CIDR 목록"
-  type        = list(string)
+variable "onprem_private_cidr" {
+  type        = string
 }
 
 variable "bgp_asn" {

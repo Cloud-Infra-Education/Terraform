@@ -77,6 +77,20 @@ resource "aws_security_group_rule" "allow_terraform_kor_proxy" {
   cidr_blocks       = [var.admin_cidr]  # Terraform 실행 머신의 공인 IP
   security_group_id = aws_security_group.proxy_kor.id
 }
+/*
+# ----- Bastion ----> Proxy
+resource "aws_security_group_rule" "allow_bastion_to_kor_proxy" {
+  provider = aws.seoul
+
+  type              = "ingress"
+  from_port         = var.db_port
+  to_port           = var.db_port
+  protocol          = "tcp"
+  security_group_id = aws_security_group.proxy_kor.id
+  source_security_group_id = 
+}
+*/
+
 
 resource "aws_security_group_rule" "allow_vpc_to_kor_proxy" {
   provider          = aws.oregon

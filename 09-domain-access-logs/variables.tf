@@ -12,7 +12,7 @@ variable "domain_name" {
 variable "opensearch_domain_name" {
   description = "OpenSearch 도메인 이름"
   type        = string
-  default     = "chan-route53-dns-logs"
+  default     = "route53-dns-logs"
 }
 
 variable "opensearch_instance_type" {

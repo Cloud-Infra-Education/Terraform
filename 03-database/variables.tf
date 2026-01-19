@@ -1,6 +1,6 @@
 variable "our_team" {
   type    = string
-  default = "formation-lap"
+  default = "formation-lap" 
 }
 
 # ================

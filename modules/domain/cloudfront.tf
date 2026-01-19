@@ -7,7 +7,7 @@ locals {
 
 # CloudFront OAC 설정
 resource "aws_cloudfront_origin_access_control" "this" {
-  name                              = "chan-oac-for-cloudfront"
+  name                              = "oac-for-cloudfront"
   description                       = "S3보안을 위한 CloudFront 접속용 OAC "
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"

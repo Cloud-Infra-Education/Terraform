@@ -22,7 +22,7 @@ data "aws_iam_policy_document" "rds_assume_role" {
 }
 
 resource "aws_iam_role" "rds_role" {
-  name               = "${var.our_team}-RDS-Role"
+  name               = "${var.our_team}-RDS-Role" 
   assume_role_policy = data.aws_iam_policy_document.rds_assume_role.json
 }
 
@@ -56,7 +56,7 @@ resource "aws_iam_role_policy" "aurora_kms_policy" {
 # ============= Seoul Region ================
 resource "aws_iam_role" "kor_rds_proxy" {
   provider           = aws.seoul
-  name               = "${var.our_team}-KOR-RDS-Proxy-Role"
+  name               = "${var.our_team}-KOR-RDS-Proxy-Role"  
   assume_role_policy = data.aws_iam_policy_document.rds_proxy_assume_role.json
 }
 
@@ -80,7 +80,7 @@ resource "aws_iam_role_policy" "kor_rds_proxy" {
 # ============= Oregon Region ================
 resource "aws_iam_role" "usa_rds_proxy" {
   provider           = aws.oregon
-  name               = "${var.our_team}-USA-RDS-Proxy-Role"
+  name               = "${var.our_team}-USA-RDS-Proxy-Role" 
   assume_role_policy = data.aws_iam_policy_document.rds_proxy_assume_role.json
 }
 

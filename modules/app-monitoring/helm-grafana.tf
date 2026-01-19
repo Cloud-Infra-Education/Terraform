@@ -54,7 +54,7 @@ resource "helm_release" "grafana_seoul" {
                 httpHeaderName1 = "X-Scope-OrgID"
               }
               secureJsonData = {
-                httpHeaderValue1 = "chan"
+                httpHeaderValue1 = "monitoring"
               }
             },
             {
@@ -75,7 +75,7 @@ resource "helm_release" "grafana_seoul" {
                 httpHeaderName1 = "X-Scope-OrgID"
               }
               secureJsonData = {
-                httpHeaderValue1 = "chan"
+                httpHeaderValue1 = "monitoring"
               }
             }
           ]

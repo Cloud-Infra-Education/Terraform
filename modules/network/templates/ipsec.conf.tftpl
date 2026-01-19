@@ -1,0 +1,23 @@
+config setup
+    charondebug="all"
+
+conn %default
+    authby=secret
+    left=%defaultroute
+    leftid=${onprem_public_ip}
+    leftsubnet=${onprem_private_cidr}
+    ike=aes128-sha1-modp1024
+    esp=aes128-sha1-modp1024
+    keyexchange=ikev1
+    type=tunnel
+    auto=start
+    dpdaction=restart
+
+conn aws-seoul-t1
+    right=${tunnel1_address}
+    rightsubnet=${aws_rightsubnets}
+
+conn aws-seoul-t2
+    right=${tunnel2_address}
+    rightsubnet=${aws_rightsubnets}
+

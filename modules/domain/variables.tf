@@ -15,7 +15,7 @@ variable "api_subdomain" {
 
 variable "www_subdomain" {
   type = string
-  default = "www"
+  default = "site"
 }
 # ===============
 # CloudFront 관련 

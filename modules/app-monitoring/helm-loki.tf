@@ -17,16 +17,17 @@ resource "helm_release" "loki_seoul" {
       deploymentMode    = "SimpleScalable"
       fullnameOverride  = local.releases.loki
 
+      serviceAccount = {
+        create = true
+        name   = local.service_accounts.loki
+        annotations = {
+          "eks.amazonaws.com/role-arn" = aws_iam_role.loki_seoul.arn
+        }
+      }
+
       loki = {
         auth_enabled = true
 
-        serviceAccount = {
-          create = true
-          name   = local.service_accounts.loki
-          annotations = {
-            "eks.amazonaws.com/role-arn" = aws_iam_role.loki_seoul.arn
-          }
-        }
 
         ingester = {
           max_chunk_age     = "2m"

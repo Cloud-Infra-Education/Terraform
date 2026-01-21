@@ -3,9 +3,10 @@ resource "aws_ec2_transit_gateway" "kor" {
   description = "KOR Transit Gateway"
 
   tags = {
-    Name = "TGW-KOR"
+    Name = "TGW-KOR" 
   }
 }
+
 
 resource "aws_ec2_transit_gateway" "usa" {
   provider    = aws.oregon
@@ -25,3 +26,4 @@ resource "time_sleep" "wait_for_tgw" {
 
   create_duration = "180s"
 }
+

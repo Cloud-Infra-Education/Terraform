@@ -5,7 +5,7 @@ variable "our_team" {
 #--------------------------------
 variable "www_subdomain" {
   type = string
-  default = "www"
+  default = "site"
 }
 variable "api_subdomain" {
   type = string

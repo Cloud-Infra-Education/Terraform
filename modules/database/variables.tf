@@ -73,3 +73,22 @@ variable "proxy_connection_borrow_timeout" {
   type        = number
   default     = 120
 }
+
+variable "kms_key_arn" {
+  type        = string
+  description = "KMS Key ARN for Aurora Global Cluster"
+  default     = null
+}
+
+
+variable "kor_vpc_cidr_blocks" {
+  type = list(string)
+}
+
+variable "usa_vpc_cidr_blocks" {
+  type = list(string)
+}
+
+variable "admin_cidr" {
+  type = string
+}

@@ -5,7 +5,7 @@
 locals {
   alloy_config = templatefile("${path.module}/alloy/config.alloy.tmpl", {
     loki_push_url            = "${local.loki_gateway_url}/loki/api/v1/push"
-    mimir_remote_write_url   = "${local.mimir_nginx_url}/api/v1/push"
+    amp_remote_write_url     = local.amp_remote_write_url
     tempo_otlp_grpc_endpoint = local.tempo_otlp_grpc_endpoint
     tenant_id                = var.tenant_org_id
   })
@@ -23,6 +23,11 @@ resource "helm_release" "alloy_seoul" {
 
   values = [
     yamlencode({
+      controller = {
+        type     = "deployment"
+        replicas = 1
+      }
+
       fullnameOverride = local.releases.alloy
 
       rbac = {
@@ -45,6 +50,7 @@ resource "helm_release" "alloy_seoul" {
 
   depends_on = [
     kubernetes_namespace_v1.monitoring,
+    kubernetes_service_v1.amp_remote_write_sigv4_proxy_seoul,
   ]
 }
 

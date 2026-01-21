@@ -9,7 +9,7 @@ data "aws_iam_policy_document" "ebs_csi_trust" {
 
     principals {
       type        = "Federated"
-      identifiers = [data.aws_iam_openid_connect_provider.this.arn]
+      identifiers = [local.oidc_provider_arn]
     }
 
     condition {

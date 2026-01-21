@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+STACKS=(
+  "01-infra"
+  "02-kubernetes"
+  "03-database"
+  "04-addons"
+  "05-argocd"
+  "06-certificate"
+  "07-domain-cf"
+  "08-domain-ga"
+  "10-app-monitoring"
+  "12-datasync"
+  "13-dms"
+)
+
+for s in "${STACKS[@]}"; do
+  echo "========== Check: $s =========="
+  (
+    cd ${s}
+    terraform state list
+    cd ..
+  )
+done
+

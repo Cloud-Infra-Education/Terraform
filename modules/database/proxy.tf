@@ -83,3 +83,14 @@ resource "aws_db_proxy_target" "usa_cluster" {
   target_group_name     = aws_db_proxy_default_target_group.usa.name
   db_cluster_identifier = aws_rds_cluster.usa.id
 }
+
+resource "aws_db_proxy_endpoint" "usa_ro" {
+  provider               = aws.oregon
+
+  db_proxy_name          = aws_db_proxy.usa.name
+  db_proxy_endpoint_name = "${var.our_team}-usa-proxy-ro" 
+  vpc_subnet_ids         = var.usa_private_db_subnet_ids
+  vpc_security_group_ids = [aws_security_group.proxy_usa.id]
+  target_role            = "READ_ONLY"
+}
+

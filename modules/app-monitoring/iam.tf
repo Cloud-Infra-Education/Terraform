@@ -1,8 +1,9 @@
 locals {
   sa_subjects = {
-    loki  = "system:serviceaccount:${var.namespace}:${local.service_accounts.loki}"
-    mimir = "system:serviceaccount:${var.namespace}:${local.service_accounts.mimir}"
-    tempo = "system:serviceaccount:${var.namespace}:${local.service_accounts.tempo}"
+    loki             = "system:serviceaccount:${var.namespace}:${local.service_accounts.loki}"
+    tempo            = "system:serviceaccount:${var.namespace}:${local.service_accounts.tempo}"
+    amp_remote_write = "system:serviceaccount:${var.namespace}:${local.service_accounts.amp_remote_write}"
+    amp_query        = "system:serviceaccount:${var.namespace}:${local.service_accounts.amp_query}"
   }
 }
 
@@ -17,7 +18,7 @@ data "aws_iam_policy_document" "loki_trust" {
 
     principals {
       type        = "Federated"
-      identifiers = [data.aws_iam_openid_connect_provider.this.arn]
+      identifiers = [local.oidc_provider_arn]
     }
 
     condition {
@@ -50,11 +51,11 @@ data "aws_iam_policy_document" "loki_s3" {
       "s3:DeleteObject",
       "s3:AbortMultipartUpload",
       "s3:ListBucketMultipartUploads",
-      "s3:ListMultipartUploadParts"
+      "s3:ListMultipartUploadParts",
     ]
     resources = [
       module.s3_loki.bucket_arn,
-      "${module.s3_loki.bucket_arn}/*"
+      "${module.s3_loki.bucket_arn}/*",
     ]
   }
 }
@@ -80,7 +81,7 @@ data "aws_iam_policy_document" "tempo_trust" {
 
     principals {
       type        = "Federated"
-      identifiers = [data.aws_iam_openid_connect_provider.this.arn]
+      identifiers = [local.oidc_provider_arn]
     }
 
     condition {
@@ -112,11 +113,11 @@ data "aws_iam_policy_document" "tempo_s3" {
       "s3:ListBucket",
       "s3:DeleteObject",
       "s3:GetObjectTagging",
-      "s3:PutObjectTagging"
+      "s3:PutObjectTagging",
     ]
     resources = [
       module.s3_tempo.bucket_arn,
-      "${module.s3_tempo.bucket_arn}/*"
+      "${module.s3_tempo.bucket_arn}/*",
     ]
   }
 }
@@ -132,17 +133,17 @@ resource "aws_iam_role_policy_attachment" "tempo_s3_seoul" {
 }
 
 # -----------------
-# Mimir IRSA
+# AMP IRSA (Remote write)
 # -----------------
 
-data "aws_iam_policy_document" "mimir_trust" {
+data "aws_iam_policy_document" "amp_remote_write_trust" {
   statement {
     effect  = "Allow"
     actions = ["sts:AssumeRoleWithWebIdentity"]
 
     principals {
       type        = "Federated"
-      identifiers = [data.aws_iam_openid_connect_provider.this.arn]
+      identifiers = [local.oidc_provider_arn]
     }
 
     condition {
@@ -154,47 +155,93 @@ data "aws_iam_policy_document" "mimir_trust" {
     condition {
       test     = "StringEquals"
       variable = "${local.oidc_issuer_hostpath}:sub"
-      values   = [local.sa_subjects.mimir]
+      values   = [local.sa_subjects.amp_remote_write]
     }
   }
 }
 
-resource "aws_iam_role" "mimir_seoul" {
-  name               = "mimir-irsa-seoul"
-  assume_role_policy = data.aws_iam_policy_document.mimir_trust.json
+resource "aws_iam_role" "amp_remote_write_seoul" {
+  name               = "amp-remote-write-irsa-seoul"
+  assume_role_policy = data.aws_iam_policy_document.amp_remote_write_trust.json
 }
 
-data "aws_iam_policy_document" "mimir_s3" {
+data "aws_iam_policy_document" "amp_remote_write" {
   statement {
-    sid     = "MimirS3"
+    sid     = "AMPRemoteWrite"
     effect  = "Allow"
-    actions = [
-      "s3:ListBucket",
-      "s3:GetObject",
-      "s3:PutObject",
-      "s3:DeleteObject",
-      "s3:AbortMultipartUpload",
-      "s3:ListBucketMultipartUploads",
-      "s3:ListMultipartUploadParts"
-    ]
+    actions = ["aps:RemoteWrite"]
     resources = [
-      module.s3_mimir_blocks.bucket_arn,
-      "${module.s3_mimir_blocks.bucket_arn}/*",
-      module.s3_mimir_alertmanager.bucket_arn,
-      "${module.s3_mimir_alertmanager.bucket_arn}/*",
-      module.s3_mimir_ruler.bucket_arn,
-      "${module.s3_mimir_ruler.bucket_arn}/*"
+      aws_prometheus_workspace.seoul.arn,
     ]
   }
 }
 
-resource "aws_iam_policy" "mimir_s3_seoul" {
-  name   = "mimir-s3-seoul"
-  policy = data.aws_iam_policy_document.mimir_s3.json
+resource "aws_iam_policy" "amp_remote_write_seoul" {
+  name   = "amp-remote-write-seoul-${aws_prometheus_workspace.seoul.id}"
+  policy = data.aws_iam_policy_document.amp_remote_write.json
 }
 
-resource "aws_iam_role_policy_attachment" "mimir_s3_seoul" {
-  role       = aws_iam_role.mimir_seoul.name
-  policy_arn = aws_iam_policy.mimir_s3_seoul.arn
+resource "aws_iam_role_policy_attachment" "amp_remote_write_seoul" {
+  role       = aws_iam_role.amp_remote_write_seoul.name
+  policy_arn = aws_iam_policy.amp_remote_write_seoul.arn
+}
+
+# -----------------
+# AMP IRSA (Query)
+# -----------------
+
+data "aws_iam_policy_document" "amp_query_trust" {
+  statement {
+    effect  = "Allow"
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+
+    principals {
+      type        = "Federated"
+      identifiers = [local.oidc_provider_arn]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "${local.oidc_issuer_hostpath}:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "${local.oidc_issuer_hostpath}:sub"
+      values   = [local.sa_subjects.amp_query]
+    }
+  }
+}
+
+resource "aws_iam_role" "amp_query_seoul" {
+  name               = "amp-query-irsa-seoul"
+  assume_role_policy = data.aws_iam_policy_document.amp_query_trust.json
+}
+
+data "aws_iam_policy_document" "amp_query" {
+  statement {
+    sid    = "AMPQuery"
+    effect = "Allow"
+    actions = [
+      "aps:QueryMetrics",
+      "aps:GetSeries",
+      "aps:GetLabels",
+      "aps:GetMetricMetadata",
+    ]
+    resources = [
+      aws_prometheus_workspace.seoul.arn,
+    ]
+  }
+}
+
+resource "aws_iam_policy" "amp_query_seoul" {
+  name   = "amp-query-seoul-${aws_prometheus_workspace.seoul.id}"
+  policy = data.aws_iam_policy_document.amp_query.json
+}
+
+resource "aws_iam_role_policy_attachment" "amp_query_seoul" {
+  role       = aws_iam_role.amp_query_seoul.name
+  policy_arn = aws_iam_policy.amp_query_seoul.arn
 }
 

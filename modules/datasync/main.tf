@@ -1,7 +1,7 @@
 # 1. 목적지 S3 Location 설정 (인프라 버킷 참조)
 resource "aws_datasync_location_s3" "destination" {
   s3_bucket_arn = var.target_bucket_arn
-  subdirectory  = "/migrated_data"
+  subdirectory  = "/videos/movies/"
 
   s3_config {
     bucket_access_role_arn = aws_iam_role.this.arn

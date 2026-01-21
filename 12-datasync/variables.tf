@@ -7,7 +7,7 @@ variable "onprem_private_ip" {
   type = string
 }
 
-variable "onprem_mg_private_cidr" {
+variable "onprem_private_cidr" {
   type = string
 }
 

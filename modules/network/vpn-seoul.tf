@@ -12,6 +12,7 @@ data "aws_ec2_transit_gateway" "kor" {
     name   = "tag:Name"
     values = ["TGW-KOR"]  
   }
+  depends_on = ["aws_ec2_transit_gateway.kor"]
 }
 
 data "aws_vpc" "kor" {
